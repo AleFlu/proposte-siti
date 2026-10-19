@@ -1,0 +1,292 @@
+/* Pizzeria La Cupola — il forno a mosaico: muro scuro, tessere verde rame e oro, piastrelle chiare */
+:root {
+  --forno: #0F2B2A;
+  --forno-2: #163B39;
+  --mosaico: #14807A;
+  --mosaico-scuro: #0C5F5A;
+  --oro: #D9A62E;
+  --brace: #E5582D;
+  --piastrella: #F3F6F4;
+  --fuga: #D5DEDB;
+  --inchiostro: #11201F;
+  --tenue: #4E6461;
+  --tenue-scuro: #A9C2BE;
+  --riga-scura: rgba(169, 194, 190, .22);
+
+  --display: "Alfa Slab One", "Rockwell", Georgia, serif;
+  --testo: "Hanken Grotesk", system-ui, sans-serif;
+
+  --s-1: .875rem;
+  --s0: 1.0625rem;
+  --s1: 1.328rem;
+  --s2: 1.66rem;
+  --s3: 2.075rem;
+  --s4: 2.594rem;
+  --hero: clamp(2.5rem, 5.6vw, 5.1rem);
+  --titolo-pagina: clamp(2.4rem, 5.5vw, 4.4rem);
+
+  --r-tessera: 3px;
+  --r-pillola: 99px;
+  --gutter: clamp(1rem, 4vw, 3.25rem);
+  --max: 76rem;
+  --ease: cubic-bezier(.2, .7, .1, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--piastrella); color: var(--inchiostro);
+  font: 400 var(--s0)/1.6 var(--testo);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--mosaico-scuro); text-underline-offset: .2em; }
+:focus-visible { outline: 3px solid var(--oro); outline-offset: 3px; border-radius: 2px; }
+.chiaro :focus-visible { outline-color: var(--mosaico-scuro); }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; letter-spacing: -.01em; text-wrap: balance; }
+
+.wrap {
+  max-width: var(--max); margin: 0 auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.scuro { background: var(--forno); color: #EAF2F0; }
+.scuro a { color: var(--oro); }
+.salta {
+  position: absolute; left: 1rem; top: -4rem; z-index: 10;
+  background: var(--oro); color: var(--forno); padding: .6rem 1rem; font-weight: 600;
+}
+.salta:focus { top: 1rem; }
+
+/* ---------- testata ---------- */
+.testata-fondo { background: var(--forno); color: #EAF2F0; }
+.testata { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1.25rem; padding-bottom: 1.25rem; }
+.marchio { display: flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--oro); }
+.marchio svg { width: 2.1rem; height: auto; flex: none; }
+.marchio b { display: block; font: 400 1.35rem/1 var(--display); letter-spacing: 0; }
+.marchio small { display: block; font: 500 .8125rem/1.3 var(--testo); color: var(--tenue-scuro); }
+.nav { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2rem); font: 500 var(--s-1)/1 var(--testo); }
+.nav a { color: #EAF2F0; text-decoration: none; padding: .45rem 0; border-bottom: 2px solid transparent; }
+.nav a:hover { border-color: var(--riga-scura); }
+.nav a[aria-current="page"] { border-color: var(--oro); }
+.nav .nav-prenota { background: var(--oro); color: var(--forno); padding: .75rem 1.15rem; border-radius: var(--r-pillola); border: 0; font-weight: 600; }
+.nav .nav-prenota:hover, .nav .nav-prenota[aria-current="page"] { background: #EBC160; }
+.menu-apri {
+  display: none; font: 600 var(--s-1)/1 var(--testo); color: #EAF2F0; cursor: pointer;
+  background: transparent; border: 1px solid var(--riga-scura); border-radius: var(--r-pillola); padding: .7rem 1.05rem;
+}
+@media (max-width: 820px) {
+  .menu-apri { display: inline-block; }
+  .nav {
+    display: none; position: absolute; z-index: 5; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0; font-size: var(--s1);
+    background: var(--forno-2);
+    padding: .5rem max(var(--gutter), env(safe-area-inset-right, 0px)) 1.5rem max(var(--gutter), env(safe-area-inset-left, 0px));
+    box-shadow: 0 24px 40px -20px rgba(0, 0, 0, .55);
+  }
+  .nav.aperta { display: flex; }
+  .nav a { padding: 1rem 0; border-bottom: 1px solid var(--riga-scura); }
+  .nav a[aria-current="page"] { color: var(--oro); border-color: var(--riga-scura); }
+  .nav .nav-prenota { margin-top: 1rem; text-align: center; padding: 1rem; }
+}
+
+/* ---------- apertura della home ---------- */
+.apertura {
+  display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: var(--gutter); align-items: center;
+  padding-top: clamp(1.5rem, 4vw, 3.5rem); padding-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+.apertura h1 { margin: 0; font-size: var(--hero); line-height: 1.02; max-width: 13ch; }
+.apertura .ore { font-variant-numeric: tabular-nums lining-nums; }
+.apertura .pronto { margin: 1.25rem 0 0; color: var(--oro); font-weight: 600; }
+.apertura .intro { margin: 1rem 0 2rem; max-width: 40ch; color: var(--tenue-scuro); font-size: var(--s1); line-height: 1.45; }
+.azioni { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+.bottone {
+  display: inline-block; font: 600 var(--s0)/1 var(--testo); text-decoration: none; cursor: pointer;
+  background: var(--oro); color: var(--forno) !important; border: 0; border-radius: var(--r-pillola); padding: 1.05rem 1.5rem;
+}
+.bottone:hover { background: #EBC160; }
+.chiaro .bottone, .bottone.su-chiaro { background: var(--forno); color: var(--piastrella) !important; }
+.chiaro .bottone:hover, .bottone.su-chiaro:hover { background: var(--mosaico-scuro); }
+.link-forte { font-weight: 600; text-decoration: underline; text-decoration-thickness: 1.5px; }
+.forno-tela { position: relative; width: 100%; aspect-ratio: 1 / .86; }
+.forno-tela canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+@media (max-width: 820px) {
+  .apertura { grid-template-columns: 1fr; }
+  .forno-tela { max-width: 30rem; }
+}
+
+/* ---------- stasera ---------- */
+.stasera { border-bottom: 1px solid var(--fuga); }
+.stasera .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem 2rem; padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.stasera p { margin: 0; }
+.stasera strong { font-weight: 600; }
+.pallino { display: inline-block; width: .6rem; height: .6rem; border-radius: 50%; background: var(--mosaico); margin-right: .5rem; vertical-align: .05em; }
+.chiuso .pallino { background: transparent; box-shadow: inset 0 0 0 2px var(--tenue); }
+.orari-brevi { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.orari-brevi a {
+  display: grid; gap: .1rem; text-decoration: none; color: var(--inchiostro);
+  border: 1px solid var(--fuga); background: #fff; border-radius: var(--r-tessera); padding: .55rem .8rem;
+  font-variant-numeric: tabular-nums;
+}
+.orari-brevi a:hover { border-color: var(--mosaico-scuro); }
+.orari-brevi b { font-weight: 600; }
+.orari-brevi span { font-size: .8125rem; color: var(--tenue); }
+.orari-brevi .pieno { opacity: .55; }
+
+/* ---------- sezioni ---------- */
+section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+.intestazione { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--gutter); align-items: end; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.intestazione h2 { margin: 0; font-size: var(--s4); line-height: 1.02; }
+.intestazione p { margin: 0; max-width: 50ch; }
+.scuro .intestazione p { color: var(--tenue-scuro); }
+@media (max-width: 760px) { .intestazione { grid-template-columns: 1fr; gap: 1rem; } }
+.testa-pagina { padding-top: clamp(1.5rem, 4vw, 3rem); padding-bottom: clamp(2.5rem, 5vw, 4rem); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gutter); align-items: end; }
+.testa-pagina h1 { margin: 0; font-size: var(--titolo-pagina); line-height: 1.02; }
+.testa-pagina p { margin: 0; max-width: 42ch; color: var(--tenue-scuro); font-size: var(--s1); line-height: 1.45; }
+@media (max-width: 760px) { .testa-pagina { grid-template-columns: 1fr; gap: 1rem; } }
+
+/* ---------- menu ---------- */
+.filtri { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 2.5rem; }
+.filtri button {
+  font: 500 var(--s-1)/1 var(--testo); color: var(--inchiostro); cursor: pointer;
+  background: #fff; border: 1px solid var(--fuga); border-radius: var(--r-pillola); padding: .7rem 1.05rem;
+}
+.filtri button:hover { border-color: var(--mosaico-scuro); }
+.filtri button[aria-pressed="true"] { background: var(--forno); border-color: var(--forno); color: var(--piastrella); }
+.gruppo + .gruppo { margin-top: clamp(2.5rem, 6vw, 4rem); }
+.gruppo h2 { font-size: var(--s3); margin: 0 0 .25rem; }
+.gruppo > p { margin: 0 0 1rem; color: var(--tenue); max-width: 60ch; }
+.voci { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--inchiostro); }
+.voce {
+  display: grid; grid-template-columns: .8rem minmax(0, 1fr) auto; gap: .35rem 1rem; align-items: baseline;
+  padding: 1.1rem 0; border-bottom: 1px solid var(--fuga);
+}
+.voce::before { content: ""; width: .7rem; height: .7rem; background: var(--mosaico); border-radius: 1px; transform: translateY(-.05em) rotate(4deg); }
+.voce h3 { margin: 0; font-size: var(--s1); line-height: 1.15; }
+.voce .ingredienti { grid-column: 2; margin: 0; color: var(--tenue); max-width: 60ch; }
+.voce .prezzo { margin: 0; grid-column: 3; grid-row: 1; font-weight: 600; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
+.voce .etichette { grid-column: 2; display: flex; flex-wrap: wrap; gap: .35rem; margin: .2rem 0 0; padding: 0; list-style: none; }
+.voce .etichette li { font-size: .8125rem; color: var(--mosaico-scuro); border: 1px solid #B9D3CF; border-radius: var(--r-tessera); padding: .15rem .5rem; }
+.voce[hidden] { display: none; }
+.scuro .voci { border-color: var(--oro); }
+.scuro .voce { border-color: var(--riga-scura); }
+.scuro .voce::before { background: var(--oro); }
+.scuro .voce .ingredienti { color: var(--tenue-scuro); }
+.nota-menu { margin-top: 2.5rem; padding: 1.25rem 1.5rem; background: #fff; border: 1px solid var(--fuga); border-radius: var(--r-tessera); max-width: 46rem; }
+.nota-menu p { margin: 0; }
+.nota-menu p + p { margin-top: .5rem; }
+.nessuna { font-style: italic; color: var(--tenue); }
+
+/* ---------- la scheda tecnica in una frase ---------- */
+.frase-tecnica { margin: 0; font: 400 clamp(1.7rem, 3.6vw, 3rem)/1.18 var(--display); max-width: 24ch; text-wrap: balance; }
+.frase-tecnica b { font-weight: 400; color: var(--oro); font-variant-numeric: lining-nums; }
+
+/* ---------- l'impasto ---------- */
+.fase-ora {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem 1.5rem; align-items: center;
+  background: var(--forno-2); border-radius: var(--r-tessera); padding: 1.25rem 1.5rem; margin-top: 1.5rem; max-width: 42rem;
+}
+.fase-ora .numero { font: 400 var(--s4)/1 var(--display); color: var(--oro); font-variant-numeric: tabular-nums lining-nums; }
+.fase-ora p { margin: 0; }
+.tempo { list-style: none; margin: 0; padding: 0; position: relative; }
+.tempo::before { content: ""; position: absolute; left: 9.25rem; top: .6rem; bottom: .6rem; width: 2px; background: var(--fuga); }
+.tempo li { position: relative; display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 2.5rem; padding: 1.1rem 0; }
+.tempo li::before {
+  content: ""; position: absolute; left: calc(9.25rem - .45rem + 1px); top: 1.55rem; width: .9rem; height: .9rem;
+  background: var(--piastrella); border: 2px solid var(--mosaico); border-radius: 2px; transform: rotate(45deg);
+}
+.tempo li.fatto::before { background: var(--mosaico); }
+.tempo li.ora::before { background: var(--oro); border-color: var(--oro); box-shadow: 0 0 0 5px rgba(217, 166, 46, .25); }
+.tempo time { font-weight: 600; font-variant-numeric: tabular-nums; }
+.tempo time small { display: block; font-weight: 400; color: var(--tenue); }
+.tempo h3 { margin: 0 0 .3rem; font-size: var(--s1); }
+.tempo p { margin: 0; max-width: 54ch; color: var(--tenue); }
+.tempo li.ora h3::after {
+  content: "adesso"; display: inline-block; margin-left: .6rem; vertical-align: .2em;
+  font: 600 .75rem/1 var(--testo); color: var(--forno); background: var(--oro); padding: .3rem .55rem; border-radius: var(--r-pillola);
+}
+@media (max-width: 620px) {
+  .tempo::before { left: .45rem; }
+  .tempo li { grid-template-columns: 1fr; gap: .4rem; padding-left: 2rem; }
+  .tempo li::before { left: 0; top: 1.4rem; }
+}
+.ingredienti-lista { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem var(--gutter); }
+.ingredienti-lista div { border-top: 2px solid var(--oro); padding-top: .9rem; }
+.ingredienti-lista dt { font: 400 var(--s1)/1.2 var(--display); color: #EAF2F0; margin-bottom: .3rem; }
+.ingredienti-lista dd { margin: 0; color: var(--tenue-scuro); max-width: 40ch; }
+@media (max-width: 680px) { .ingredienti-lista { grid-template-columns: 1fr; } }
+
+/* ---------- prenota ---------- */
+.prenota-griglia { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+@media (max-width: 860px) { .prenota-griglia { grid-template-columns: 1fr; } }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem 1.25rem; }
+.campo { display: grid; gap: .45rem; align-content: start; }
+.campo.largo { grid-column: 1 / -1; }
+label, legend { font: 600 var(--s-1)/1.3 var(--testo); }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+legend { padding: 0; margin-bottom: .6rem; }
+input, select, textarea {
+  font: inherit; color: var(--inchiostro); width: 100%;
+  background: #fff; border: 1px solid #B9C8C4; border-radius: var(--r-tessera); padding: .8rem .85rem;
+}
+textarea { min-height: 5.5rem; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--mosaico-scuro); outline-offset: 0; border-color: var(--mosaico-scuro); }
+.orari-scelta { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.4rem, 1fr)); gap: .5rem; }
+.orari-scelta label {
+  position: relative; display: grid; gap: .15rem; cursor: pointer; font-weight: 400;
+  background: #fff; border: 1px solid #B9C8C4; border-radius: var(--r-tessera); padding: .65rem .75rem;
+  font-variant-numeric: tabular-nums;
+}
+.orari-scelta input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.orari-scelta b { font-weight: 600; font-size: var(--s0); }
+.orari-scelta span { font-size: .8125rem; color: var(--tenue); }
+.orari-scelta label:has(input:checked) { background: var(--forno); border-color: var(--forno); color: var(--piastrella); }
+.orari-scelta label:has(input:checked) span { color: var(--tenue-scuro); }
+.orari-scelta label:has(input:focus-visible) { outline: 3px solid var(--mosaico-scuro); outline-offset: 2px; }
+.orari-scelta label:has(input:disabled) { cursor: not-allowed; opacity: .5; background: transparent; }
+.orari-scelta .vuoto { grid-column: 1 / -1; margin: 0; color: var(--tenue); }
+.aiuto { margin: 0; font-size: var(--s-1); color: var(--tenue); }
+form .bottone { grid-column: 1 / -1; justify-self: start; }
+.esito { grid-column: 1 / -1; margin: 0; padding: 1rem 1.25rem; border-radius: var(--r-tessera); background: #fff; border-left: 4px solid var(--mosaico); }
+.esito.errore { border-left-color: var(--brace); }
+.esito strong { font-weight: 600; }
+@media (max-width: 560px) { form { grid-template-columns: 1fr; } }
+.buono { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; }
+.buono li { display: grid; grid-template-columns: .8rem minmax(0, 1fr); gap: .75rem; align-items: baseline; }
+.buono li::before { content: ""; width: .6rem; height: .6rem; background: var(--mosaico); border-radius: 1px; transform: rotate(4deg); }
+.buono h3 { margin: 0 0 .2rem; font: 600 var(--s0)/1.3 var(--testo); letter-spacing: 0; }
+.buono p { margin: 0; color: var(--tenue); }
+
+/* ---------- dove siamo ---------- */
+.dove-griglia { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 6vw, 5rem); }
+@media (max-width: 760px) { .dove-griglia { grid-template-columns: 1fr; } }
+.indirizzo { font: 400 var(--s3)/1.12 var(--display); margin: 0 0 1rem; font-style: normal; }
+.arrivare { margin: 1.5rem 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .6rem 1.25rem; }
+.arrivare dt { font-weight: 600; }
+.arrivare dd { margin: 0; color: var(--tenue); }
+.orari { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.orari caption { text-align: left; font: 400 var(--s2)/1.2 var(--display); margin-bottom: .75rem; }
+.orari th, .orari td { text-align: left; padding: .8rem 0; border-bottom: 1px solid var(--fuga); font-weight: 400; vertical-align: top; }
+.orari th { width: 8.5rem; color: var(--tenue); }
+.orari tr.oggi th, .orari tr.oggi td { font-weight: 600; color: var(--inchiostro); }
+.orari tr.oggi th::after { content: "oggi"; margin-left: .5rem; font: 600 .75rem/1 var(--testo); color: var(--piastrella); background: var(--mosaico-scuro); padding: .2rem .45rem; border-radius: var(--r-pillola); vertical-align: .1em; }
+
+/* ---------- piede ---------- */
+footer { background: var(--forno); color: #EAF2F0; padding-block: 3rem 2.5rem; font-size: var(--s-1); }
+footer a { color: #EAF2F0; }
+.piede { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem var(--gutter); }
+.piede h2 { margin: 0 0 .6rem; font-size: var(--s1); color: var(--oro); }
+.piede p { margin: 0; }
+.piede ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; }
+.nota-demo { margin: 2.5rem 0 0; color: var(--tenue-scuro); }
+@media (max-width: 760px) { .piede { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* aggiunte per home e prenota */
+.prenota-veloce { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
+.prenota-veloce > p { margin: 0; font-weight: 600; }
+.esito:empty { display: none; }
+.prenota-griglia aside h2 { font-size: var(--s2); margin: 0 0 1.25rem; }
+.scuro .pallino { background: var(--oro); }
+.scuro .chiuso .pallino, .scuro .chiuso.pallino { background: transparent; box-shadow: inset 0 0 0 2px var(--tenue-scuro); }
+.testa-pagina p strong { color: #EAF2F0; font-weight: 600; }

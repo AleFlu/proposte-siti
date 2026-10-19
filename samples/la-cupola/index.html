@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Cupola, pizzeria napoletana a Torino</title>
+<meta name="description" content="Pizza napoletana in San Salvario, Torino. Impasto a lunga lievitazione, forno a legna a 450 gradi. Prenota un tavolo per stasera.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230F2B2A%27/%3E%3Cpath d=%27M5 25 A11 17 0 0 1 27 25 Z%27 fill=%27%23D9A62E%27/%3E%3Cpath d=%27M12.5 25 V21 a3.5 3.5 0 0 1 7 0 V25 Z%27 fill=%27%230F2B2A%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/stile.css">
+</head>
+<body data-pagina="home">
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+<div class="testata-fondo">
+  <header class="wrap testata">
+    <a class="marchio" href="index.html" aria-current="page"><svg viewBox="0 0 40 34" aria-hidden="true"><path d="M3 30 A17 26 0 0 1 37 30 Z" fill="currentColor"/><path d="M14.5 30 V24.5 a5.5 5.5 0 0 1 11 0 V30 Z" fill="#0F2B2A"/><rect x="1" y="30.5" width="38" height="3" fill="currentColor"/></svg><span><b>La Cupola</b><small>Pizzeria napoletana</small></span></a>
+    <button class="menu-apri" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Principale">
+      <a href="pizze.html">Le pizze</a>
+      <a href="impasto.html">L’impasto</a>
+      <a href="dove.html">Dove siamo</a>
+      <a class="nav-prenota" href="prenota.html">Prenota</a>
+    </nav>
+  </header>
+</div>
+
+<main id="contenuto">
+<div class="scuro">
+    <div class="wrap apertura">
+      <div>
+        <h1 id="titolo-impasto">L’impasto di stasera lievita da più di trenta ore.</h1>
+        <p class="pronto" id="pronto"></p>
+        <p class="intro">Pizza napoletana in San Salvario. Forno a legna costruito a Napoli, 450 gradi, sessanta secondi di cottura.</p>
+        <div class="azioni">
+          <a class="bottone" href="prenota.html">Prenota un tavolo</a>
+          <a class="link-forte" href="pizze.html">Le pizze e i prezzi</a>
+        </div>
+      </div>
+      <div class="forno-tela"><canvas id="mosaico" aria-hidden="true"></canvas></div>
+    </div>
+  </div>
+
+  <div class="stasera chiaro">
+    <div class="wrap">
+      <p data-apertura><span class="pallino"></span><strong>Dal martedì alla domenica, dalle 19</strong></p>
+      <div class="prenota-veloce">
+        <p id="quando-prenoti">Posti liberi</p>
+        <ul class="orari-brevi" id="orari-stasera"></ul>
+      </div>
+      <a class="link-forte" href="prenota.html">Altri giorni</a>
+    </div>
+  </div>
+
+  <section class="chiaro" aria-labelledby="t-fuori">
+    <div class="wrap">
+      <div class="intestazione">
+        <h2 id="t-fuori">Fuori menu di ottobre</h2>
+        <p>Tre pizze che ci sono solo questo mese, con quello che arriva dal mercato di Porta Palazzo.</p>
+      </div>
+      <ul class="voci" id="fuori-menu" aria-labelledby="t-fuori"></ul>
+      <p><a class="link-forte" href="pizze.html">Tutto il menu</a></p>
+    </div>
+  </section>
+
+  <section class="scuro" aria-label="L’impasto in numeri">
+    <div class="wrap">
+      <p class="frase-tecnica">Ogni pizza è un panetto da <b>260</b> grammi, con il <b>72%</b> d’acqua, che riposa almeno <b>30</b> ore e cuoce <b>60</b> secondi a <b>450</b> gradi.</p>
+      <p><a class="link-forte" href="impasto.html">Come lavoriamo l’impasto</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="piede">
+      <div>
+        <h2>La Cupola</h2>
+        <p>Pizzeria napoletana</p>
+        <p>Via Belfiore 31, 10125 Torino</p>
+        <p>Telefono 011 000 0000</p>
+      </div>
+      <div>
+        <h2>Orari</h2>
+        <p data-orari-oggi>Dal martedì alla domenica, dalle 19</p>
+        <p><a href="dove.html">Orari di tutta la settimana</a></p>
+      </div>
+      <div>
+        <h2>Pagine</h2>
+        <ul>
+          <li><a href="pizze.html">Le pizze</a></li>
+          <li><a href="impasto.html">L’impasto</a></li>
+          <li><a href="prenota.html">Prenota un tavolo</a></li>
+          <li><a href="dove.html">Dove siamo</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota-demo">Proposta grafica dimostrativa: pizzeria, indirizzo e recapiti sono di fantasia.</p>
+  </div>
+</footer>
+
+<script src="assets/cupola.js"></script>
+</body>
+</html>

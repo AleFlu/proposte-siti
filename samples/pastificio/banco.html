@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Al banco | Pastificio Carta Blu</title>
+<meta name="description" content="Cosa trovi al banco del Pastificio Carta Blu giorno per giorno, con i prezzi al chilo e gli orari.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%232F4C93%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%279%27 fill=%27none%27 stroke=%27%23F3D27C%27 stroke-width=%273%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/stile.css">
+</head>
+<body data-pagina="banco">
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+<header class="wrap testata">
+  <a class="marchio" href="index.html">Pastificio <span>Carta Blu</span></a>
+  <button class="menu-apri" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+  <nav class="nav" id="nav" aria-label="Principale">
+    <a href="formati.html">Formati</a>
+    <a href="banco.html" aria-current="page">Al banco</a>
+    <a href="bottega.html">La bottega</a>
+    <a class="nav-ordina" href="ordina.html">Ordina per domenica</a>
+  </nav>
+</header>
+
+<main id="contenuto">
+<div class="wrap testa-pagina">
+    <h1>Al banco</h1>
+    <p>Le tagliatelle ci sono tutti i giorni. Il resto gira con la settimana: i tortellini il giovedì e il sabato.</p>
+  </div>
+
+  <div class="stato">
+    <div class="wrap">
+      <span data-stato><span class="pallino"></span><strong>Orari</strong> dal martedì al sabato</span>
+      <span>Borgo Riccio 14, Parma</span>
+      <span>0521 000 000</span>
+    </div>
+  </div>
+
+  <section aria-label="Banco giorno per giorno">
+    <div class="wrap">
+      <div class="giorni" role="tablist" aria-label="Giorno della settimana" id="giorni"></div>
+      <div id="banco-giorno" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="campionario" aria-labelledby="orari-settimana">
+    <div class="wrap due-colonne">
+      <div>
+        <h2 class="sottotitolo" id="orari-settimana">Orari</h2>
+        <table class="orari orari-chiari" aria-labelledby="orari-settimana"><tbody id="orari"></tbody></table>
+      </div>
+      <div>
+        <h2 class="sottotitolo">Buono a sapersi</h2>
+        <ul class="buono buono-chiaro">
+          <li>Si paga anche con carta e bancomat, pure per un etto di tagliatelle.</li>
+          <li>Se porti il tuo contenitore, la pasta va lì e la carta resta a noi.</li>
+          <li>Il sabato alle 11 i tortellini spesso sono finiti: chiama prima, li mettiamo da parte.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="piede">
+      <div>
+        <h2>Pastificio Carta Blu</h2>
+        <p>Borgo Riccio 14, 43121 Parma</p>
+        <p>Telefono 0521 000 000</p>
+      </div>
+      <div>
+        <h2>Orari</h2>
+        <p data-orari-oggi>Dal martedì al sabato dalle 7:30</p>
+        <p><a href="banco.html#orari-settimana">Orari di tutta la settimana</a></p>
+      </div>
+      <div>
+        <h2>Pagine</h2>
+        <ul>
+          <li><a href="formati.html">Formati</a></li>
+          <li><a href="banco.html">Al banco</a></li>
+          <li><a href="bottega.html">La bottega e dove siamo</a></li>
+          <li><a href="ordina.html">Ordina per domenica</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota-demo">Proposta grafica dimostrativa: attività, persone, indirizzo e recapiti sono di fantasia.</p>
+  </div>
+</footer>
+
+<script src="assets/sito.js"></script>
+</body>
+</html>

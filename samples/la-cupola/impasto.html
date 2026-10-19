@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L’impasto | La Cupola</title>
+<meta name="description" content="Come lavoriamo l’impasto della pizza alla Cupola: trenta ore di lievitazione, panetti da 260 grammi, forno a 450 gradi.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230F2B2A%27/%3E%3Cpath d=%27M5 25 A11 17 0 0 1 27 25 Z%27 fill=%27%23D9A62E%27/%3E%3Cpath d=%27M12.5 25 V21 a3.5 3.5 0 0 1 7 0 V25 Z%27 fill=%27%230F2B2A%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/stile.css">
+</head>
+<body data-pagina="impasto">
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+<div class="testata-fondo">
+  <header class="wrap testata">
+    <a class="marchio" href="index.html"><svg viewBox="0 0 40 34" aria-hidden="true"><path d="M3 30 A17 26 0 0 1 37 30 Z" fill="currentColor"/><path d="M14.5 30 V24.5 a5.5 5.5 0 0 1 11 0 V30 Z" fill="#0F2B2A"/><rect x="1" y="30.5" width="38" height="3" fill="currentColor"/></svg><span><b>La Cupola</b><small>Pizzeria napoletana</small></span></a>
+    <button class="menu-apri" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Principale">
+      <a href="pizze.html">Le pizze</a>
+      <a href="impasto.html" aria-current="page">L’impasto</a>
+      <a href="dove.html">Dove siamo</a>
+      <a class="nav-prenota" href="prenota.html">Prenota</a>
+    </nav>
+  </header>
+</div>
+
+<main id="contenuto">
+<div class="scuro">
+    <div class="wrap testa-pagina">
+      <div>
+        <h1>L’impasto</h1>
+        <div class="fase-ora" aria-live="polite">
+          <span class="numero" id="fase-numero">30 ore</span>
+          <p id="fase-testo">L’impasto del prossimo servizio riposa in frigo a 4 gradi.</p>
+        </div>
+      </div>
+      <p>Farina, acqua, sale e un grammo di lievito per chilo. Il resto lo fa il tempo: almeno trenta ore tra l’impasto e il forno.</p>
+    </div>
+  </div>
+
+  <section class="chiaro" aria-labelledby="t-tempo">
+    <div class="wrap">
+      <div class="intestazione">
+        <h2 id="t-tempo">Dall’impasto al forno</h2>
+        <p>Ogni servizio usa l’impasto fatto il giorno prima alle 11. La tessera gialla segna dove si trova adesso quello del prossimo servizio.</p>
+      </div>
+      <ol class="tempo">
+        <li data-ore="0"><time>11:00<small>Il giorno prima</small></time><div><h3>Impasto</h3><p>Farina tipo 1 macinata a pietra, acqua a 18 gradi, sale marino e un grammo di lievito di birra per chilo. Si impasta piano, per venti minuti.</p></div></li>
+        <li data-ore="1"><time>12:00<small>Il giorno prima</small></time><div><h3>Puntata</h3><p>Un’ora nella madia di legno, coperto. È la prima lievitazione, quella che dà forza alla pasta.</p></div></li>
+        <li data-ore="2"><time>13:00<small>Il giorno prima</small></time><div><h3>In frigo a 4 gradi</h3><p>Il lievito lavora lentissimo e intanto la pasta diventa più leggera da digerire.</p></div></li>
+        <li data-ore="22"><time>9:00<small>Il giorno della pizza</small></time><div><h3>Staglio</h3><p>La massa si divide a mano in panetti da 260 grammi, che tornano in frigo nelle cassette.</p></div></li>
+        <li data-ore="29"><time>16:00<small>Il giorno della pizza</small></time><div><h3>Fuori dal frigo</h3><p>Tre ore a temperatura ambiente, così i panetti si stendono a mano senza strapparsi.</p></div></li>
+        <li data-ore="32"><time>19:00<small>Il giorno della pizza</small></time><div><h3>Al forno</h3><p>450 gradi sul piano di biscotto di Sorrento. Da 60 a 90 secondi, girando la pizza due volte.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="scuro" aria-labelledby="t-forno">
+    <div class="wrap">
+      <div class="intestazione">
+        <h2 id="t-forno">Il forno</h2>
+        <p>L’ha costruito a mano un fornaio di Sant’Anastasia, vicino a Napoli: una cupola di mattoni refrattari rivestita di 14.000 tessere di mosaico.</p>
+      </div>
+      <dl class="ingredienti-lista">
+        <div><dt>La legna</dt><dd>Faggio e quercia stagionati due anni, da un bosco delle Valli di Lanzo.</dd></div>
+        <div><dt>Il piano</dt><dd>Biscotto di Sorrento: argilla cotta che tiene il calore senza bruciare il fondo.</dd></div>
+        <div><dt>Il pomodoro</dt><dd>San Marzano DOP, schiacciato a mano con un pizzico di sale. Non si cuoce prima del forno.</dd></div>
+        <div><dt>Il fiordilatte</dt><dd>Da Agerola, arriva due volte a settimana e si taglia al mattino perché sgoccioli.</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="piede">
+      <div>
+        <h2>La Cupola</h2>
+        <p>Pizzeria napoletana</p>
+        <p>Via Belfiore 31, 10125 Torino</p>
+        <p>Telefono 011 000 0000</p>
+      </div>
+      <div>
+        <h2>Orari</h2>
+        <p data-orari-oggi>Dal martedì alla domenica, dalle 19</p>
+        <p><a href="dove.html">Orari di tutta la settimana</a></p>
+      </div>
+      <div>
+        <h2>Pagine</h2>
+        <ul>
+          <li><a href="pizze.html">Le pizze</a></li>
+          <li><a href="impasto.html">L’impasto</a></li>
+          <li><a href="prenota.html">Prenota un tavolo</a></li>
+          <li><a href="dove.html">Dove siamo</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota-demo">Proposta grafica dimostrativa: pizzeria, indirizzo e recapiti sono di fantasia.</p>
+  </div>
+</footer>
+
+<script src="assets/cupola.js"></script>
+</body>
+</html>
