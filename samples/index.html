@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proposte siti</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root { --fondo: #F2F2EE; --testo: #1D2024; --tenue: #5C6168; --riga: #D3D3CC; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--fondo); color: var(--testo);
+  font: 400 1.0625rem/1.55 "Instrument Sans", system-ui, sans-serif;
+}
+main { max-width: 44rem; margin: 0 auto; padding: clamp(3rem, 10vw, 6rem) max(16px, env(safe-area-inset-right, 0px)) 4rem max(16px, env(safe-area-inset-left, 0px)); }
+h1 { font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 1rem; }
+p { margin: 0; color: var(--tenue); max-width: 52ch; }
+ul { list-style: none; margin: 3rem 0 0; padding: 0; border-top: 1px solid var(--testo); }
+li a {
+  display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.25rem; align-items: center;
+  padding: 1.5rem 0; border-bottom: 1px solid var(--riga);
+  color: inherit; text-decoration: none;
+}
+li a:hover strong { text-decoration: underline; text-underline-offset: .2em; }
+li a:focus-visible { outline: 3px solid var(--testo); outline-offset: 4px; }
+.campione { width: 3.5rem; height: 3.5rem; border-radius: 4px; }
+strong { display: block; font-size: 1.25rem; font-weight: 600; }
+span.desc { color: var(--tenue); font-size: .9375rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Proposte di siti</h1>
+  <p>Due esempi di siti fatti su misura per attività locali. Le attività sono di fantasia: servono a far vedere il tipo di lavoro, non sono modelli da riempire.</p>
+  <ul>
+    <li><a href="pastificio/">
+      <svg class="campione" viewBox="0 0 56 56" aria-hidden="true"><rect width="56" height="56" fill="#2F4C93"/><circle cx="28" cy="28" r="13" fill="none" stroke="#F3D27C" stroke-width="3"/></svg>
+      <span><strong>Pastificio Carta Blu</strong><span class="desc">Pasta fresca a Parma: campionario dei formati, banco del giorno, ordini per la domenica.</span></span>
+    </a></li>
+    <li><a href="studio/">
+      <svg class="campione" viewBox="0 0 56 56" aria-hidden="true"><rect width="56" height="56" fill="#E9EFE6"/><path d="M14 0v56M18 0v56" stroke="#B3261E"/><path d="M24 20h22M24 30h22M24 40h14" stroke="#16302B" stroke-width="2.5"/></svg>
+      <span><strong>Studio Ravasi Commercialisti</strong><span class="desc">Commercialisti a Monza: scadenzario fiscale, simulatore del forfettario, prezzi pubblici.</span></span>
+    </a></li>
+  </ul>
+</main>
+</body>
+</html>

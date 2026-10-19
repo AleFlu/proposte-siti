@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__context7",
+      "mcp__playwright",
+      "mcp__chrome-devtools",
+      "mcp__shadcn"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "figma@knowledge-work-plugins": true
+  }
+}
