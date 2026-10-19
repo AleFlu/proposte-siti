@@ -4,47 +4,339 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Proposte siti</title>
+<meta name="description" content="Due proposte di siti su misura per attività locali: un pastificio e uno studio di commercialisti.">
 <meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%231D2024%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2714%27 rx=%272%27 fill=%27none%27 stroke=%27%23F2F2EE%27 stroke-width=%272%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root { --fondo: #F2F2EE; --testo: #1D2024; --tenue: #5C6168; --riga: #D3D3CC; }
+/* Tavolo da lavoro: ogni proposta è una tavola con l'anteprima viva a sinistra e le scelte di progetto a destra. */
+:root {
+  --tavolo: #ECEBE6;      /* grigio caldo del tavolo da disegno */
+  --foglio: #FAFAF7;
+  --testo: #1D2024;
+  --tenue: #5E636A;
+  --riga: #D2D1CA;
+  --ombra: 0 1px 2px rgba(29, 32, 36, .06), 0 24px 48px -28px rgba(29, 32, 36, .35);
+
+  --serif: "Instrument Serif", "Times New Roman", serif;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --max: 80rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+}
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0; background: var(--fondo); color: var(--testo);
-  font: 400 1.0625rem/1.55 "Instrument Sans", system-ui, sans-serif;
+  margin: 0; background: var(--tavolo); color: var(--testo);
+  font: 400 1rem/1.55 var(--sans);
+  -webkit-font-smoothing: antialiased;
 }
-main { max-width: 44rem; margin: 0 auto; padding: clamp(3rem, 10vw, 6rem) max(16px, env(safe-area-inset-right, 0px)) 4rem max(16px, env(safe-area-inset-left, 0px)); }
-h1 { font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 1rem; }
-p { margin: 0; color: var(--tenue); max-width: 52ch; }
-ul { list-style: none; margin: 3rem 0 0; padding: 0; border-top: 1px solid var(--testo); }
-li a {
-  display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.25rem; align-items: center;
-  padding: 1.5rem 0; border-bottom: 1px solid var(--riga);
-  color: inherit; text-decoration: none;
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--testo); outline-offset: 4px; border-radius: 2px; }
+.wrap {
+  max-width: var(--max); margin: 0 auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
-li a:hover strong { text-decoration: underline; text-underline-offset: .2em; }
-li a:focus-visible { outline: 3px solid var(--testo); outline-offset: 4px; }
-.campione { width: 3.5rem; height: 3.5rem; border-radius: 4px; }
-strong { display: block; font-size: 1.25rem; font-weight: 600; }
-span.desc { color: var(--tenue); font-size: .9375rem; }
+
+/* ---------- apertura ---------- */
+.apertura { padding-block: clamp(3rem, 9vw, 7rem) clamp(2.5rem, 6vw, 4.5rem); }
+.apertura h1 {
+  margin: 0; max-width: 16ch;
+  font: 400 clamp(2.75rem, 7.5vw, 6rem)/.98 var(--serif);
+  letter-spacing: -.02em; text-wrap: balance;
+}
+.apertura h1 em { font-style: italic; }
+.apertura-griglia { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); gap: 2rem var(--gutter); align-items: end; }
+.apertura p { margin: 0; color: var(--tenue); font-size: 1.0625rem; max-width: 42ch; }
+.indice { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1.5rem; padding: 0; list-style: none; }
+.indice a {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font: 500 .875rem/1 var(--sans); text-decoration: none;
+  padding: .6rem .9rem .6rem .6rem; border-radius: 99px; background: var(--foglio); border: 1px solid var(--riga);
+}
+.indice a:hover { border-color: var(--testo); }
+.indice i { width: 1.1rem; height: 1.1rem; border-radius: 50%; display: block; }
+@media (max-width: 760px) { .apertura-griglia { grid-template-columns: 1fr; } }
+
+/* ---------- tavola di una proposta ---------- */
+.tavola { padding-block: clamp(2.5rem, 6vw, 4.5rem); border-top: 1px solid var(--riga); }
+.tavola-griglia { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+@media (max-width: 960px) { .tavola-griglia { grid-template-columns: 1fr; } }
+
+/* anteprime vive */
+.anteprime { position: relative; display: block; text-decoration: none; padding-bottom: 3rem; }
+.schermo {
+  background: var(--foglio); border-radius: 10px; box-shadow: var(--ombra);
+  overflow: hidden; border: 1px solid var(--riga);
+}
+.barra-browser {
+  display: flex; align-items: center; gap: .75rem; height: 2.25rem; padding: 0 .9rem;
+  border-bottom: 1px solid var(--riga); font: 400 .75rem/1 var(--sans); color: var(--tenue);
+}
+.barra-browser .pallini { display: flex; gap: .35rem; }
+.barra-browser .pallini span { width: .6rem; height: .6rem; border-radius: 50%; background: var(--riga); }
+.barra-browser .indirizzo {
+  flex: 1; min-width: 0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  background: var(--tavolo); border-radius: 5px; padding: .35rem .6rem; max-width: 22rem; margin: 0 auto;
+}
+.vetro { position: relative; aspect-ratio: 1440 / 900; overflow: hidden; background: var(--tavolo); }
+.vetro iframe {
+  position: absolute; top: 0; left: 0; border: 0; pointer-events: none;
+  width: 1440px; height: 900px; transform-origin: 0 0; transform: scale(var(--scala, .5));
+}
+.telefono {
+  position: absolute; right: clamp(-.5rem, -1vw, 0rem); bottom: 0; width: clamp(7.5rem, 22%, 11.5rem);
+  background: var(--testo); padding: .45rem; border-radius: 1.6rem; box-shadow: var(--ombra);
+}
+.telefono .vetro { aspect-ratio: 375 / 780; border-radius: 1.2rem; }
+.telefono .vetro iframe { width: 375px; height: 780px; }
+.anteprime:hover .schermo, .anteprime:focus-visible .schermo { border-color: var(--testo); }
+.suggerimento {
+  position: absolute; left: 0; bottom: .5rem; font: 400 .8125rem/1.3 var(--sans); color: var(--tenue);
+}
+@media (max-width: 520px) {
+  .telefono { width: 34%; }
+  .suggerimento { display: none; }
+  .anteprime { padding-bottom: 2.5rem; }
+}
+
+/* scheda di progetto */
+.scheda { display: grid; gap: 1.75rem; }
+.settore { font: 500 .875rem/1.3 var(--sans); color: var(--tenue); margin: 0; }
+.scheda h2 { margin: 0; font: 400 clamp(2.25rem, 4.5vw, 3.25rem)/1 var(--serif); letter-spacing: -.015em; text-wrap: balance; }
+.tesi { margin: 0; font-size: 1.125rem; line-height: 1.5; max-width: 40ch; }
+.blocco h3 { margin: 0 0 .75rem; font: 600 .8125rem/1.2 var(--sans); color: var(--tenue); }
+.palette { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.palette li { display: grid; gap: .4rem; font: 400 .75rem/1.25 var(--sans); }
+.palette i { display: block; aspect-ratio: 1.4; border-radius: 6px; box-shadow: inset 0 0 0 1px rgba(29, 32, 36, .12); }
+.palette b { display: block; font-weight: 600; font-size: .8125rem; }
+.palette span { color: var(--tenue); font-variant-numeric: tabular-nums; }
+.caratteri { display: grid; gap: .6rem; }
+.caratteri div {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding-bottom: .6rem; border-bottom: 1px solid var(--riga);
+}
+.caratteri .campione { font-size: 1.75rem; line-height: 1.1; }
+.caratteri small { font-size: .8125rem; color: var(--tenue); text-align: right; }
+.prove { margin: 0; padding: 0; list-style: none; display: grid; gap: .55rem; }
+.prove li { display: grid; grid-template-columns: 1.1rem 1fr; gap: .6rem; align-items: baseline; }
+.prove li::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--punto, var(--testo)); transform: translateY(-.1em); }
+.azioni { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.apri {
+  display: inline-block; font: 600 .9375rem/1 var(--sans); text-decoration: none;
+  color: var(--foglio); background: var(--testo); padding: 1rem 1.35rem; border-radius: 99px;
+}
+.apri:hover { background: var(--hover, #3A3F46); }
+.copia {
+  font: 500 .875rem/1 var(--sans); color: var(--testo); background: transparent; cursor: pointer;
+  border: 1px solid var(--riga); border-radius: 99px; padding: .9rem 1.1rem;
+}
+.copia:hover { border-color: var(--testo); }
+
+/* ---------- metodo ---------- */
+.metodo { padding-block: clamp(3rem, 8vw, 6rem); border-top: 1px solid var(--riga); }
+.metodo h2 { margin: 0 0 2rem; font: 400 clamp(2rem, 4vw, 3rem)/1.05 var(--serif); max-width: 20ch; text-wrap: balance; }
+.passi { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; counter-reset: p; }
+.passi li { counter-increment: p; background: var(--foglio); border-radius: 10px; padding: 1.25rem 1.25rem 1.5rem; border: 1px solid var(--riga); }
+.passi li::before { content: counter(p); display: block; font: 400 2.25rem/1 var(--serif); margin-bottom: 1rem; }
+.passi h3 { margin: 0 0 .4rem; font: 600 1rem/1.3 var(--sans); }
+.passi p { margin: 0; color: var(--tenue); font-size: .9375rem; }
+@media (max-width: 900px) { .passi { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .passi { grid-template-columns: 1fr; } }
+
+footer { padding-block: 2rem 3rem; border-top: 1px solid var(--riga); font-size: .875rem; color: var(--tenue); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
 </style>
 </head>
 <body>
+
+<header class="wrap apertura">
+  <div class="apertura-griglia">
+    <h1>Siti che parlano il mestiere <em>di chi li usa</em></h1>
+    <div>
+      <p>Due proposte per attività locali, progettate da zero. Ogni sito parte da un dettaglio che appartiene solo a quel lavoro: la carta in cui si incarta la pasta, il registro su cui si fanno i conti.</p>
+      <ul class="indice" aria-label="Vai alla proposta">
+        <li><a href="#pastificio"><i style="background:#2F4C93"></i>Pastificio</a></li>
+        <li><a href="#studio"><i style="background:#E9EFE6; box-shadow: inset 0 0 0 2px #B3261E"></i>Commercialisti</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
 <main>
-  <h1>Proposte di siti</h1>
-  <p>Due esempi di siti fatti su misura per attività locali. Le attività sono di fantasia: servono a far vedere il tipo di lavoro, non sono modelli da riempire.</p>
-  <ul>
-    <li><a href="pastificio/">
-      <svg class="campione" viewBox="0 0 56 56" aria-hidden="true"><rect width="56" height="56" fill="#2F4C93"/><circle cx="28" cy="28" r="13" fill="none" stroke="#F3D27C" stroke-width="3"/></svg>
-      <span><strong>Pastificio Carta Blu</strong><span class="desc">Pasta fresca a Parma: campionario dei formati, banco del giorno, ordini per la domenica.</span></span>
-    </a></li>
-    <li><a href="studio/">
-      <svg class="campione" viewBox="0 0 56 56" aria-hidden="true"><rect width="56" height="56" fill="#E9EFE6"/><path d="M14 0v56M18 0v56" stroke="#B3261E"/><path d="M24 20h22M24 30h22M24 40h14" stroke="#16302B" stroke-width="2.5"/></svg>
-      <span><strong>Studio Ravasi Commercialisti</strong><span class="desc">Commercialisti a Monza: scadenzario fiscale, simulatore del forfettario, prezzi pubblici.</span></span>
-    </a></li>
-  </ul>
+  <article class="tavola" id="pastificio" style="--punto:#2F4C93; --hover:#2F4C93">
+    <div class="wrap tavola-griglia">
+      <a class="anteprime" href="pastificio/" aria-label="Apri il sito del Pastificio Carta Blu">
+        <div class="schermo">
+          <div class="barra-browser" aria-hidden="true"><span class="pallini"><span></span><span></span><span></span></span><span class="indirizzo">pastificiocartablu.it</span></div>
+          <div class="vetro" data-larghezza="1440"><iframe src="pastificio/" title="Anteprima desktop" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+        </div>
+        <div class="telefono" aria-hidden="true">
+          <div class="vetro" data-larghezza="375"><iframe src="pastificio/" title="Anteprima mobile" loading="lazy" tabindex="-1"></iframe></div>
+        </div>
+        <span class="suggerimento">Passa sopra per scorrere l’anteprima</span>
+      </a>
+
+      <div class="scheda">
+        <div>
+          <p class="settore">Pastificio artigianale, Parma</p>
+          <h2>Pastificio Carta Blu</h2>
+        </div>
+        <p class="tesi">Il blu della carta da zucchero in cui si incartava la pasta, la semola e un campionario di formati disegnati come un catalogo di caratteri.</p>
+        <div class="blocco">
+          <h3>Palette</h3>
+          <ul class="palette">
+            <li><i style="background:#2F4C93"></i><span><b>Carta blu</b>#2F4C93</span></li>
+            <li><i style="background:#14244F"></i><span><b>Inchiostro</b>#14244F</span></li>
+            <li><i style="background:#F3D27C"></i><span><b>Semola</b>#F3D27C</span></li>
+            <li><i style="background:#F0A81C"></i><span><b>Tuorlo</b>#F0A81C</span></li>
+          </ul>
+        </div>
+        <div class="blocco">
+          <h3>Caratteri</h3>
+          <div class="caratteri">
+            <div><span class="campione" style="font-family:'Bodoni Moda',serif; font-style:italic">Tortellini</span><small>Bodoni Moda, nato a Parma</small></div>
+            <div><span class="campione" style="font-family:'Instrument Sans',sans-serif; font-size:1.25rem">Aperto ora, fino alle 13:30</span><small>Instrument Sans</small></div>
+          </div>
+        </div>
+        <div class="blocco">
+          <h3>Cosa può provare il cliente</h3>
+          <ul class="prove">
+            <li>Toccare un formato e leggere cottura, condimento e prezzo al kg</li>
+            <li>Vedere il banco del giorno, che cambia con la settimana</li>
+            <li>Sapere se il negozio è aperto in questo momento</li>
+            <li>Prenotare la pasta per la domenica con il totale calcolato</li>
+          </ul>
+        </div>
+        <div class="azioni">
+          <a class="apri" href="pastificio/">Apri il sito</a>
+          <button class="copia" type="button" data-percorso="pastificio/">Copia il link</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="tavola" id="studio" style="--punto:#B3261E; --hover:#2D6A55">
+    <div class="wrap tavola-griglia">
+      <a class="anteprime" href="studio/" aria-label="Apri il sito dello Studio Ravasi Commercialisti">
+        <div class="schermo">
+          <div class="barra-browser" aria-hidden="true"><span class="pallini"><span></span><span></span><span></span></span><span class="indirizzo">studioravasi.it</span></div>
+          <div class="vetro" data-larghezza="1440"><iframe src="studio/" title="Anteprima desktop" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+        </div>
+        <div class="telefono" aria-hidden="true">
+          <div class="vetro" data-larghezza="375"><iframe src="studio/" title="Anteprima mobile" loading="lazy" tabindex="-1"></iframe></div>
+        </div>
+        <span class="suggerimento">Passa sopra per scorrere l’anteprima</span>
+      </a>
+
+      <div class="scheda">
+        <div>
+          <p class="settore">Studio di commercialisti, Monza</p>
+          <h2>Studio Ravasi Commercialisti</h2>
+        </div>
+        <p class="tesi">Niente blu navy e strette di mano: la carta verdina del registro contabile, la rigatura e la doppia riga rossa sotto i totali.</p>
+        <div class="blocco">
+          <h3>Palette</h3>
+          <ul class="palette">
+            <li><i style="background:#E9EFE6"></i><span><b>Registro</b>#E9EFE6</span></li>
+            <li><i style="background:#16302B"></i><span><b>Inchiostro</b>#16302B</span></li>
+            <li><i style="background:#2D6A55"></i><span><b>Verde</b>#2D6A55</span></li>
+            <li><i style="background:#B3261E"></i><span><b>Rosso totali</b>#B3261E</span></li>
+          </ul>
+        </div>
+        <div class="blocco">
+          <h3>Caratteri</h3>
+          <div class="caratteri">
+            <div><span class="campione" style="font-family:'Schibsted Grotesk',sans-serif; font-weight:700; letter-spacing:-.02em">16 nov</span><small>Schibsted Grotesk</small></div>
+            <div><span class="campione" style="font-family:'Source Serif 4',serif; font-size:1.25rem">Ti restano 26.986 €</span><small>Source Serif 4</small></div>
+          </div>
+        </div>
+        <div class="blocco">
+          <h3>Cosa può provare il cliente</h3>
+          <ul class="prove">
+            <li>Vedere le prossime scadenze fiscali, calcolate sulla data di oggi</li>
+            <li>Filtrarle per forfettario, partita IVA, Srl o seconda casa</li>
+            <li>Stimare quanto resta in tasca col regime forfettario</li>
+            <li>Leggere un listino prezzi chiaro, senza sorprese in fattura</li>
+          </ul>
+        </div>
+        <div class="azioni">
+          <a class="apri" href="studio/">Apri il sito</a>
+          <button class="copia" type="button" data-percorso="studio/">Copia il link</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <section class="metodo">
+    <div class="wrap">
+      <h2>Come nasce un sito così</h2>
+      <ol class="passi">
+        <li><h3>Ascolto</h3><p>Un’ora con te, nel tuo negozio o studio, per capire chi sono i tuoi clienti e cosa cercano.</p></li>
+        <li><h3>Direzione</h3><p>Due o tre direzioni visive a confronto, costruite con i tuoi testi e le tue foto.</p></li>
+        <li><h3>Costruzione</h3><p>Il sito prende forma pagina per pagina, verificato su telefono, tablet e computer.</p></li>
+        <li><h3>Messa online</h3><p>Dominio, velocità e accessibilità controllati. Gli aggiornamenti successivi li facciamo noi.</p></li>
+      </ol>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <span>Proposte di siti, 2026</span>
+    <span>Le attività mostrate sono di fantasia: servono a far vedere il tipo di lavoro.</span>
+  </div>
+</footer>
+
+<!-- i font dei campioni, caricati dopo il resto -->
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Schibsted+Grotesk:wght@700&family=Source+Serif+4:opsz@8..60&display=swap" rel="stylesheet">
+
+<script>
+// scala ogni anteprima alla larghezza del suo riquadro
+const vetri = document.querySelectorAll(".vetro");
+const ro = new ResizeObserver(voci => {
+  for (const v of voci) v.target.style.setProperty("--scala", v.contentRect.width / +v.target.dataset.larghezza);
+});
+vetri.forEach(v => ro.observe(v));
+
+// al passaggio del mouse le anteprime scorrono lentamente fino in fondo
+const calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll(".anteprime").forEach(a => {
+  let raf = null;
+  const frames = [...a.querySelectorAll("iframe")];
+  const ferma = () => { cancelAnimationFrame(raf); raf = null; };
+  const scorri = verso => {
+    ferma();
+    const passo = () => {
+      let ancora = false;
+      for (const f of frames) {
+        const w = f.contentWindow, d = f.contentDocument;
+        if (!w || !d) continue;
+        const max = d.documentElement.scrollHeight - w.innerHeight;
+        const y = w.scrollY + verso * (f.offsetWidth > 500 ? 6 : 4);
+        w.scrollTo({ top: Math.max(0, Math.min(max, y)), behavior: "instant" });
+        if (verso > 0 ? w.scrollY < max : w.scrollY > 0) ancora = true;
+      }
+      if (ancora) raf = requestAnimationFrame(passo);
+    };
+    raf = requestAnimationFrame(passo);
+  };
+  if (calmo) return;
+  a.addEventListener("pointerenter", () => scorri(1));
+  a.addEventListener("pointerleave", () => scorri(-3));
+});
+
+// copia il link della proposta
+document.querySelectorAll(".copia").forEach(b => {
+  b.addEventListener("click", async () => {
+    const url = new URL(b.dataset.percorso, location.href).href;
+    try { await navigator.clipboard.writeText(url); b.textContent = "Link copiato"; }
+    catch { prompt("Copia il link:", url); }
+    setTimeout(() => (b.textContent = "Copia il link"), 2000);
+  });
+});
+</script>
 </body>
 </html>
