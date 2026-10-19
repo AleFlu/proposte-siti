@@ -83,14 +83,13 @@ a { color: inherit; }
   font-size: var(--s1); line-height: 1.45; color: var(--semola);
 }
 .tris {
-  display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;
-  color: var(--semola);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.75rem, 2vw, 1.5rem);
+  align-items: end; color: var(--semola);
 }
 .tris svg { width: 100%; height: auto; }
-.tris svg:first-child { grid-column: 1 / -1; width: 72%; justify-self: end; }
 @media (max-width: 760px) {
   .apertura { grid-template-columns: 1fr; }
-  .tris { max-width: 22rem; }
+  .tris { max-width: 24rem; }
 }
 
 /* disegno a tratto all'apertura: l'unico movimento automatico della pagina */
