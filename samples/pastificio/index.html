@@ -67,7 +67,7 @@ a { color: inherit; }
 
 /* ---------- apertura ---------- */
 .apertura {
-  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
   gap: var(--gutter); align-items: end;
   padding-top: clamp(2rem, 6vw, 5rem); padding-bottom: clamp(2.5rem, 6vw, 5rem);
 }
@@ -83,13 +83,13 @@ a { color: inherit; }
   font-size: var(--s1); line-height: 1.45; color: var(--semola);
 }
 .tris {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.75rem, 2vw, 1.5rem);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.5rem, 1.5vw, 1rem);
   align-items: end; color: var(--semola);
 }
 .tris svg { width: 100%; height: auto; }
 @media (max-width: 760px) {
   .apertura { grid-template-columns: 1fr; }
-  .tris { max-width: 24rem; }
+  .tris { max-width: 30rem; }
 }
 
 /* disegno a tratto all'apertura: l'unico movimento automatico della pagina */
