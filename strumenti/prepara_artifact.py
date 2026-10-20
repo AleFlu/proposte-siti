@@ -16,6 +16,7 @@ import sys
 
 ARTIFACT = {
     "pastificio": "https://claude.ai/code/artifact/0700d175-c57f-449d-ae4d-360a80249c14",
+    "la-cupola": "https://claude.ai/artifact/5RsbSNaxjQyyr8X373NkvR",
 }
 
 radice = pathlib.Path(__file__).resolve().parent.parent
