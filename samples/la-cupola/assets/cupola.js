@@ -8,36 +8,6 @@ const ORARI_CENA = ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30"];
 const POSTI_SALA = 32;
 const GIORNI = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
 const MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"];
-const ETICHETTE = { veg: "vegetariana", nolatt: "senza lattosio", picc: "piccante" };
-
-const MENU = [
-  { gruppo: "Le classiche", nota: "Ogni pizza anche con impasto integrale al 30%, per 1,50 € in più.", voci: [
-    { nome: "Marinara", ingr: "Pomodoro San Marzano DOP, aglio, origano di Sicilia, olio extravergine", prezzo: 7, tag: ["veg", "nolatt"] },
-    { nome: "Margherita", ingr: "Pomodoro San Marzano DOP, fiordilatte di Agerola, basilico, olio extravergine", prezzo: 8.5, tag: ["veg"] },
-    { nome: "Margherita con bufala", ingr: "Pomodoro San Marzano DOP, mozzarella di bufala campana DOP aggiunta a crudo, basilico", prezzo: 11, tag: ["veg"] },
-    { nome: "Cosacca", ingr: "Pomodoro, pecorino romano, basilico, olio extravergine. Dopo la marinara, la pizza più antica", prezzo: 8, tag: ["veg"] },
-    { nome: "Diavola", ingr: "Pomodoro, fiordilatte, salame piccante calabrese, olio al peperoncino", prezzo: 10, tag: ["picc"] },
-    { nome: "Ripieno al forno", ingr: "Ricotta di bufala, salame napoletano, fiordilatte e pepe nero, con pomodoro sopra", prezzo: 11.5, tag: [] }
-  ]},
-  { gruppo: "Fuori menu di ottobre", nota: "Cambiano ogni mese, con quello che arriva dal mercato di Porta Palazzo.", voci: [
-    { nome: "Zucca e salsiccia di Bra", ingr: "Crema di zucca, salsiccia di Bra, provola affumicata, salvia", prezzo: 12.5, tag: [] },
-    { nome: "Porcini e Castelmagno", ingr: "Porcini trifolati, fonduta di Castelmagno DOP, timo", prezzo: 14, tag: ["veg"] },
-    { nome: "Scarola", ingr: "Scarola ripassata, olive di Gaeta, capperi, acciughe del Cantabrico. Senza latticini", prezzo: 12, tag: ["nolatt"] }
-  ]},
-  { gruppo: "Fritti", nota: "Fritti al momento, in olio di arachide.", voci: [
-    { nome: "Frittatina di pasta", ingr: "Bucatini, besciamella, piselli e provola, impanata e fritta", prezzo: 4.5, tag: [] },
-    { nome: "Crocchè", ingr: "Patate, pecorino e prezzemolo, con un cuore di fiordilatte", prezzo: 3, tag: ["veg"] },
-    { nome: "Montanarina", ingr: "Pizza fritta piccola con pomodoro, Parmigiano e basilico", prezzo: 4, tag: ["veg"] },
-    { nome: "Montanarina piccante", ingr: "Pizza fritta piccola con pomodoro, peperoncino di Calabria e pecorino", prezzo: 4.5, tag: ["veg", "picc"] }
-  ]},
-  { gruppo: "Da bere", nota: "", filtrabile: false, voci: [
-    { nome: "Birra artigianale di Cuneo", ingr: "Bionda non filtrata, bottiglia da 33 cl", prezzo: 5.5, tag: [] },
-    { nome: "Falanghina del Sannio", ingr: "Bianco campano, al calice", prezzo: 5, tag: [] },
-    { nome: "Aglianico del Taburno", ingr: "Rosso campano, al calice", prezzo: 5.5, tag: [] },
-    { nome: "Acqua minerale", ingr: "Naturale o frizzante, 75 cl", prezzo: 2.5, tag: [] }
-  ]}
-];
-
 // ---------- utilità ----------
 const $ = id => document.getElementById(id);
 const adesso = new Date();
@@ -126,14 +96,6 @@ function testoApertura() {
 const apertura = testoApertura();
 document.querySelectorAll("[data-apertura]").forEach(el => { el.innerHTML = apertura.testo; el.classList.toggle("chiuso", !apertura.aperto); });
 document.querySelectorAll("[data-orari-oggi]").forEach(el => { el.textContent = SERVIZI[adesso.getDay()].length ? `Oggi ${fasceTesto(adesso.getDay())}` : "Oggi chiuso"; });
-
-// ---------- voci di menu ----------
-const voceHtml = v => `<li class="voce" data-tag="${v.tag.join(" ")}">
-  <h3>${v.nome}</h3>
-  <p class="prezzo">${euro(v.prezzo)}</p>
-  <p class="ingredienti">${v.ingr}</p>
-  ${v.tag.length ? `<ul class="etichette">${v.tag.map(t => `<li>${ETICHETTE[t]}</li>`).join("")}</ul>` : ""}
-</li>`;
 
 // ---------- il mosaico del forno ----------
 function mosaico(tela, anima) {
@@ -248,7 +210,6 @@ if (pagina === "home") {
   }).join("");
   $("quando-prenoti").textContent = `Posti liberi ${nomeGiorno(s.giorno) === "oggi" ? (s.inizio.getHours() >= 18 ? "stasera" : "oggi") : nomeGiorno(s.giorno)}`;
 
-  $("fuori-menu").innerHTML = MENU[1].voci.map(voceHtml).join("");
 
   // mosaico
   const tela = $("mosaico");
@@ -262,30 +223,37 @@ if (pagina === "home") {
   });
 }
 
-if (pagina === "pizze") {
-  const contenitore = $("menu");
-  contenitore.innerHTML = MENU.map((g, i) => `<div class="gruppo" data-filtrabile="${g.filtrabile !== false}">
-    <h2 id="gruppo-${i}">${g.gruppo}</h2>
-    ${g.nota ? `<p>${g.nota}</p>` : ""}
-    <ul class="voci" aria-labelledby="gruppo-${i}">${g.voci.map(voceHtml).join("")}</ul>
-  </div>`).join("");
-  const esito = $("esito-filtro");
-  document.querySelector(".filtri").addEventListener("click", e => {
-    const b = e.target.closest("button"); if (!b) return;
-    document.querySelectorAll(".filtri button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
-    const f = b.dataset.filtro;
-    let mostrate = 0;
-    contenitore.querySelectorAll(".gruppo").forEach(g => {
-      if (g.dataset.filtrabile === "false") { g.hidden = f !== "tutte"; return; }
-      let visibili = 0;
-      g.querySelectorAll(".voce").forEach(v => {
-        const ok = f === "tutte" || v.dataset.tag.split(" ").includes(f);
-        v.hidden = !ok; if (ok) visibili++;
-      });
-      g.hidden = visibili === 0; mostrate += visibili;
-    });
-    esito.textContent = f === "tutte" ? "" : `${mostrate} ${mostrate === 1 ? "voce" : "voci"} ${ETICHETTE[f] === "vegetariana" ? "vegetariane" : ETICHETTE[f] === "piccante" ? "piccanti" : "senza lattosio"}.`;
+// ---------- allergeni: i nomi si aprono toccando i numeri ----------
+document.querySelectorAll(".allergeni").forEach(b => {
+  const nomi = $(b.getAttribute("aria-controls"));
+  if (!nomi) return;
+  nomi.hidden = true;
+  b.addEventListener("click", () => {
+    const aperto = b.getAttribute("aria-expanded") !== "true";
+    b.setAttribute("aria-expanded", String(aperto));
+    nomi.hidden = !aperto;
   });
+});
+
+if (pagina === "pizze") {
+  // l'indice segue la sezione che si sta leggendo
+  const voci = [...document.querySelectorAll(".indice-menu a")];
+  const lista = document.querySelector(".indice-menu ul");
+  const evidenzia = id => {
+    voci.forEach(a => {
+      const attiva = a.getAttribute("href") === `#${id}`;
+      a.toggleAttribute("aria-current", attiva);
+      if (attiva) a.setAttribute("aria-current", "true");
+      if (attiva && lista.scrollWidth > lista.clientWidth) {
+        lista.scrollTo({ left: a.offsetLeft - lista.clientWidth / 2 + a.offsetWidth / 2, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      }
+    });
+  };
+  const osservatore = new IntersectionObserver(voci_ => {
+    const visibili = voci_.filter(v => v.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    if (visibili.length) evidenzia(visibili[0].target.id);
+  }, { rootMargin: "-20% 0px -65% 0px" });
+  document.querySelectorAll(".sezione-menu").forEach(sez => osservatore.observe(sez));
 }
 
 if (pagina === "impasto") {

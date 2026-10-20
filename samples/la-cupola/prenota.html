@@ -2,14 +2,29 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prenota un tavolo | La Cupola</title>
-<meta name="description" content="Prenota un tavolo alla Cupola, pizzeria napoletana a Torino: scegli giorno, persone e orario e vedi subito i posti liberi.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prenota un tavolo | La Cupola, pizzeria a Torino</title>
+<meta name="description" content="Prenota un tavolo alla Cupola, pizzeria napoletana in San Salvario a Torino: scegli giorno, persone e orario e vedi subito quanti posti sono liberi.">
+<!-- demo con attività di fantasia: non indicizzare (vedi CLAUDE.md) -->
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://aleflu.github.io/proposte-siti/la-cupola/prenota.html">
+<meta name="theme-color" content="#0F2B2A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="La Cupola">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Prenota un tavolo | La Cupola, pizzeria a Torino">
+<meta property="og:description" content="Prenota un tavolo alla Cupola, pizzeria napoletana in San Salvario a Torino: scegli giorno, persone e orario e vedi subito quanti posti sono liberi.">
+<meta property="og:url" content="https://aleflu.github.io/proposte-siti/la-cupola/prenota.html">
+<meta property="og:image" content="https://aleflu.github.io/proposte-siti/la-cupola/assets/anteprima.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230F2B2A%27/%3E%3Cpath d=%27M5 25 A11 17 0 0 1 27 25 Z%27 fill=%27%23D9A62E%27/%3E%3Cpath d=%27M12.5 25 V21 a3.5 3.5 0 0 1 7 0 V25 Z%27 fill=%27%230F2B2A%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/stile.css">
+
 </head>
 <body data-pagina="prenota">
 <a class="salta" href="#contenuto">Vai al contenuto</a>
@@ -19,7 +34,7 @@
     <a class="marchio" href="index.html"><svg viewBox="0 0 40 34" aria-hidden="true"><path d="M3 30 A17 26 0 0 1 37 30 Z" fill="currentColor"/><path d="M14.5 30 V24.5 a5.5 5.5 0 0 1 11 0 V30 Z" fill="#0F2B2A"/><rect x="1" y="30.5" width="38" height="3" fill="currentColor"/></svg><span><b>La Cupola</b><small>Pizzeria napoletana</small></span></a>
     <button class="menu-apri" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Principale">
-      <a href="pizze.html">Le pizze</a>
+      <a href="pizze.html">Menu</a>
       <a href="impasto.html">L’impasto</a>
       <a href="dove.html">Dove siamo</a>
       <a class="nav-prenota" href="prenota.html" aria-current="page">Prenota</a>
@@ -57,7 +72,7 @@
         </div>
         <div class="campo">
           <label for="f-tel">Telefono</label>
-          <input id="f-tel" name="tel" type="tel" autocomplete="tel" required>
+          <input id="f-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required>
         </div>
         <div class="campo largo">
           <label for="f-note">Note</label>
@@ -97,7 +112,7 @@
       <div>
         <h2>Pagine</h2>
         <ul>
-          <li><a href="pizze.html">Le pizze</a></li>
+          <li><a href="pizze.html">Menu e prezzi</a></li>
           <li><a href="impasto.html">L’impasto</a></li>
           <li><a href="prenota.html">Prenota un tavolo</a></li>
           <li><a href="dove.html">Dove siamo</a></li>
@@ -107,6 +122,8 @@
     <p class="nota-demo">Proposta grafica dimostrativa: pizzeria, indirizzo e recapiti sono di fantasia.</p>
   </div>
 </footer>
+
+<nav class="barra-azioni" aria-label="Azioni rapide"><a href="tel:+390110000000">Chiama 011 000 0000</a></nav>
 
 <script src="assets/cupola.js"></script>
 </body>

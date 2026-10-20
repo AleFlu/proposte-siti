@@ -57,6 +57,45 @@ Usa la skill `superpowers:brainstorming` per i passi 1–3 e `superpowers:writin
 - Accessibilità WCAG 2.2 AA: contrasto verificato, navigazione da tastiera, landmark, alt text sensati.
 - Dark mode solo se in brief; se c'è, progettata, non invertita.
 
+## Smartphone prima di tutto
+
+Google indicizza la versione mobile e la maggior parte dei clienti arriva dal telefono: si progetta a 375 px e poi si allarga.
+
+- Testo di lettura almeno 16 px, righe sotto i 70 caratteri, contrasto AA anche in pieno sole (niente grigi chiari su bianco).
+- Aree toccabili di almeno 44 × 44 px, distanziate tra loro.
+- Le azioni principali dell'attività (chiamare, prenotare, ordinare, arrivare) sempre a un tocco: barra fissa in basso su telefono, che rispetta `env(safe-area-inset-bottom)`.
+- Contenuti lunghi (menu, listini) con un indice di sezione che resta visibile mentre si scorre.
+- Niente hover come unico modo per scoprire un'informazione; niente PDF o immagini al posto del testo.
+- Moduli: `type`, `inputmode` e `autocomplete` corretti, così si apre la tastiera giusta e si compila da soli.
+
+## Indicizzazione Google (SEO)
+
+Obbligatoria per ogni sito di un cliente. Fonti: Google Search Central (dati strutturati LocalBusiness), Core Web Vitals.
+
+**Ogni pagina**
+- `<title>` unico di 50–60 caratteri, nella forma "Cosa | Nome attività, Città".
+- `<meta name="description">` unica di 140–160 caratteri, scritta per far cliccare chi cerca.
+- `<link rel="canonical">` con l'URL definitivo; `<html lang="it">` (più `hreflang` se ci sono altre lingue).
+- Un solo `<h1>`, poi `h2`/`h3` senza salti di livello.
+- Contenuti importanti per la ricerca (menu, prezzi, orari, indirizzo, servizi) scritti nell'HTML, non generati solo da JavaScript, mai in PDF o immagine.
+- Immagini con `alt` descrittivo, `width`/`height`, WebP o AVIF, `loading="lazy"` sotto la piega.
+- Open Graph per le anteprime su WhatsApp e social: `og:title`, `og:description`, `og:image` 1200 × 630 con URL assoluto, `og:locale` = `it_IT`.
+- URL leggibili e in italiano (`/menu`, `/prenota`), link interni con testo descrittivo (mai "clicca qui").
+
+**Dati strutturati (JSON-LD)**
+- L'attività con il tipo più specifico (`Restaurant`, `Bakery`, `Store`, `ProfessionalService`… altrimenti `LocalBusiness`): `name`, `address` (`PostalAddress`), `geo`, `telephone` con +39, `url`, `image`, `openingHoursSpecification`, `priceRange`; per i ristoranti anche `servesCuisine`, `menu` (URL della pagina menu) e `acceptsReservations`.
+- Nome, indirizzo e telefono identici su sito, Google Business Profile e social.
+- Validare con il Rich Results Test e con il Schema Markup Validator prima della messa online.
+
+**Sito intero**
+- `sitemap.xml` e `robots.txt` alla radice del dominio; sitemap inviata in Google Search Console.
+- Google Business Profile creato e collegato al sito: per un'attività locale conta quanto il sito.
+- HTTPS, nessun link interno rotto, pagina 404 personalizzata.
+- Core Web Vitals sul telefono: LCP < 2,5 s (nostro obiettivo 2,0), CLS < 0,1 (nostro obiettivo 0,05), INP < 200 ms.
+
+**Demo e bozze**
+- Le proposte con attività di fantasia hanno `<meta name="robots" content="noindex">`: indirizzi e telefoni inventati non devono finire su Google. Tutto il resto della SEO si implementa lo stesso, così la demo mostra al cliente il lavoro completo.
+
 ## Verifica di ogni pagina (Definition of Done)
 
 1. Screenshot Playwright ai 4 breakpoint, nessuno scroll orizzontale.
@@ -64,3 +103,4 @@ Usa la skill `superpowers:brainstorming` per i passi 1–3 e `superpowers:writin
 3. Skill `design:accessibility-review` sulla pagina.
 4. Skill `design:design-critique` sugli screenshot, con la domanda esplicita: "cosa qui sembra generico o generato da AI?" — correggere ciò che emerge.
 5. Copy rivisto con `design:ux-copy`.
+6. SEO: title e description unici, canonical, Open Graph, JSON-LD validato, Lighthouse SEO 100 sulla versione mobile.

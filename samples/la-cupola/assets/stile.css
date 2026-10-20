@@ -144,37 +144,110 @@ section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
 .testa-pagina p { margin: 0; max-width: 42ch; color: var(--tenue-scuro); font-size: var(--s1); line-height: 1.45; }
 @media (max-width: 760px) { .testa-pagina { grid-template-columns: 1fr; gap: 1rem; } }
 
-/* ---------- menu ---------- */
-.filtri { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 2.5rem; }
-.filtri button {
-  font: 500 var(--s-1)/1 var(--testo); color: var(--inchiostro); cursor: pointer;
-  background: #fff; border: 1px solid var(--fuga); border-radius: var(--r-pillola); padding: .7rem 1.05rem;
+/* ---------- menu: come il foglio appeso in pizzeria, con l'indice sempre a portata di pollice ---------- */
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.segno { display: inline-block; width: .62rem; height: .62rem; margin-left: .45rem; border-radius: 1px; transform: rotate(4deg); vertical-align: .1em; }
+.segno + .segno { margin-left: .25rem; }
+.segno.veg { background: var(--mosaico); }
+.segno.picc { background: var(--brace); }
+
+.menu-layout {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start;
+  padding-block: clamp(2rem, 6vw, 4rem) clamp(3rem, 8vw, 6rem);
 }
-.filtri button:hover { border-color: var(--mosaico-scuro); }
-.filtri button[aria-pressed="true"] { background: var(--forno); border-color: var(--forno); color: var(--piastrella); }
-.gruppo + .gruppo { margin-top: clamp(2.5rem, 6vw, 4rem); }
-.gruppo h2 { font-size: var(--s3); margin: 0 0 .25rem; }
-.gruppo > p { margin: 0 0 1rem; color: var(--tenue); max-width: 60ch; }
-.voci { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--inchiostro); }
-.voce {
-  display: grid; grid-template-columns: .8rem minmax(0, 1fr) auto; gap: .35rem 1rem; align-items: baseline;
-  padding: 1.1rem 0; border-bottom: 1px solid var(--fuga);
+.indice-menu { position: sticky; top: 1.5rem; min-width: 0; }
+.indice-menu ul { list-style: none; margin: 0; padding: 0; display: grid; border-left: 2px solid var(--fuga); }
+.indice-menu a {
+  display: block; padding: .6rem 0 .6rem 1rem; margin-left: -2px; border-left: 2px solid transparent;
+  color: var(--inchiostro); text-decoration: none; font-weight: 500;
 }
-.voce::before { content: ""; width: .7rem; height: .7rem; background: var(--mosaico); border-radius: 1px; transform: translateY(-.05em) rotate(4deg); }
-.voce h3 { margin: 0; font-size: var(--s1); line-height: 1.15; }
-.voce .ingredienti { grid-column: 2; margin: 0; color: var(--tenue); max-width: 60ch; }
-.voce .prezzo { margin: 0; grid-column: 3; grid-row: 1; font-weight: 600; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
-.voce .etichette { grid-column: 2; display: flex; flex-wrap: wrap; gap: .35rem; margin: .2rem 0 0; padding: 0; list-style: none; }
-.voce .etichette li { font-size: .8125rem; color: var(--mosaico-scuro); border: 1px solid #B9D3CF; border-radius: var(--r-tessera); padding: .15rem .5rem; }
-.voce[hidden] { display: none; }
-.scuro .voci { border-color: var(--oro); }
-.scuro .voce { border-color: var(--riga-scura); }
-.scuro .voce::before { background: var(--oro); }
-.scuro .voce .ingredienti { color: var(--tenue-scuro); }
-.nota-menu { margin-top: 2.5rem; padding: 1.25rem 1.5rem; background: #fff; border: 1px solid var(--fuga); border-radius: var(--r-tessera); max-width: 46rem; }
-.nota-menu p { margin: 0; }
-.nota-menu p + p { margin-top: .5rem; }
-.nessuna { font-style: italic; color: var(--tenue); }
+.indice-menu a:hover { color: var(--mosaico-scuro); }
+.indice-menu a[aria-current="true"] { border-color: var(--mosaico); color: var(--mosaico-scuro); font-weight: 600; }
+
+.legenda-segni { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; margin: 0 0 2rem; padding: 0; list-style: none; font-size: var(--s-1); color: var(--tenue); }
+.legenda-segni li { display: flex; align-items: center; gap: .5rem; }
+.legenda-segni .segno { margin: 0; }
+
+.sezione-menu { padding-block: 0; scroll-margin-top: 1.5rem; }
+.sezione-menu + .sezione-menu { margin-top: clamp(2.75rem, 7vw, 4.25rem); }
+.sezione-menu h2 { margin: 0; font-size: var(--s3); line-height: 1.05; }
+.sezione-menu .sotto { margin: .45rem 0 0; color: var(--tenue); max-width: 54ch; }
+.fila-tessere { height: .5rem; margin: 1rem 0 0; background: repeating-linear-gradient(90deg, var(--mosaico) 0 .5rem, transparent .5rem .66rem); }
+
+.piatti { list-style: none; margin: 0; padding: 0; }
+.piatto { padding: 1.1rem 0 1rem; border-bottom: 1px solid var(--fuga); }
+.piatto .riga { display: flex; align-items: baseline; gap: 1rem; }
+.piatto h3 { margin: 0; flex: 1; min-width: 0; font-size: 1.22rem; line-height: 1.2; }
+.piatto .prezzo { margin: 0; font-weight: 600; font-size: 1.0625rem; font-variant-numeric: tabular-nums lining-nums; }
+.piatto .ingr { margin: .3rem 0 0; color: var(--tenue); max-width: 60ch; }
+.piatto .consiglio { margin: .5rem 0 0; padding-left: .8rem; border-left: 2px solid var(--oro); font-style: italic; max-width: 56ch; }
+.allergeni {
+  display: inline-flex; align-items: center; min-height: 2.75rem; margin: 0 0 -.75rem; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  font: 500 .875rem/1 var(--testo); color: var(--mosaico-scuro);
+  text-decoration: underline dotted 1.5px; text-underline-offset: .3em;
+}
+.allergeni[aria-expanded="true"] { text-decoration-style: solid; }
+.allergeni-nomi { margin: .9rem 0 0; padding: .55rem .8rem; font-size: .875rem; background: #fff; border-left: 3px solid var(--mosaico); }
+.piatti-home { border-top: 2px solid var(--inchiostro); }
+.rimando-menu { margin: 1.5rem 0 0; }
+
+.in-evidenza { background: var(--forno); color: #EAF2F0; padding: clamp(1.25rem, 4vw, 2rem); border-radius: var(--r-tessera); }
+.in-evidenza .sotto, .in-evidenza .ingr { color: var(--tenue-scuro); }
+.in-evidenza .fila-tessere { background: repeating-linear-gradient(90deg, var(--oro) 0 .5rem, transparent .5rem .66rem); }
+.in-evidenza .piatto { border-color: var(--riga-scura); }
+.in-evidenza .piatto:last-child { border-bottom: 0; padding-bottom: .25rem; }
+.in-evidenza .segno.veg { background: #2AA79E; }
+.in-evidenza .allergeni { color: var(--oro); }
+.in-evidenza .allergeni-nomi { background: var(--forno-2); border-color: var(--oro); }
+.in-evidenza :focus-visible { outline-color: var(--oro); }
+
+.varianti { width: 100%; border-collapse: collapse; margin-top: .5rem; }
+.varianti th, .varianti td { padding: .85rem 0; border-bottom: 1px solid var(--fuga); text-align: left; font-weight: 400; vertical-align: baseline; }
+.varianti td { padding-left: 1rem; text-align: right; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.note-menu { margin: 1.5rem 0 0; padding: 0; list-style: none; display: grid; gap: .75rem; color: var(--tenue); max-width: 60ch; }
+.lista-allergeni { margin: 1rem 0 0; padding: 0; list-style: none; columns: 2; column-gap: 2rem; }
+.lista-allergeni li { break-inside: avoid; display: flex; gap: .75rem; padding: .4rem 0; }
+.lista-allergeni b { min-width: 1.4rem; color: var(--mosaico-scuro); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 960px) {
+  .menu-layout { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 0; }
+  .indice-menu {
+    top: env(safe-area-inset-top, 0px); z-index: 4;
+    margin-inline: calc(-1 * max(var(--gutter), env(safe-area-inset-left, 0px)));
+    background: var(--piastrella); border-bottom: 1px solid var(--fuga);
+    box-shadow: 0 8px 16px -14px rgba(17, 32, 31, .5);
+  }
+  .indice-menu ul {
+    display: flex; gap: 1.4rem; overflow-x: auto; border: 0; scrollbar-width: none;
+    padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px));
+  }
+  .indice-menu ul::-webkit-scrollbar { display: none; }
+  .indice-menu a { white-space: nowrap; margin: 0; padding: 1rem 0 .85rem; border-left: 0; border-bottom: 3px solid transparent; }
+  .indice-menu a[aria-current="true"] { border-color: var(--mosaico); }
+  .menu-corpo { padding-top: 1.5rem; }
+  .sezione-menu { scroll-margin-top: 4.75rem; }
+  .in-evidenza { margin-inline: calc(-1 * max(var(--gutter), env(safe-area-inset-left, 0px))); border-radius: 0; padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)); }
+}
+@media (max-width: 420px) { .lista-allergeni { columns: 1; } }
+
+/* ---------- barra delle azioni su telefono ---------- */
+.barra-azioni { display: none; }
+@media (max-width: 820px) {
+  .barra-azioni {
+    position: fixed; z-index: 6; left: 0; right: 0; bottom: 0;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: .6rem;
+    padding: .6rem max(.75rem, env(safe-area-inset-right, 0px)) calc(.6rem + env(safe-area-inset-bottom, 0px)) max(.75rem, env(safe-area-inset-left, 0px));
+    background: var(--forno); box-shadow: 0 -12px 28px -14px rgba(0, 0, 0, .55);
+  }
+  .barra-azioni a {
+    display: flex; align-items: center; justify-content: center; min-height: 3rem;
+    border: 1px solid var(--riga-scura); border-radius: var(--r-pillola);
+    color: #EAF2F0; font-weight: 600; text-decoration: none;
+  }
+  .barra-azioni a.primaria { background: var(--oro); border-color: var(--oro); color: var(--forno); }
+  footer { padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px)); }
+}
 
 /* ---------- la scheda tecnica in una frase ---------- */
 .frase-tecnica { margin: 0; font: 400 clamp(1.7rem, 3.6vw, 3rem)/1.18 var(--display); max-width: 24ch; text-wrap: balance; }
