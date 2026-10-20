@@ -363,3 +363,9 @@ footer a { color: #EAF2F0; }
 .scuro .pallino { background: var(--oro); }
 .scuro .chiuso .pallino, .scuro .chiuso.pallino { background: transparent; box-shadow: inset 0 0 0 2px var(--tenue-scuro); }
 .testa-pagina p strong { color: #EAF2F0; font-weight: 600; }
+
+/* pagina privacy */
+.testo-legale { max-width: 46rem; padding-block: 0; }
+.testo-legale h2 { margin: 2rem 0 .5rem; font-size: var(--s2); }
+.testo-legale h2:first-child { margin-top: 0; }
+.testo-legale p { margin: 0; max-width: 64ch; }

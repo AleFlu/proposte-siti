@@ -343,3 +343,41 @@ footer { border-top: 1px solid var(--riga); padding: 3rem 0 2.5rem; font-size: v
 .buono-chiaro li::before { background: var(--carta); }
 .campionario .rimando:hover { text-decoration-color: var(--carta); }
 .ordina .rimando:hover { text-decoration-color: var(--carta); }
+
+/* ---------- correzioni dalla review: accessibilità e telefono ---------- */
+.marchio { display: inline-block; padding-block: .5rem; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--carta); outline-offset: 2px; }
+.scheda:focus { outline: none; }
+.scheda[hidden], [role="tabpanel"][hidden], .giorno-home[hidden] { display: none; }
+[role="tabpanel"]:focus-visible { outline: 3px solid var(--semola); outline-offset: 6px; }
+.conferma small { font: 400 var(--s-1)/1.4 var(--testo); }
+
+@media (max-width: 420px) {
+  .striscia { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .striscia a { grid-template-columns: 3rem minmax(0, 1fr); justify-items: start; align-items: center; text-align: left; padding: .75rem .25rem; }
+  .striscia svg { max-width: 3rem; }
+  .striscia span { font-size: 1.05rem; }
+}
+
+.testo-legale { max-width: 46rem; }
+.testo-legale h2 { margin: 2rem 0 .5rem; font: italic 500 var(--s2)/1.15 var(--display); }
+.testo-legale h2:first-child { margin-top: 0; }
+.testo-legale p { margin: 0; max-width: 64ch; }
+.campionario a { color: var(--carta); }
+.ordina .aiuto a { color: inherit; font-weight: 600; }
+
+.barra-azioni { display: none; }
+@media (max-width: 820px) {
+  .barra-azioni {
+    position: fixed; z-index: 6; left: 0; right: 0; bottom: 0;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: .6rem;
+    padding: .6rem max(.75rem, env(safe-area-inset-right, 0px)) calc(.6rem + env(safe-area-inset-bottom, 0px)) max(.75rem, env(safe-area-inset-left, 0px));
+    background: var(--carta-scura); box-shadow: 0 -12px 28px -14px rgba(0, 0, 0, .55);
+  }
+  .barra-azioni a {
+    display: flex; align-items: center; justify-content: center; min-height: 3rem;
+    border: 1px solid var(--riga); border-radius: 99px; color: var(--farina); font-weight: 600; text-decoration: none;
+  }
+  .barra-azioni a.primaria { background: var(--semola); border-color: var(--semola); color: var(--carta-scura); }
+  footer { padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px)); }
+}

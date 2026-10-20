@@ -12,6 +12,7 @@ OUT = pathlib.Path(__file__).resolve().parent.parent / "samples" / "la-cupola"
 BASE = "https://aleflu.github.io/proposte-siti/la-cupola/"
 TELEFONO = "011 000 0000"
 TEL_LINK = "+390110000000"
+PIVA = "00000000000"
 CUR = ' aria-current="page"'
 
 # ---------- allergeni (Regolamento UE 1169/2011, allegato II) ----------
@@ -196,9 +197,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{FAVICON}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/font.css">
 <link rel="stylesheet" href="assets/stile.css">
 {extra_head}
 </head>
@@ -228,6 +227,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
         <p>Pizzeria napoletana</p>
         <p>Via Belfiore 31, 10125 Torino</p>
         <p>Telefono {TELEFONO}</p>
+        <p>Partita IVA {PIVA}</p>
       </div>
       <div>
         <h2>Orari</h2>
@@ -241,10 +241,11 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
           <li><a href="impasto.html">L’impasto</a></li>
           <li><a href="prenota.html">Prenota un tavolo</a></li>
           <li><a href="dove.html">Dove siamo</a></li>
+          <li><a href="privacy.html">Privacy e cookie</a></li>
         </ul>
       </div>
     </div>
-    <p class="nota-demo">Proposta grafica dimostrativa: pizzeria, indirizzo e recapiti sono di fantasia.</p>
+    <p class="nota-demo">Proposta grafica dimostrativa: pizzeria, indirizzo, recapiti e partita IVA sono di fantasia.</p>
   </div>
 </footer>
 
@@ -422,7 +423,7 @@ pagina("impasto.html", "L’impasto: 30 ore di lievitazione | La Cupola, Torino"
   </section>
 """)
 
-pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria a Torino",
+pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria napoletana a Torino",
   "Prenota un tavolo alla Cupola, pizzeria napoletana in San Salvario a Torino: scegli giorno, persone e orario e vedi subito quanti posti sono liberi.",
   "prenota", f"""
   <div class="scuro">
@@ -461,6 +462,7 @@ pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria a Torino",
           <textarea id="f-note" name="note" placeholder="Allergie, seggiolone, un compleanno"></textarea>
         </div>
         <button class="bottone" type="submit">Invia la richiesta</button>
+        <p class="aiuto campo largo">Usiamo nome e telefono solo per gestire questa prenotazione. Leggi l’<a href="privacy.html">informativa privacy</a>.</p>
         <p class="esito" id="esito" role="status"></p>
       </form>
 
@@ -477,7 +479,7 @@ pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria a Torino",
   </section>
 """, barra="solo-chiama")
 
-pagina("dove.html", "Dove siamo e orari | La Cupola, pizzeria a Torino",
+pagina("dove.html", "Dove siamo e orari | La Cupola, pizzeria napoletana a Torino",
   "La Cupola è in via Belfiore 31, nel quartiere San Salvario a Torino. Come arrivare in metro, treno o bici e gli orari di apertura giorno per giorno.",
   "dove", f"""
   <div class="scuro">
@@ -506,4 +508,32 @@ pagina("dove.html", "Dove siamo e orari | La Cupola, pizzeria a Torino",
     </div>
   </section>
 """, extra_head=json_ld(RISTORANTE))
+
+pagina("privacy.html", "Informativa privacy e cookie | La Cupola, pizzeria a Torino",
+  "Come la pizzeria La Cupola tratta nome e telefono lasciati per prenotare un tavolo, per quanto tempo li conserva, quali diritti hai e quali cookie usa il sito.",
+  "privacy", f"""
+  <div class="scuro">
+    <div class="wrap testa-pagina">
+      <h1>Privacy e cookie</h1>
+      <p>Chi tratta i tuoi dati, quali, perché e per quanto tempo. Testo di esempio per la demo, da far verificare prima della messa online.</p>
+    </div>
+  </div>
+
+  <section class="chiaro" aria-label="Informativa">
+    <div class="wrap testo-legale">
+      <h2>Titolare del trattamento</h2>
+      <p>La Cupola, via Belfiore 31, 10125 Torino, partita IVA {PIVA}, telefono {TELEFONO}.</p>
+      <h2>Quali dati raccogliamo</h2>
+      <p>Solo quelli che scrivi nel modulo di prenotazione: nome, telefono, giorno, orario, numero di persone ed eventuali note, per esempio su allergie o seggiolone.</p>
+      <h2>Perché e su quale base</h2>
+      <p>Per riservarti il tavolo e avvisarti se qualcosa cambia. La base giuridica è l’esecuzione di misure richieste da te (art. 6, par. 1, lettera b del Regolamento UE 2016/679). Le note su allergie le usiamo solo in cucina per quella sera. Non usiamo i dati per pubblicità e non li cediamo a nessuno.</p>
+      <h2>Per quanto tempo</h2>
+      <p>Fino alla data della prenotazione e per i 30 giorni successivi, poi li cancelliamo.</p>
+      <h2>I tuoi diritti</h2>
+      <p>Puoi chiedere di vedere, correggere o cancellare i tuoi dati, o opporti al trattamento (articoli 15–22 del Regolamento), chiamando il numero qui sopra. Puoi anche rivolgerti al Garante per la protezione dei dati personali.</p>
+      <h2>Cookie</h2>
+      <p>Il sito non usa cookie di profilazione né statistiche di terze parti, quindi non serve il banner per il consenso. I caratteri tipografici sono serviti dal sito stesso, senza collegamenti a Google. Il servizio che ospita il sito registra, come ogni server, dati tecnici di accesso (indirizzo IP, data e ora) per ragioni di sicurezza.</p>
+    </div>
+  </section>
+""")
 print("ok")

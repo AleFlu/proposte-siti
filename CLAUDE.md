@@ -96,6 +96,18 @@ Obbligatoria per ogni sito di un cliente. Fonti: Google Search Central (dati str
 **Demo e bozze**
 - Le proposte con attività di fantasia hanno `<meta name="robots" content="noindex">`: indirizzi e telefoni inventati non devono finire su Google. Tutto il resto della SEO si implementa lo stesso, così la demo mostra al cliente il lavoro completo.
 
+## Legale e conformità (Italia / UE)
+
+Da verificare con il cliente e, per i testi definitivi, con un consulente: qui ci sono i minimi che il sito deve già rispettare.
+
+- **Partita IVA nel piede di ogni pagina** (art. 35 DPR 633/1972); per le società anche sede, REA e capitale sociale (art. 2250 c.c.).
+- **Font serviti dal sito**, mai da `fonts.googleapis.com`: caricarli da Google invia l'IP del visitatore a terzi (sentenza LG München, 2022). Usare `strumenti/scarica_font.py`.
+- **Nessuno script di terze parti senza consenso**: niente Google Analytics, pixel o mappe incorporate prima del consenso. Con soli cookie tecnici o nessun cookie non serve il banner (Linee guida cookie del Garante, 10 giugno 2021); preferire statistiche senza cookie.
+- **Informativa privacy** (art. 13 GDPR) in una pagina dedicata, linkata nel piede e accanto a ogni modulo che raccoglie dati personali; la base giuridica di prenotazioni e ordini è l'art. 6.1.b, quindi niente caselle di consenso obbligatorie per inviare il modulo.
+- **Ristorazione**: allergeni dei 14 gruppi del Reg. UE 1169/2011 indicati per piatto con legenda; coperto e servizio dichiarati; prezzi IVA inclusa.
+- **Accessibilità**: WCAG 2.2 AA come base. Dal 28 giugno 2025 l'European Accessibility Act (D.Lgs. 82/2022) obbliga molti servizi digitali verso i consumatori; le microimprese che forniscono servizi sono esentate, ma il sito deve comunque essere accessibile.
+- **Pagina 404** personalizzata e nessun link interno rotto.
+
 ## Artifact su claude.ai: sempre uguali a git
 
 Alcuni sample hanno anche una copia come artifact su claude.ai (l'elenco è in `ARTIFACT` dentro `strumenti/prepara_artifact.py`). La fonte è **sempre** `samples/<nome>/` su git; l'artifact non si modifica mai a mano.
