@@ -369,3 +369,23 @@ footer a { color: #EAF2F0; }
 .testo-legale h2 { margin: 2rem 0 .5rem; font-size: var(--s2); }
 .testo-legale h2:first-child { margin-top: 0; }
 .testo-legale p { margin: 0; max-width: 64ch; }
+
+/* menu su desktop: indice con più peso, colonna dei piatti più stretta, tutto centrato */
+@media (min-width: 961px) {
+  .menu-layout { grid-template-columns: 15.5rem minmax(0, 44rem); justify-content: center; gap: clamp(3rem, 6vw, 5.5rem); }
+  .indice-titolo { margin: 0 0 .75rem; font: 600 .875rem/1.2 var(--testo); color: var(--tenue); }
+  .indice-menu a { font-size: 1.0625rem; padding-block: .55rem; }
+  .indice-extra { display: grid; gap: 1.25rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--fuga); }
+  .legenda-colonna { flex-direction: column; margin: 0; }
+  .indice-nota { margin: 0; font-size: var(--s-1); color: var(--tenue); }
+  .indice-extra .bottone { justify-self: start; }
+  .legenda-telefono { display: none; }
+}
+@media (max-width: 960px) {
+  .indice-titolo, .indice-extra { display: none; }
+}
+@media (min-width: 961px) {
+  .indice-extra .legenda-colonna { border-left: 0; display: flex; gap: .45rem; }
+  .indice-extra .bottone { margin: 0; padding: .95rem 1.35rem; border-left: 0; font-size: .9375rem; color: var(--piastrella) !important; white-space: nowrap; }
+  .indice-extra .bottone:hover { color: var(--piastrella) !important; }
+}

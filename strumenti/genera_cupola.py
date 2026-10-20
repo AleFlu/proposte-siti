@@ -331,15 +331,24 @@ pagina("pizze.html", "Menu: pizze napoletane, fritti e prezzi | La Cupola, Torin
 
   <div class="wrap menu-layout chiaro">
     <nav class="indice-menu" aria-label="Sezioni del menu">
+      <p class="indice-titolo">Sezioni</p>
       <ul>
 {indice}
         <li><a href="#varianti">Varianti</a></li>
         <li><a href="#allergeni">Allergeni</a></li>
       </ul>
+      <div class="indice-extra">
+        <ul class="legenda-segni legenda-colonna" aria-label="Legenda">
+          <li><span class="segno veg" aria-hidden="true"></span>vegetariana</li>
+          <li><span class="segno picc" aria-hidden="true"></span>piccante</li>
+        </ul>
+        <p class="indice-nota">Prezzi in euro, coperto incluso. Tocca “Allergeni” sotto un piatto per leggere cosa contiene.</p>
+        <a class="bottone su-chiaro" href="prenota.html">Prenota un tavolo</a>
+      </div>
     </nav>
 
     <div class="menu-corpo">
-      <ul class="legenda-segni" aria-label="Legenda">
+      <ul class="legenda-segni legenda-telefono" aria-label="Legenda">
         <li><span class="segno veg" aria-hidden="true"></span>vegetariana</li>
         <li><span class="segno picc" aria-hidden="true"></span>piccante</li>
         <li>Tocca “Allergeni” per leggere cosa contiene un piatto</li>
