@@ -96,6 +96,14 @@ Obbligatoria per ogni sito di un cliente. Fonti: Google Search Central (dati str
 **Demo e bozze**
 - Le proposte con attività di fantasia hanno `<meta name="robots" content="noindex">`: indirizzi e telefoni inventati non devono finire su Google. Tutto il resto della SEO si implementa lo stesso, così la demo mostra al cliente il lavoro completo.
 
+## Artifact su claude.ai: sempre uguali a git
+
+Alcuni sample hanno anche una copia come artifact su claude.ai (l'elenco è in `ARTIFACT` dentro `strumenti/prepara_artifact.py`). La fonte è **sempre** `samples/<nome>/` su git; l'artifact non si modifica mai a mano.
+
+- Ogni modifica a un sample che ha un artifact: commit su git, poi `python3 strumenti/prepara_artifact.py <nome>` e ripubblicazione dell'artifact (pagina `.artifact/<nome>/index.html`, tutte le altre pagine e gli `assets/` in `files`, `url` dell'artifact esistente).
+- Richiesta arrivata da un commento sull'artifact: si corregge il file in `samples/`, si fa commit e si ripubblica come sopra. Mai correggere solo la copia dell'artifact.
+- Dopo la pubblicazione si rilegge l'artifact e si confrontano gli hash dei file con quelli su git: devono coincidere.
+
 ## Verifica di ogni pagina (Definition of Done)
 
 1. Screenshot Playwright ai 4 breakpoint, nessuno scroll orizzontale.
