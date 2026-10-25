@@ -458,7 +458,10 @@ pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria napoletana a Tor
         </div>
         <fieldset class="campo largo">
           <legend>Orario</legend>
-          <div class="orari-scelta" id="orari"></div>
+          <div class="orari-scelta" id="orari">
+            <!-- orari di cena senza JavaScript, e spazio già occupato: niente salto quando lo script li aggiorna -->
+            <label><input type="radio" name="ora" value="19:00"><b>19:00</b><span>cena</span></label><label><input type="radio" name="ora" value="19:30"><b>19:30</b><span>cena</span></label><label><input type="radio" name="ora" value="20:00"><b>20:00</b><span>cena</span></label><label><input type="radio" name="ora" value="20:30"><b>20:30</b><span>cena</span></label><label><input type="radio" name="ora" value="21:00"><b>21:00</b><span>cena</span></label><label><input type="radio" name="ora" value="21:30"><b>21:30</b><span>cena</span></label>
+          </div>
           <p class="aiuto">Sotto ogni orario ci sono i posti ancora liberi.</p>
         </fieldset>
         <div class="campo">
