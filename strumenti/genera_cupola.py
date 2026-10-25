@@ -8,6 +8,8 @@ import html
 import json
 import pathlib
 
+import comune
+
 OUT = pathlib.Path(__file__).resolve().parent.parent / "samples" / "la-cupola"
 BASE = "https://aleflu.github.io/proposte-siti/la-cupola/"
 TELEFONO = "011 000 0000"
@@ -125,10 +127,8 @@ MENU_LD = {
 json_ld = lambda dati: f'<script type="application/ld+json">\n{json.dumps(dati, ensure_ascii=False, indent=1)}\n</script>'
 
 # ---------- pezzi di pagina ----------
-FAVICON = ("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E"
-           "%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230F2B2A%27/%3E"
-           "%3Cpath d=%27M5 25 A11 17 0 0 1 27 25 Z%27 fill=%27%23D9A62E%27/%3E"
-           "%3Cpath d=%27M12.5 25 V21 a3.5 3.5 0 0 1 7 0 V25 Z%27 fill=%27%230F2B2A%27/%3E%3C/svg%3E")
+ICONA_SVG = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#0F2B2A"/>'
+             '<path d="M5 25 A11 17 0 0 1 27 25 Z" fill="#D9A62E"/><path d="M12.5 25 V21 a3.5 3.5 0 0 1 7 0 V25 Z" fill="#0F2B2A"/></svg>')
 MARCHIO = ('<svg viewBox="0 0 40 34" aria-hidden="true"><path d="M3 30 A17 26 0 0 1 37 30 Z" fill="currentColor"/>'
            '<path d="M14.5 30 V24.5 a5.5 5.5 0 0 1 11 0 V30 Z" fill="#0F2B2A"/><rect x="1" y="30.5" width="38" height="3" fill="currentColor"/></svg>')
 NAV = [("pizze.html", "Menu"), ("impasto.html", "L’impasto"), ("dove.html", "Dove siamo")]
@@ -196,7 +196,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="{FAVICON}">
+{comune.testa_icone()}
 <link rel="stylesheet" href="assets/font.css">
 <link rel="stylesheet" href="assets/stile.css">
 {extra_head}
@@ -282,8 +282,11 @@ pagina("index.html", "Pizzeria napoletana a Torino, San Salvario | La Cupola",
     <div class="wrap">
       <p data-apertura><span class="pallino"></span><strong>Dal martedì alla domenica, dalle 19</strong></p>
       <div class="prenota-veloce">
-        <p id="quando-prenoti">Posti liberi</p>
-        <ul class="orari-brevi" id="orari-stasera"></ul>
+        <p id="quando-prenoti">Prenota per stasera</p>
+        <ul class="orari-brevi" id="orari-stasera">
+          <li><a href="prenota.html"><b>19:30</b><span>primo turno</span></a></li>
+          <li><a href="prenota.html"><b>21:30</b><span>secondo turno</span></a></li>
+        </ul>
       </div>
       <a class="link-forte" href="prenota.html">Altri giorni</a>
     </div>
@@ -293,7 +296,7 @@ pagina("index.html", "Pizzeria napoletana a Torino, San Salvario | La Cupola",
     <div class="wrap">
       <div class="intestazione">
         <h2 id="t-fuori">{e(fuori["titolo"])}</h2>
-        <p>Tre pizze che ci sono solo questo mese, con quello che arriva dal mercato di Porta Palazzo.</p>
+        <p>Tre pizze che ci sono solo questo mese, con quello che arriva dal mercato di Porta Palazzo. Prezzi in euro, IVA inclusa.</p>
       </div>
       <ul class="legenda-segni" aria-label="Legenda">
         <li><span class="segno veg" aria-hidden="true"></span>vegetariana</li>
@@ -325,7 +328,7 @@ pagina("pizze.html", "Menu: pizze napoletane, fritti e prezzi | La Cupola, Torin
   <div class="scuro">
     <div class="wrap testa-pagina">
       <h1>Il menu</h1>
-      <p>Pizze rosse e bianche, il fuori menu del mese, fritti e dolci. Prezzi in euro, coperto incluso.</p>
+      <p>Pizze rosse e bianche, il fuori menu del mese, fritti e dolci. Prezzi in euro, IVA e coperto inclusi.</p>
     </div>
   </div>
 
@@ -342,7 +345,7 @@ pagina("pizze.html", "Menu: pizze napoletane, fritti e prezzi | La Cupola, Torin
           <li><span class="segno veg" aria-hidden="true"></span>vegetariana</li>
           <li><span class="segno picc" aria-hidden="true"></span>piccante</li>
         </ul>
-        <p class="indice-nota">Prezzi in euro, coperto incluso. Tocca “Allergeni” sotto un piatto per leggere cosa contiene.</p>
+        <p class="indice-nota">Prezzi in euro, IVA e coperto inclusi. Tocca “Allergeni” sotto un piatto per leggere cosa contiene.</p>
         <a class="bottone su-chiaro" href="prenota.html">Prenota un tavolo</a>
       </div>
     </nav>
@@ -406,12 +409,12 @@ pagina("impasto.html", "L’impasto: 30 ore di lievitazione | La Cupola, Torino"
         <p>Ogni servizio usa l’impasto fatto il giorno prima alle 11. La tessera gialla segna dove si trova adesso quello del prossimo servizio.</p>
       </div>
       <ol class="tempo">
-        <li data-ore="0"><time>11:00<small>Il giorno prima</small></time><div><h3>Impasto</h3><p>Farina tipo 1 macinata a pietra, acqua a 18 gradi, sale marino e un grammo di lievito di birra per chilo. Si impasta piano, per venti minuti.</p></div></li>
-        <li data-ore="1"><time>12:00<small>Il giorno prima</small></time><div><h3>Puntata</h3><p>Un’ora nella madia di legno, coperto. È la prima lievitazione, quella che dà forza alla pasta.</p></div></li>
-        <li data-ore="2"><time>13:00<small>Il giorno prima</small></time><div><h3>In frigo a 4 gradi</h3><p>Il lievito lavora lentissimo e intanto la pasta diventa più leggera da digerire.</p></div></li>
-        <li data-ore="22"><time>9:00<small>Il giorno della pizza</small></time><div><h3>Staglio</h3><p>La massa si divide a mano in panetti da 260 grammi, che tornano in frigo nelle cassette.</p></div></li>
-        <li data-ore="29"><time>16:00<small>Il giorno della pizza</small></time><div><h3>Fuori dal frigo</h3><p>Tre ore a temperatura ambiente, così i panetti si stendono a mano senza strapparsi.</p></div></li>
-        <li data-ore="32"><time>19:00<small>Il giorno della pizza</small></time><div><h3>Al forno</h3><p>450 gradi sul piano di biscotto di Sorrento. Da 60 a 90 secondi, girando la pizza due volte.</p></div></li>
+        <li data-ore="0"><time datetime="11:00">11:00<small>Il giorno prima</small></time><div><h3>Impasto</h3><p>Farina tipo 1 macinata a pietra, acqua a 18 gradi, sale marino e un grammo di lievito di birra per chilo. Si impasta piano, per venti minuti.</p></div></li>
+        <li data-ore="1"><time datetime="12:00">12:00<small>Il giorno prima</small></time><div><h3>Puntata</h3><p>Un’ora nella madia di legno, coperto. È la prima lievitazione, quella che dà forza alla pasta.</p></div></li>
+        <li data-ore="2"><time datetime="13:00">13:00<small>Il giorno prima</small></time><div><h3>In frigo a 4 gradi</h3><p>Il lievito lavora lentissimo e intanto la pasta diventa più leggera da digerire.</p></div></li>
+        <li data-ore="22"><time datetime="09:00">9:00<small>Il giorno della pizza</small></time><div><h3>Staglio</h3><p>La massa si divide a mano in panetti da 260 grammi, che tornano in frigo nelle cassette.</p></div></li>
+        <li data-ore="29"><time datetime="16:00">16:00<small>Il giorno della pizza</small></time><div><h3>Fuori dal frigo</h3><p>Tre ore a temperatura ambiente, così i panetti si stendono a mano senza strapparsi.</p></div></li>
+        <li data-ore="32"><time datetime="19:00">19:00<small>Il giorno della pizza</small></time><div><h3>Al forno</h3><p>450 gradi sul piano di biscotto di Sorrento. Da 60 a 90 secondi, girando la pizza due volte.</p></div></li>
       </ol>
     </div>
   </section>
@@ -546,3 +549,6 @@ pagina("privacy.html", "Informativa privacy e cookie | La Cupola, pizzeria a Tor
   </section>
 """)
 print("ok")
+
+comune.scrivi_icone(OUT / "assets", ICONA_SVG, "La Cupola", "#0F2B2A", "#0F2B2A")
+comune.scrivi_sitemap(OUT, BASE, ["index.html", "pizze.html", "impasto.html", "prenota.html", "dove.html", "privacy.html"])

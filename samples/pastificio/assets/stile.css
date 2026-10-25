@@ -207,7 +207,7 @@ section { padding: clamp(3.5rem, 9vw, 7rem) 0; }
   margin-top: 2.5rem; padding: 2rem; background: var(--carta); color: var(--farina);
   scroll-margin-top: 2rem;
 }
-.scheda h3 { margin: 0; font: italic 500 var(--s3)/1 var(--display); }
+.scheda h2 { margin: 0; font: italic 500 var(--s3)/1 var(--display); }
 .scheda dl { display: grid; grid-template-columns: auto 1fr; gap: .6rem 1.5rem; margin: 0; }
 .scheda dt { color: var(--semola); }
 .scheda dd { margin: 0; }
@@ -380,4 +380,14 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px
   }
   .barra-azioni a.primaria { background: var(--semola); border-color: var(--semola); color: var(--carta-scura); }
   footer { padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* ---------- stampa: orari, formati e prezzi su carta, senza navigazione ---------- */
+@media print {
+  .salta, .nav, .menu-apri, .barra-azioni, .nota-demo, .disegna { display: none !important; }
+  body, footer, section { background: #fff !important; color: #000 !important; }
+  footer * { color: #000 !important; }
+  .scheda[hidden] { display: grid !important; }
+  .scheda, li { break-inside: avoid; }
+  a { text-decoration: none; }
 }

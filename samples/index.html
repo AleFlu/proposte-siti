@@ -17,7 +17,10 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%231D2024%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2714%27 rx=%272%27 fill=%27none%27 stroke=%27%23F2F2EE%27 stroke-width=%272%27/%3E%3C/svg%3E">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icona-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/icona-180.png">
+<link rel="manifest" href="assets/sito.webmanifest">
 <link rel="stylesheet" href="assets/font.css">
 <style>
 /* Tavolo da lavoro: ogni proposta è una tavola con l'anteprima viva a sinistra e le scelte di progetto a destra. */
@@ -101,7 +104,8 @@ a { color: inherit; }
 }
 .telefono .vetro { aspect-ratio: 375 / 780; border-radius: 1.2rem; }
 .telefono .vetro iframe { width: 375px; height: 780px; }
-.anteprime:hover .schermo, .anteprime:focus-visible .schermo { border-color: var(--testo); }
+.anteprime-link { position: absolute; inset: 0; z-index: 2; border-radius: 10px; }
+.anteprime:hover .schermo, .anteprime:focus-within .schermo { border-color: var(--testo); }
 .suggerimento {
   position: absolute; left: 0; bottom: .5rem; font: 400 .8125rem/1.3 var(--sans); color: var(--tenue);
 }
@@ -182,7 +186,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <main id="contenuto">
   <article class="tavola" id="pastificio" style="--punto:#2F4C93; --hover:#2F4C93">
     <div class="wrap tavola-griglia">
-      <a class="anteprime" href="pastificio/"><span class="vh">Apri il sito del Pastificio Carta Blu</span>
+      <div class="anteprime">
         <div class="schermo">
           <div class="barra-browser" aria-hidden="true"><span class="pallini"><span></span><span></span><span></span></span><span class="indirizzo">pastificiocartablu.it</span></div>
           <div class="vetro" data-larghezza="1440"><iframe src="pastificio/" title="Anteprima desktop" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
@@ -191,7 +195,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <div class="vetro" data-larghezza="375"><iframe src="pastificio/" title="Anteprima mobile" loading="lazy" tabindex="-1"></iframe></div>
         </div>
         <span class="suggerimento" aria-hidden="true">Passa sopra per scorrere l’anteprima</span>
-      </a>
+        <a class="anteprime-link" href="pastificio/"><span class="vh">Apri il sito del Pastificio Carta Blu</span></a>
+      </div>
 
       <div class="scheda">
         <div>
@@ -235,7 +240,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
   <article class="tavola" id="la-cupola" style="--punto:#14807A; --hover:#0C5F5A">
     <div class="wrap tavola-griglia">
-      <a class="anteprime" href="la-cupola/"><span class="vh">Apri il sito della Pizzeria La Cupola</span>
+      <div class="anteprime">
         <div class="schermo">
           <div class="barra-browser" aria-hidden="true"><span class="pallini"><span></span><span></span><span></span></span><span class="indirizzo">pizzerialacupola.it</span></div>
           <div class="vetro" data-larghezza="1440"><iframe src="la-cupola/" title="Anteprima desktop" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
@@ -244,7 +249,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <div class="vetro" data-larghezza="375"><iframe src="la-cupola/" title="Anteprima mobile" loading="lazy" tabindex="-1"></iframe></div>
         </div>
         <span class="suggerimento" aria-hidden="true">Passa sopra per scorrere l’anteprima</span>
-      </a>
+        <a class="anteprime-link" href="la-cupola/"><span class="vh">Apri il sito della Pizzeria La Cupola</span></a>
+      </div>
 
       <div class="scheda">
         <div>

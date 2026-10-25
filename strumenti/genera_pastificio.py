@@ -9,6 +9,8 @@ import html
 import json
 import pathlib
 
+import comune
+
 OUT = pathlib.Path(__file__).resolve().parent.parent / "samples" / "pastificio"
 BASE = "https://aleflu.github.io/proposte-siti/pastificio/"
 TELEFONO = "0521 000 000"
@@ -79,7 +81,8 @@ NEGOZIO = {
     ],
 }
 json_ld = lambda d: f'<script type="application/ld+json">\n{json.dumps(d, ensure_ascii=False, indent=1)}\n</script>'
-FAVICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%232F4C93%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%279%27 fill=%27none%27 stroke=%27%23F3D27C%27 stroke-width=%273%27/%3E%3C/svg%3E"
+ICONA_SVG = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#2F4C93"/>'
+             '<circle cx="16" cy="16" r="9" fill="none" stroke="#F3D27C" stroke-width="3"/></svg>')
 NAV = [("formati.html", "Formati"), ("banco.html", "Al banco"), ("bottega.html", "La bottega")]
 
 
@@ -129,7 +132,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="{FAVICON}">
+{comune.testa_icone()}
 <link rel="stylesheet" href="assets/font.css">
 <link rel="stylesheet" href="assets/stile.css">
 {extra_head}
@@ -159,6 +162,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
         <p>Borgo Riccio 14, 43121 Parma</p>
         <p>Telefono {TELEFONO}</p>
         <p>Partita IVA {PIVA}</p>
+        <p>Prezzi in euro, IVA inclusa.</p>
       </div>
       <div>
         <h2>Orari</h2>
@@ -224,7 +228,7 @@ pagina("index.html", "Pasta fresca fatta a mano a Parma | Pastificio Carta Blu",
     <div class="wrap">
       <div class="titolo-sezione">
         <h2 id="banco-oggi-titolo">Sabato al banco</h2>
-        <p>Prezzi al chilo. Le tagliatelle ci sono tutti i giorni, il resto gira con la settimana.</p>
+        <p>Prezzi al chilo, IVA inclusa. Le tagliatelle ci sono tutti i giorni, il resto gira con la settimana.</p>
       </div>
       <p class="vuoto" id="banco-avviso" hidden></p>
       {pannelli_home}
@@ -260,7 +264,7 @@ def scheda(fid):
     giorni = [g.lower() for g in GIORNI if fid in BANCO[g]["lista"]]
     ordina = f'<a class="rimando" href="ordina.html?formato={fid}">Ordinali per domenica</a>' if fid in ORDINABILI else ""
     return f"""<div class="scheda" id="scheda-{fid}" data-formato="{fid}" hidden tabindex="-1">
-        <div><h3>{e(f["nome"])}</h3><p>{e(f["nota"])}.</p></div>
+        <div><h2>{e(f["nome"])}</h2><p>{e(f["nota"])}.</p></div>
         <div>
           <dl>
             <dt>Cottura</dt><dd>{e(f["cottura"])}</dd>
@@ -377,12 +381,12 @@ pagina("bottega.html", "La bottega e dove siamo, Parma | Pastificio Carta Blu",
         <p>Dal martedì al sabato, sempre con lo stesso ordine. Il lunedì si riposa e si lava tutto.</p>
       </div>
       <ol class="giornata">
-        <li data-ore="5.5"><time>5:30</time><div><h3>L’impasto</h3><p>Un uovo ogni cento grammi di farina, a mano sulla spianatoia. Poi riposa coperto per mezz’ora.</p></div></li>
-        <li data-ore="6"><time>6:00</time><div><h3>La sfoglia</h3><p>Si tira al mattarello finché si vede la venatura del legno attraverso la pasta.</p></div></li>
-        <li data-ore="6.75"><time>6:45</time><div><h3>I ripieni</h3><p>Tortellini, anolini e tortelli si chiudono uno a uno. Un chilo di tortellini sono circa mille pieghe.</p></div></li>
-        <li data-ore="7.5"><time>7:30</time><div><h3>Apre il banco</h3><p>La pasta del mattino è pronta e si comincia a incartare.</p></div></li>
-        <li data-ore="11"><time>11:00</time><div><h3>La seconda sfoglia</h3><p>Le tagliatelle per il pomeriggio, così la sera sono fresche come al mattino.</p></div></li>
-        <li data-ore="19.5"><time>19:30</time><div><h3>Si chiude</h3><p>La spianatoia si pulisce solo con il raschietto e un panno asciutto. Mai acqua sul faggio.</p></div></li>
+        <li data-ore="5.5"><time datetime="05:30">5:30</time><div><h3>L’impasto</h3><p>Un uovo ogni cento grammi di farina, a mano sulla spianatoia. Poi riposa coperto per mezz’ora.</p></div></li>
+        <li data-ore="6"><time datetime="06:00">6:00</time><div><h3>La sfoglia</h3><p>Si tira al mattarello finché si vede la venatura del legno attraverso la pasta.</p></div></li>
+        <li data-ore="6.75"><time datetime="06:45">6:45</time><div><h3>I ripieni</h3><p>Tortellini, anolini e tortelli si chiudono uno a uno. Un chilo di tortellini sono circa mille pieghe.</p></div></li>
+        <li data-ore="7.5"><time datetime="07:30">7:30</time><div><h3>Apre il banco</h3><p>La pasta del mattino è pronta e si comincia a incartare.</p></div></li>
+        <li data-ore="11"><time datetime="11:00">11:00</time><div><h3>La seconda sfoglia</h3><p>Le tagliatelle per il pomeriggio, così la sera sono fresche come al mattino.</p></div></li>
+        <li data-ore="19.5"><time datetime="19:30">19:30</time><div><h3>Si chiude</h3><p>La spianatoia si pulisce solo con il raschietto e un panno asciutto. Mai acqua sul faggio.</p></div></li>
       </ol>
     </div>
   </section>
@@ -480,3 +484,6 @@ pagina("privacy.html", "Informativa privacy e cookie | Pastificio Carta Blu, Par
   </section>
 """)
 print("ok")
+
+comune.scrivi_icone(OUT / "assets", ICONA_SVG, "Pastificio Carta Blu", "#2F4C93", "#2F4C93")
+comune.scrivi_sitemap(OUT, BASE, ["index.html", "formati.html", "banco.html", "bottega.html", "ordina.html", "privacy.html"])

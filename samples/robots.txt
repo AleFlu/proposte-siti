@@ -1,0 +1,9 @@
+# Vale solo alla radice del dominio: con un sito di progetto su GitHub Pages
+# (aleflu.github.io/proposte-siti/) Google legge aleflu.github.io/robots.txt.
+# Le demo restano fuori da Google grazie al <meta name="robots" content="noindex">,
+# che funziona solo se le pagine NON sono bloccate qui: per questo niente Disallow.
+User-agent: *
+Allow: /
+
+Sitemap: https://aleflu.github.io/proposte-siti/la-cupola/sitemap.xml
+Sitemap: https://aleflu.github.io/proposte-siti/pastificio/sitemap.xml

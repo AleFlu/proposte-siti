@@ -19,7 +19,10 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230F2B2A%27/%3E%3Cpath d=%27M5 25 A11 17 0 0 1 27 25 Z%27 fill=%27%23D9A62E%27/%3E%3Cpath d=%27M12.5 25 V21 a3.5 3.5 0 0 1 7 0 V25 Z%27 fill=%27%230F2B2A%27/%3E%3C/svg%3E">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icona-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/icona-180.png">
+<link rel="manifest" href="assets/sito.webmanifest">
 <link rel="stylesheet" href="assets/font.css">
 <link rel="stylesheet" href="assets/stile.css">
 <script type="application/ld+json">
@@ -123,8 +126,11 @@
     <div class="wrap">
       <p data-apertura><span class="pallino"></span><strong>Dal martedì alla domenica, dalle 19</strong></p>
       <div class="prenota-veloce">
-        <p id="quando-prenoti">Posti liberi</p>
-        <ul class="orari-brevi" id="orari-stasera"></ul>
+        <p id="quando-prenoti">Prenota per stasera</p>
+        <ul class="orari-brevi" id="orari-stasera">
+          <li><a href="prenota.html"><b>19:30</b><span>primo turno</span></a></li>
+          <li><a href="prenota.html"><b>21:30</b><span>secondo turno</span></a></li>
+        </ul>
       </div>
       <a class="link-forte" href="prenota.html">Altri giorni</a>
     </div>
@@ -134,7 +140,7 @@
     <div class="wrap">
       <div class="intestazione">
         <h2 id="t-fuori">Fuori menu di ottobre</h2>
-        <p>Tre pizze che ci sono solo questo mese, con quello che arriva dal mercato di Porta Palazzo.</p>
+        <p>Tre pizze che ci sono solo questo mese, con quello che arriva dal mercato di Porta Palazzo. Prezzi in euro, IVA inclusa.</p>
       </div>
       <ul class="legenda-segni" aria-label="Legenda">
         <li><span class="segno veg" aria-hidden="true"></span>vegetariana</li>

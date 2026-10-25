@@ -28,3 +28,9 @@
 - Contenuti/asset disponibili (foto, logo, testi):
 - Lingue:
 - Scadenza:
+
+## Azioni principali dell'attività (vanno nella barra fissa su telefono)
+[Massimo due, in ordine: chiamare, prenotare, ordinare, arrivare, scrivere su WhatsApp]
+
+## Contenuti dal cliente
+Compilati con `standard/raccolta-contenuti.md`: cosa c'è, cosa manca, chi lo fornisce ed entro quando.

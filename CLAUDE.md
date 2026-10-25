@@ -1,15 +1,20 @@
 # Progetto sito — regole per Claude
 
 Obiettivo: un frontend con identità visiva propria, che non sembri generato da un'AI.
-Prima si decide, poi si costruisce: niente codice UI finché `docs/01-brief.md` e
-`docs/03-design-direction.md` non sono compilati e approvati.
+Prima si decide, poi si costruisce: niente codice UI finché `docs/<nome>/01-brief.md` e
+`docs/<nome>/03-design-direction.md` non sono compilati e approvati.
+
+**Ogni nuovo sito parte dallo standard** (`standard/README.md`): `python3 strumenti/nuovo_sito.py <nome> "<Nome>"`
+crea documenti, generatore e base tecnica. Prima di consegnare, `standard/checklist.md` e `standard/lezioni.md`.
+Quando un sito insegna qualcosa di nuovo, si aggiorna lo standard (base, modello, checklist o lezioni), non solo il sito.
 
 ## Workflow obbligatorio
 
-1. **Brief** → `docs/01-brief.md` (pubblico, obiettivo, tono, 3 siti di riferimento *non* del settore).
-2. **Architettura dei contenuti** → `docs/02-ia.md` (sitemap, gerarchia, contenuti reali per ogni pagina).
-3. **Direzione di design** → `docs/03-design-direction.md` (una tesi visiva in una frase + 2 alternative scartate e perché).
-4. **Design tokens** → `docs/04-tokens.md`, poi tradotti in CSS variables / Tailwind theme.
+0. **Raccolta contenuti** → `docs/<nome>/00-raccolta-contenuti.md` (testi, foto, dati legali, orari: veri o verosimili).
+1. **Brief** → `docs/<nome>/01-brief.md` (pubblico, obiettivo, tono, 3 siti di riferimento *non* del settore).
+2. **Architettura dei contenuti** → `docs/<nome>/02-ia.md` (sitemap, gerarchia, contenuti reali per ogni pagina).
+3. **Direzione di design** → `docs/<nome>/03-design-direction.md` (una tesi visiva in una frase + 2 alternative scartate e perché).
+4. **Design tokens** → `docs/<nome>/04-tokens.md`, poi tradotti in CSS variables in `assets/stile.css`.
 5. **Componenti** → solo dopo i token. Ogni componente nasce da un bisogno di una pagina in `02-ia.md`.
 6. **Verifica** a ogni pagina finita (vedi sotto).
 
@@ -88,7 +93,9 @@ Obbligatoria per ogni sito di un cliente. Fonti: Google Search Central (dati str
 - Validare con il Rich Results Test e con il Schema Markup Validator prima della messa online.
 
 **Sito intero**
-- `sitemap.xml` e `robots.txt` alla radice del dominio; sitemap inviata in Google Search Console.
+- `sitemap.xml` (la scrive `comune.scrivi_sitemap()`) e `robots.txt` alla radice del dominio, senza `Disallow` sulle pagine; sitemap inviata in Google Search Console.
+- Favicon SVG e icone PNG per iPhone e Android con manifest (`comune.scrivi_icone()`), mai solo un'icona `data:` incorporata.
+- HTML valido al validatore W3C.
 - Google Business Profile creato e collegato al sito: per un'attività locale conta quanto il sito.
 - HTTPS, nessun link interno rotto, pagina 404 personalizzata.
 - Core Web Vitals sul telefono: LCP < 2,5 s (nostro obiettivo 2,0), CLS < 0,1 (nostro obiettivo 0,05), INP < 200 ms.
@@ -104,6 +111,7 @@ Da verificare con il cliente e, per i testi definitivi, con un consulente: qui c
 - **Font serviti dal sito**, mai da `fonts.googleapis.com`: caricarli da Google invia l'IP del visitatore a terzi (sentenza LG München, 2022). Usare `strumenti/scarica_font.py`.
 - **Nessuno script di terze parti senza consenso**: niente Google Analytics, pixel o mappe incorporate prima del consenso. Con soli cookie tecnici o nessun cookie non serve il banner (Linee guida cookie del Garante, 10 giugno 2021); preferire statistiche senza cookie.
 - **Informativa privacy** (art. 13 GDPR) in una pagina dedicata, linkata nel piede e accanto a ogni modulo che raccoglie dati personali; la base giuridica di prenotazioni e ordini è l'art. 6.1.b, quindi niente caselle di consenso obbligatorie per inviare il modulo.
+- **Prezzi con "IVA inclusa"** (Codice del consumo, artt. 13–17).
 - **Ristorazione**: allergeni dei 14 gruppi del Reg. UE 1169/2011 indicati per piatto con legenda; coperto e servizio dichiarati; prezzi IVA inclusa.
 - **Accessibilità**: WCAG 2.2 AA come base. Dal 28 giugno 2025 l'European Accessibility Act (D.Lgs. 82/2022) obbliga molti servizi digitali verso i consumatori; le microimprese che forniscono servizi sono esentate, ma il sito deve comunque essere accessibile.
 - **Pagina 404** personalizzata e nessun link interno rotto.
@@ -124,3 +132,4 @@ Alcuni sample hanno anche una copia come artifact su claude.ai (l'elenco è in `
 4. Skill `design:design-critique` sugli screenshot, con la domanda esplicita: "cosa qui sembra generico o generato da AI?" — correggere ciò che emerge.
 5. Copy rivisto con `design:ux-copy`.
 6. SEO: title e description unici, canonical, Open Graph, JSON-LD validato, Lighthouse SEO 100 sulla versione mobile.
+7. `python3 strumenti/controlla.py samples/<nome> --demo` senza errori (senza `--demo` per un sito vero).

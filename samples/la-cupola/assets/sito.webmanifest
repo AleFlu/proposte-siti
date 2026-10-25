@@ -1,0 +1,20 @@
+{
+ "name": "La Cupola",
+ "short_name": "La Cupola",
+ "start_url": "../",
+ "display": "browser",
+ "theme_color": "#0F2B2A",
+ "background_color": "#0F2B2A",
+ "icons": [
+  {
+   "src": "icona-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icona-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}

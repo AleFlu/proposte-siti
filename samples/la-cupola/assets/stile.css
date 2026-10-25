@@ -389,3 +389,14 @@ footer a { color: #EAF2F0; }
   .indice-extra .bottone { margin: 0; padding: .95rem 1.35rem; border-left: 0; font-size: .9375rem; color: var(--piastrella) !important; white-space: nowrap; }
   .indice-extra .bottone:hover { color: var(--piastrella) !important; }
 }
+
+/* ---------- stampa: il menu su carta, senza navigazione né fondi scuri ---------- */
+@media print {
+  .salta, .testata-fondo, .barra-azioni, .indice-menu, .forno-tela, .azioni, .stasera, .allergeni, .fila-tessere, .nota-demo { display: none !important; }
+  body, .scuro, .in-evidenza, footer { background: #fff !important; color: #000 !important; }
+  .scuro *, .in-evidenza *, footer * { color: #000 !important; }
+  .menu-layout { display: block; padding: 0; }
+  .allergeni-nomi { display: block !important; margin: .25rem 0 0; padding: 0; border: 0; background: none !important; }
+  .piatto { break-inside: avoid; }
+  a { text-decoration: none; }
+}

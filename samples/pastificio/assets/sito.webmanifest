@@ -1,0 +1,20 @@
+{
+ "name": "Pastificio Carta Blu",
+ "short_name": "Pastificio Carta Blu",
+ "start_url": "../",
+ "display": "browser",
+ "theme_color": "#2F4C93",
+ "background_color": "#2F4C93",
+ "icons": [
+  {
+   "src": "icona-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icona-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}

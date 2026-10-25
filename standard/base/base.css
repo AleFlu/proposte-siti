@@ -1,0 +1,116 @@
+/* Base comune a tutti i siti (standard/base/base.css).
+   Il generatore la copia in samples/<nome>/assets/base.css a ogni rigenerazione: non modificarla lì.
+   Qui c'è solo ciò che non deve cambiare tra un sito e l'altro: accessibilità, telefono, stampa.
+   L'identità (colori, caratteri, layout) sta in stile.css, che definisce questi token:
+     --ink --paper --accent --accent-ink --focus --muted --line
+     --font-display --font-text --gutter --max --radius-control
+*/
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--font-text);   /* mai sotto i 16 px su telefono */
+  -webkit-font-smoothing: antialiased;
+}
+img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
+p { text-wrap: pretty; }
+a { color: inherit; text-underline-offset: .2em; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+[hidden] { display: none !important; }
+
+/* testo solo per i lettori di schermo (contesto in più per link e segni) */
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* salta al contenuto: primo elemento della pagina, visibile al focus */
+.salta {
+  position: absolute; left: 1rem; top: -4rem; z-index: 20;
+  background: var(--accent); color: var(--accent-ink); padding: .7rem 1rem; font-weight: 600;
+}
+.salta:focus { top: 1rem; }
+
+/* contenitore con margini che rispettano il notch */
+.wrap {
+  max-width: var(--max); margin: 0 auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+/* ---------- testata: navigazione che su telefono diventa un pannello ---------- */
+.testata { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.25rem; }
+.nav { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2rem); }
+.nav a { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: none; }
+.nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .45em; }
+.menu-apri { display: none; min-height: 2.75rem; padding: 0 1.1rem; cursor: pointer; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-control); }
+@media (max-width: 820px) {
+  .menu-apri { display: inline-block; }
+  .nav {
+    display: none; position: absolute; z-index: 15; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0; background: var(--paper);
+    padding: .5rem max(var(--gutter), env(safe-area-inset-right, 0px)) 1.5rem max(var(--gutter), env(safe-area-inset-left, 0px));
+    border-bottom: 1px solid var(--line);
+  }
+  .nav.aperta { display: flex; }
+  .nav a { padding: .75rem 0; border-bottom: 1px solid var(--line); }
+}
+
+/* ---------- barra delle azioni su telefono: le 1–2 azioni dell'attività sempre a un tocco ---------- */
+.barra-azioni { display: none; }
+@media (max-width: 820px) {
+  .barra-azioni {
+    position: fixed; z-index: 10; left: 0; right: 0; bottom: 0;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: .6rem;
+    padding: .6rem max(.75rem, env(safe-area-inset-right, 0px)) calc(.6rem + env(safe-area-inset-bottom, 0px)) max(.75rem, env(safe-area-inset-left, 0px));
+    background: var(--paper); border-top: 1px solid var(--line);
+  }
+  .barra-azioni a {
+    display: flex; align-items: center; justify-content: center; min-height: 3rem;
+    border: 1px solid var(--line); border-radius: var(--radius-control); font-weight: 600; text-decoration: none;
+  }
+  .barra-azioni a.primaria { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  footer { padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* ---------- indice di un contenuto lungo (menu, listino): resta visibile ---------- */
+.indice { position: sticky; top: 1.5rem; min-width: 0; }
+.indice a[aria-current="true"] { font-weight: 600; }
+.sezione-indice { scroll-margin-top: 1.5rem; }
+@media (max-width: 960px) {
+  .indice { top: 0; z-index: 5; background: var(--paper); overflow-x: auto; }
+  .sezione-indice { scroll-margin-top: 4.5rem; }
+}
+
+/* ---------- schede (tab) accessibili ---------- */
+[role="tab"] { min-height: 2.75rem; cursor: pointer; }
+
+/* ---------- tabella orari ---------- */
+.orari { border-collapse: collapse; }
+.orari th, .orari td { text-align: left; padding: .35rem 1.25rem .35rem 0; vertical-align: top; }
+.orari tr.oggi { font-weight: 600; }
+
+/* ---------- moduli ---------- */
+input, select, textarea { min-height: 2.75rem; border: 1px solid var(--line); border-radius: var(--radius-control); padding: .6rem .8rem; background: var(--paper); }
+label { display: block; font-weight: 600; margin-bottom: .35rem; }
+
+/* ---------- piede legale e testi lunghi ---------- */
+.piede-legale { font-size: .9375rem; color: var(--muted); }
+.testo-legale { max-width: 46rem; }
+.testo-legale h2 { margin: 2rem 0 .5rem; }
+.testo-legale h2:first-child { margin-top: 0; }
+.testo-legale p { margin: 0; max-width: 64ch; }
+.nota-demo { font-size: .875rem; color: var(--muted); }
+
+/* ---------- movimento ridotto ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* ---------- stampa: contenuto su carta, senza navigazione né fondi ---------- */
+@media print {
+  .salta, .menu-apri, .nav, .barra-azioni, .indice, .nota-demo, video, canvas { display: none !important; }
+  body, section, header, footer { background: #fff !important; color: #000 !important; }
+  a { text-decoration: none; }
+  li, tr, figure { break-inside: avoid; }
+}
