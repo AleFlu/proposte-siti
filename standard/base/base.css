@@ -70,6 +70,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
   }
   .barra-azioni a.primaria { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
   footer { padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px)); }
+  /* la barra non deve coprire l'elemento che riceve il focus (WCAG 2.2, 2.4.11) */
+  html { scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* ---------- indice di un contenuto lungo (menu, listino): resta visibile ---------- */
@@ -92,6 +94,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* ---------- moduli ---------- */
 input, select, textarea { min-height: 2.75rem; border: 1px solid var(--line); border-radius: var(--radius-control); padding: .6rem .8rem; background: var(--paper); }
 label { display: block; font-weight: 600; margin-bottom: .35rem; }
+[aria-invalid="true"] { border-width: 2px; border-color: currentColor; }
 
 /* ---------- piede legale e testi lunghi ---------- */
 .piede-legale { font-size: .9375rem; color: var(--muted); }

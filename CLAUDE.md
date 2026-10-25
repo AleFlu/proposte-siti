@@ -107,7 +107,7 @@ Obbligatoria per ogni sito di un cliente. Fonti: Google Search Central (dati str
 
 Da verificare con il cliente e, per i testi definitivi, con un consulente: qui ci sono i minimi che il sito deve già rispettare.
 
-- **Partita IVA nel piede di ogni pagina** (art. 35 DPR 633/1972); per le società anche sede, REA e capitale sociale (art. 2250 c.c.).
+- **Partita IVA nel piede di ogni pagina** (art. 35 DPR 633/1972); per le società anche sede, REA e capitale sociale (art. 2250 c.c.). Nel piede anche un'email di contatto (D.Lgs. 70/2003, art. 7) e, per le professioni regolamentate, ordine o albo e numero di iscrizione.
 - **Font serviti dal sito**, mai da `fonts.googleapis.com`: caricarli da Google invia l'IP del visitatore a terzi (sentenza LG München, 2022). Usare `strumenti/scarica_font.py`.
 - **Nessuno script di terze parti senza consenso**: niente Google Analytics, pixel o mappe incorporate prima del consenso. Con soli cookie tecnici o nessun cookie non serve il banner (Linee guida cookie del Garante, 10 giugno 2021); preferire statistiche senza cookie.
 - **Informativa privacy** (art. 13 GDPR) in una pagina dedicata, linkata nel piede e accanto a ogni modulo che raccoglie dati personali; la base giuridica di prenotazioni e ordini è l'art. 6.1.b, quindi niente caselle di consenso obbligatorie per inviare il modulo.

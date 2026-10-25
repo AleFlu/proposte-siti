@@ -10,7 +10,17 @@ const GIORNI = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "ve
 const MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"];
 // ---------- utilità ----------
 const $ = id => document.getElementById(id);
-const adesso = new Date();
+// ora italiana, qualunque sia il fuso del telefono: gli orari dell'attività sono quelli di Roma
+function oraItalia() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
+    timeZone: "Europe/Rome", hourCycle: "h23", year: "numeric", month: "numeric", day: "numeric",
+    hour: "numeric", minute: "numeric", second: "numeric"
+  }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  return new Date(+p.year, p.month - 1, +p.day, +p.hour, +p.minute, +p.second);
+}
+// il testo scritto da chi visita va sempre trattato come testo, mai come HTML
+const esc = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const adesso = oraItalia();
 const euro = n => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
 const hhmm = h => `${Math.floor(h)}:${String(Math.round((h % 1) * 60)).padStart(2, "0")}`;
 const oreDa = s => { const [h, m] = s.split(":").map(Number); return h + m / 60; };
@@ -186,7 +196,7 @@ if (pagina === "home") {
   const st = statoImpasto();
   const h1 = $("titolo-impasto"), pronto = $("pronto");
   const scriviTitolo = () => {
-    const ore = Math.floor((new Date() - st.impasto) / 36e5);
+    const ore = Math.floor((oraItalia() - st.impasto) / 36e5);
     if (st.oreTrascorse < 0) {
       const quando = nomeGiorno(st.impasto);
       h1.textContent = `${quando === "oggi" ? "Alle 11" : `${maiuscola(quando)} alle 11`} impastiamo per ${st.quale === "domani" ? "domani" : st.quale}.`;
@@ -301,6 +311,7 @@ if (pagina === "prenota") {
   };
   disegnaOrari(parametri.get("ora"));
   selGiorno.addEventListener("change", () => disegnaOrari());
+  ["f-nome", "f-tel"].forEach(id => $(id).addEventListener("input", e => e.target.removeAttribute("aria-invalid")));
   selPersone.addEventListener("change", () => disegnaOrari());
 
   $("modulo").addEventListener("submit", e => {
@@ -310,6 +321,7 @@ if (pagina === "prenota") {
     if (!scelto) mancano.push(["l’orario", orari.querySelector("input:not(:disabled)")]);
     if (!nome.value.trim()) mancano.push(["il nome", nome]);
     if (!tel.value.trim()) mancano.push(["il telefono", tel]);
+    [nome, tel].forEach(c => c.value.trim() ? c.removeAttribute("aria-invalid") : c.setAttribute("aria-invalid", "true"));
     esito.hidden = false;
     if (mancano.length) {
       esito.className = "esito errore";
@@ -319,7 +331,7 @@ if (pagina === "prenota") {
     }
     const d = new Date(`${selGiorno.value}T00:00`), persone = +selPersone.value;
     esito.className = "esito";
-    esito.innerHTML = `<strong>Richiesta inviata.</strong> Tavolo per ${persone} ${persone === 1 ? "persona" : "persone"}, ${dataLunga(d)} alle ${scelto.value}, a nome ${nome.value.trim()}. Ti confermiamo con un SMS entro un’ora.<br><small>Questa è una demo: nessuna prenotazione è stata registrata.</small>`;
+    esito.innerHTML = `<strong>Richiesta inviata.</strong> Tavolo per ${persone} ${persone === 1 ? "persona" : "persone"}, ${dataLunga(d)} alle ${scelto.value}, a nome ${esc(nome.value.trim())}. Ti confermiamo con un SMS entro un’ora.<br><small>Questa è una demo: nessuna prenotazione è stata registrata.</small>`;
   });
 }
 

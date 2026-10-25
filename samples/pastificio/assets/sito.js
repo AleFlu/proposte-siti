@@ -7,7 +7,17 @@ const ORARI = { 0: "8:00 – 12:00", 2: "7:30 – 13:30, 16:30 – 19:30", 3: "7
 const NOMI_GIORNI = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
 const euro = n => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
 const ora = h => `${Math.floor(h)}:${h % 1 ? "30" : "00"}`;
-const adesso = new Date();
+// ora italiana, qualunque sia il fuso del telefono: gli orari dell'attività sono quelli di Roma
+function oraItalia() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
+    timeZone: "Europe/Rome", hourCycle: "h23", year: "numeric", month: "numeric", day: "numeric",
+    hour: "numeric", minute: "numeric", second: "numeric"
+  }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  return new Date(+p.year, p.month - 1, +p.day, +p.hour, +p.minute, +p.second);
+}
+// il testo scritto da chi visita va sempre trattato come testo, mai come HTML
+const esc = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const adesso = oraItalia();
 const oggi = adesso.getDay();
 const $ = id => document.getElementById(id);
 const pagina = document.body.dataset.pagina;
@@ -140,17 +150,19 @@ if (pagina === "ordina") {
     stima.textContent = `Totale indicativo: ${euro(prezzo * +peso.value)}. Si paga al ritiro.`;
   };
   sel.addEventListener("change", aggiorna); peso.addEventListener("change", aggiorna); aggiorna();
+  ["f-nome", "f-tel"].forEach(id => $(id).addEventListener("input", e => e.target.removeAttribute("aria-invalid")));
 
   $("modulo").addEventListener("submit", e => {
     e.preventDefault();
     const nome = $("f-nome"), tel = $("f-tel"), conferma = $("conferma");
     conferma.hidden = false;
+    [nome, tel].forEach(c => c.value.trim() ? c.removeAttribute("aria-invalid") : c.setAttribute("aria-invalid", "true"));
     if (!nome.value.trim() || !tel.value.trim()) {
       conferma.textContent = "Servono nome e telefono: ti chiamiamo solo se manca qualcosa.";
       (nome.value.trim() ? tel : nome).focus();
       return;
     }
     const formato = sel.selectedOptions[0].textContent.split(",")[0];
-    conferma.innerHTML = `Prenotato. ${formato} per ${nome.value.trim().split(" ")[0]}, da ritirare domenica tra le 8 e le 12.<br><small>Questa è una demo: nessun ordine è stato registrato.</small>`;
+    conferma.innerHTML = `Prenotato. ${formato} per ${esc(nome.value.trim().split(" ")[0])}, da ritirare domenica tra le 8 e le 12.<br><small>Questa è una demo: nessun ordine è stato registrato.</small>`;
   });
 }

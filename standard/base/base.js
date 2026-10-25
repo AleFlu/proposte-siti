@@ -4,6 +4,18 @@
 
 const $ = id => document.getElementById(id);
 
+// ora italiana, qualunque sia il fuso del telefono: gli orari dell'attività sono quelli di Roma
+function oraItalia() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
+    timeZone: "Europe/Rome", hourCycle: "h23", year: "numeric", month: "numeric", day: "numeric",
+    hour: "numeric", minute: "numeric", second: "numeric"
+  }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  return new Date(+p.year, p.month - 1, +p.day, +p.hour, +p.minute, +p.second);
+}
+
+// il testo scritto da chi visita va sempre trattato come testo, mai come HTML
+const esc = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
 // ---------- menu su telefono, chiudibile con Esc ----------
 (function () {
   const bottone = document.querySelector(".menu-apri"), nav = $("nav");
@@ -25,7 +37,7 @@ const $ = id => document.getElementById(id);
   const fasce = JSON.parse(dati.textContent);          // { "0": [[8, 12]], "2": [[7.5, 13.5], [16.5, 19.5]], … } 0 = domenica
   const giorni = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
   const ora = h => `${Math.floor(h)}:${String(Math.round(h % 1 * 60)).padStart(2, "0")}`;
-  const adesso = new Date(), oggi = adesso.getDay();
+  const adesso = oraItalia(), oggi = adesso.getDay();
   const h = adesso.getHours() + adesso.getMinutes() / 60;
   const diOggi = fasce[oggi] || [];
   const aperta = diOggi.find(([a, b]) => h >= a && h < b);

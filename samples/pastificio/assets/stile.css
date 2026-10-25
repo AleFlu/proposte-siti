@@ -402,3 +402,11 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px
 /* spaziatura del testo aumentata (WCAG 1.4.12): i nomi lunghi vanno a capo invece di sbordare */
 .formato, .formato button { min-width: 0; }
 .formato .nome, .formato .regione { overflow-wrap: anywhere; }
+
+/* la barra fissa non deve coprire l'elemento che riceve il focus (WCAG 2.2, 2.4.11) */
+@media (max-width: 820px) {
+  html { scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* campo da completare dopo un invio */
+input[aria-invalid="true"] { border-bottom: 4px solid #8B1A1A; }

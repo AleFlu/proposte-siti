@@ -172,6 +172,8 @@ def controlla_sito(cartella, demo, problemi):
             legale = avv if cartella.name == "samples" else err
             if not re.search(r"Partita IVA|P\.\s?IVA", src):
                 legale("manca la partita IVA nel piede")
+            if "mailto:" not in src:
+                legale("manca un'email di contatto (D.Lgs. 70/2003, art. 7)")
             if 'href="privacy.html"' not in src and nome != "privacy.html":
                 legale("manca il link all'informativa privacy")
             if "<form" in src:

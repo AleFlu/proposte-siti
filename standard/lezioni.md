@@ -32,6 +32,10 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
 - **`[hidden]` annullato da un `display: grid` del componente.** Serve una regola `.componente[hidden] { display: none }`.
 
 ## Accessibilità
+- **Vegetariana e piccante distinti solo dal colore** (quadratino verde e quadratino arancio): per chi non distingue
+  i colori erano uguali. Ora tondo e rombo, con la legenda che usa le stesse forme.
+- **La barra fissa in basso copriva in parte i campi raggiunti con la tastiera.** `scroll-padding-bottom` sull'`html`,
+  dentro la media query della barra. Per misurarlo con Playwright aspettare la fine dello scorrimento animato.
 - **`aria-label` diverso dal testo visibile** (label-content-name-mismatch). Per dare più contesto si usa
   testo nascosto visivamente (`.vh`) dentro il link, non `aria-label`.
 - **Schede del banco senza tastiera.** Ruoli `tablist`/`tab`/`tabpanel`, frecce, Home e Fine, `tabindex` mobile.
@@ -43,6 +47,12 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
 - **Salto di livello h1 → h3** nella pagina Formati del pastificio, trovato da `controlla.py`.
 
 ## SEO e legale
+- **Nessuno dei due siti aveva un link per arrivare**, nonostante la regola «arrivare a un tocco». Ora la pagina
+  Dove siamo ha il link a Google Maps e la sua barra mostra Chiama e Indicazioni.
+- **Mancava l'email nel piede** (D.Lgs. 70/2003, art. 7). `controlla.py` ora la segnala.
+- **«Fuori menu di ottobre»**: un testo con il mese invecchia da solo. Meglio «di stagione», oppure la data va nel
+  calendario degli aggiornamenti.
+- **GitHub Pages non è adatto ai siti dei clienti**: i termini lo escludono per attività commerciali e vendite.
 - **Font caricati da Google.** Inviano l'IP del visitatore a terzi: font sempre locali con `scarica_font.py`.
 - **Partita IVA e privacy mancanti nei primi sample.** Ora sono nel piede del generatore di partenza.
 - **"Coperto incluso" senza "IVA inclusa".** I prezzi devono dire se l'IVA è inclusa.
@@ -51,6 +61,12 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
   Nell'HTML ci va sempre un ripiego statico, che il JS sostituisce.
 - **Anteprima social tagliata.** Lo screenshot 1200 × 630 va fatto con la pagina rimpicciolita (zoom 0,78)
   e controllato intero.
+
+## Codice
+- **«Aperto ora» calcolato sull'ora del telefono**: un turista con il telefono su un altro fuso vedeva l'orario sbagliato.
+  Ora si usa l'ora di Roma (`oraItalia()` in `base.js`).
+- **Il nome scritto nel modulo veniva inserito come HTML** nel messaggio di conferma. Era un rischio solo per chi lo
+  scriveva, ma è una cattiva abitudine: ora passa da `esc()`.
 
 ## Strumenti
 - **Rich Results Test: "L'URL non è disponibile per Google" sulle demo.** Rifiuta le pagine con `noindex`.

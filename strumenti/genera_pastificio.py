@@ -8,6 +8,7 @@ Tutto il contenuto è scritto nell'HTML; assets/sito.js aggiunge solo l'interazi
 import html
 import json
 import pathlib
+import urllib.parse
 
 import comune
 
@@ -16,6 +17,9 @@ BASE = "https://aleflu.github.io/proposte-siti/pastificio/"
 TELEFONO = "0521 000 000"
 TEL_LINK = "+390521000000"
 PIVA = "00000000000"
+EMAIL = "bottega@cartablu.example"
+# indicazioni a un tocco: apre Google Maps (app o sito) sull'indirizzo
+MAPPA = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote_plus("Borgo Riccio 14, 43121 Parma")
 CUR = ' aria-current="page"'
 e = html.escape
 
@@ -69,7 +73,7 @@ NEGOZIO = {
     "@context": "https://schema.org", "@type": "Store",
     "name": "Pastificio Carta Blu",
     "description": "Pasta fresca all’uovo e ripiena fatta a mano ogni mattina a Parma, venduta al banco a peso.",
-    "url": BASE, "image": [BASE + "assets/anteprima.jpg"], "telephone": "+39 0521 000 000", "priceRange": "€€",
+    "url": BASE, "image": [BASE + "assets/anteprima.jpg"], "telephone": "+39 0521 000 000", "email": EMAIL, "priceRange": "€€",
     "address": {"@type": "PostalAddress", "streetAddress": "Borgo Riccio 14", "addressLocality": "Parma",
                 "postalCode": "43121", "addressRegion": "PR", "addressCountry": "IT"},
     "geo": {"@type": "GeoCoordinates", "latitude": 44.8015, "longitude": 10.3279},
@@ -109,8 +113,12 @@ def righe_orari():
 def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte"):
     voci = "\n".join(f'    <a href="{h}"{CUR if h == file else ""}>{t}</a>' for h, t in NAV)
     url = BASE + ("" if file == "index.html" else file)
-    azioni = (f'<a href="tel:{TEL_LINK}">Chiama {TELEFONO}</a>' if barra == "solo-chiama"
-              else f'<a href="tel:{TEL_LINK}">Chiama</a><a class="primaria" href="ordina.html">Ordina per domenica</a>')
+    if barra == "solo-chiama":
+        azioni = f'<a href="tel:{TEL_LINK}">Chiama {TELEFONO}</a>'
+    elif barra == "indicazioni":
+        azioni = f'<a href="tel:{TEL_LINK}">Chiama</a><a class="primaria" href="{e(MAPPA)}">Indicazioni</a>'
+    else:
+        azioni = f'<a href="tel:{TEL_LINK}">Chiama</a><a class="primaria" href="ordina.html">Ordina per domenica</a>'
     testo = f"""<!doctype html>
 <html lang="it">
 <head>
@@ -161,6 +169,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
         <h2>Pastificio Carta Blu</h2>
         <p>Borgo Riccio 14, 43121 Parma</p>
         <p>Telefono {TELEFONO}</p>
+        <p><a href="mailto:{EMAIL}">{EMAIL}</a></p>
         <p>Partita IVA {PIVA}</p>
         <p>Prezzi in euro, IVA inclusa.</p>
       </div>
@@ -397,11 +406,12 @@ pagina("bottega.html", "La bottega e dove siamo, Parma | Pastificio Carta Blu",
         <h2 class="indirizzo" id="t-dove">Borgo Riccio 14,<br>Parma</h2>
         <p>A due passi da piazza Garibaldi. Si parcheggia in viale Toschi, poi sono tre minuti a piedi.</p>
         <p>Telefono {TELEFONO}</p>
+        <p><a class="rimando" href="{e(MAPPA)}">Apri le indicazioni in Google Maps</a></p>
       </div>
       <table class="orari" aria-label="Orari di apertura"><tbody>{righe_orari()}</tbody></table>
     </div>
   </section>
-""", extra_head=json_ld(NEGOZIO))
+""", extra_head=json_ld(NEGOZIO), barra="indicazioni")
 
 opzioni = "".join(f'<option value="{fid}" data-prezzo="{FORMATI[fid]["prezzo"]}">{e(FORMATI[fid]["nome"])}, {euro(FORMATI[fid]["prezzo"])}/kg</option>' for fid in ORDINABILI)
 pagina("ordina.html", "Ordina la pasta per domenica | Pastificio Carta Blu, Parma",
@@ -437,7 +447,7 @@ pagina("ordina.html", "Ordina la pasta per domenica | Pastificio Carta Blu, Parm
           </select>
         </div>
         <div class="campo largo">
-          <label for="f-note">Note</label>
+          <label for="f-note">Note (facoltativo)</label>
           <input id="f-note" name="note" placeholder="Per esempio: metà tortellini e metà anolini">
         </div>
         <p class="aiuto campo largo" id="stima" aria-live="polite">Totale indicativo: 48,00 €. Si paga al ritiro.</p>

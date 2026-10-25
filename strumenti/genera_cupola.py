@@ -7,6 +7,7 @@ e rigenerare, invece di toccare a mano gli HTML in samples/la-cupola/.
 import html
 import json
 import pathlib
+import urllib.parse
 
 import comune
 
@@ -15,6 +16,9 @@ BASE = "https://aleflu.github.io/proposte-siti/la-cupola/"
 TELEFONO = "011 000 0000"
 TEL_LINK = "+390110000000"
 PIVA = "00000000000"
+EMAIL = "ciao@lacupola.example"
+# indicazioni a un tocco: apre Google Maps (app o sito) sull'indirizzo
+MAPPA = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote_plus("Via Belfiore 31, 10125 Torino")
 CUR = ' aria-current="page"'
 
 # ---------- allergeni (Regolamento UE 1169/2011, allegato II) ----------
@@ -46,12 +50,12 @@ MENU = [
         {"nome": "Patate e provola", "ingr": "provola affumicata, patate al forno, rosmarino, pepe nero", "prezzo": 10, "all": [1, 7], "segni": ["veg"]},
         {"nome": "Ricotta e pepe", "ingr": "fiordilatte, ricotta di bufala, pepe nero, basilico, scorza di limone", "prezzo": 9.5, "all": [1, 7], "segni": ["veg"]},
      ]},
-    {"id": "fuori-menu", "titolo": "Fuori menu di ottobre", "indice": "Fuori menu", "evidenza": True,
-     "sotto": "Cambiano ogni mese, con quello che arriva dal mercato di Porta Palazzo.",
+    {"id": "fuori-menu", "titolo": "Fuori menu di stagione", "indice": "Fuori menu", "evidenza": True,
+     "sotto": "Cambiano con le stagioni: quello che arriva dal mercato di Porta Palazzo.",
      "piatti": [
         {"nome": "Zucca e salsiccia di Bra", "ingr": "crema di zucca, salsiccia di Bra, provola affumicata, salvia", "prezzo": 12.5, "all": [1, 7], "segni": []},
         {"nome": "Porcini e Castelmagno", "ingr": "porcini trifolati, fonduta di Castelmagno DOP, timo", "prezzo": 14, "all": [1, 7], "segni": ["veg"],
-         "consiglio": "Con un calice di Aglianico è la nostra cena di ottobre."},
+         "consiglio": "Con un calice di Aglianico è la cena che consigliamo di più."},
         {"nome": "Scarola", "ingr": "scarola ripassata, olive di Gaeta, capperi, acciughe del Cantabrico, senza latticini", "prezzo": 12, "all": [1, 4], "segni": []},
      ]},
     {"id": "fritti", "titolo": "Fritti", "indice": "Fritti",
@@ -102,6 +106,7 @@ RISTORANTE = {
     "url": BASE,
     "image": [BASE + "assets/anteprima.jpg"],
     "telephone": "+39 011 000 0000",
+    "email": EMAIL,
     "priceRange": "€€",
     "servesCuisine": ["Pizza napoletana", "Cucina campana"],
     "menu": BASE + "pizze.html",
@@ -178,6 +183,8 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
     url = BASE + ("" if file == "index.html" else file)
     if barra == "solo-chiama":
         azioni = f'<a href="tel:{TEL_LINK}">Chiama {TELEFONO}</a>'
+    elif barra == "indicazioni":
+        azioni = f'<a href="tel:{TEL_LINK}">Chiama</a><a class="primaria" href="{e(MAPPA)}">Indicazioni</a>'
     else:
         azioni = f'<a href="tel:{TEL_LINK}">Chiama</a><a class="primaria" href="prenota.html">Prenota un tavolo</a>'
     pagina_html = f"""<!doctype html>
@@ -232,6 +239,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
         <p>Pizzeria napoletana</p>
         <p>Via Belfiore 31, 10125 Torino</p>
         <p>Telefono {TELEFONO}</p>
+        <p><a href="mailto:{EMAIL}">{EMAIL}</a></p>
         <p>Partita IVA {PIVA}</p>
       </div>
       <div>
@@ -301,7 +309,7 @@ pagina("index.html", "Pizzeria napoletana a Torino, San Salvario | La Cupola",
     <div class="wrap">
       <div class="intestazione">
         <h2 id="t-fuori">{e(fuori["titolo"])}</h2>
-        <p>Tre pizze che ci sono solo questo mese, con quello che arriva dal mercato di Porta Palazzo. Prezzi in euro, IVA inclusa.</p>
+        <p>Tre pizze che ci sono solo in questa stagione, con quello che arriva dal mercato di Porta Palazzo. Prezzi in euro, IVA inclusa.</p>
       </div>
       <ul class="legenda-segni" aria-label="Legenda">
         <li><span class="segno veg" aria-hidden="true"></span>vegetariana</li>
@@ -328,12 +336,12 @@ varianti = "\n".join(f'            <tr><th scope="row">{e(n)}</th><td>{v}</td></
 lista_allergeni = "\n".join(f'          <li><b>{n}</b>{e(nome)}</li>' for n, nome in ALLERGENI.items())
 
 pagina("pizze.html", "Menu: pizze napoletane, fritti e prezzi | La Cupola, Torino",
-  "Il menu della Cupola a Torino: pizze rosse e bianche, fuori menu di ottobre, fritti napoletani, dolci e vini campani, con prezzi e allergeni.",
+  "Il menu della Cupola a Torino: pizze rosse e bianche, fuori menu di stagione, fritti napoletani, dolci e vini campani, con prezzi e allergeni.",
   "pizze", f"""
   <div class="scuro">
     <div class="wrap testa-pagina">
       <h1>Il menu</h1>
-      <p>Pizze rosse e bianche, il fuori menu del mese, fritti e dolci. Prezzi in euro, IVA e coperto inclusi.</p>
+      <p>Pizze rosse e bianche, il fuori menu di stagione, fritti e dolci. Prezzi in euro, IVA e coperto inclusi.</p>
     </div>
   </div>
 
@@ -478,7 +486,7 @@ pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria napoletana a Tor
           <input id="f-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required>
         </div>
         <div class="campo largo">
-          <label for="f-note">Note</label>
+          <label for="f-note">Note (facoltativo)</label>
           <textarea id="f-note" name="note" placeholder="Allergie, seggiolone, un compleanno"></textarea>
         </div>
         <button class="bottone" type="submit">Invia la richiesta</button>
@@ -513,6 +521,7 @@ pagina("dove.html", "Dove siamo e orari | La Cupola, pizzeria napoletana a Torin
     <div class="wrap dove-griglia">
       <div>
         <address class="indirizzo">Via Belfiore 31<br>10125 Torino</address>
+        <p><a class="link-forte" href="{e(MAPPA)}">Apri le indicazioni in Google Maps</a></p>
         <p>In San Salvario, tra il parco del Valentino e la stazione di Porta Nuova.</p>
         <dl class="arrivare">
           <dt>Metro</dt><dd>Linea 1, fermata Marconi, poi 5 minuti a piedi.</dd>
@@ -529,7 +538,7 @@ pagina("dove.html", "Dove siamo e orari | La Cupola, pizzeria napoletana a Torin
       </table>
     </div>
   </section>
-""", extra_head=json_ld(RISTORANTE))
+""", extra_head=json_ld(RISTORANTE), barra="indicazioni")
 
 pagina("privacy.html", "Informativa privacy e cookie | La Cupola, pizzeria a Torino",
   "Come la pizzeria La Cupola tratta nome e telefono lasciati per prenotare un tavolo, per quanto tempo li conserva, quali diritti hai e quali cookie usa il sito.",

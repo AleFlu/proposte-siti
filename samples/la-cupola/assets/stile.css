@@ -150,8 +150,9 @@ section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .segno { display: inline-block; width: .62rem; height: .62rem; margin-left: .45rem; border-radius: 1px; transform: rotate(4deg); vertical-align: .1em; }
 .segno + .segno { margin-left: .25rem; }
-.segno.veg { background: var(--mosaico); }
-.segno.picc { background: var(--brace); }
+/* forma diversa oltre al colore (WCAG 1.4.1): tondo vegetariana, rombo piccante */
+.segno.veg { background: var(--mosaico); border-radius: 50%; transform: none; }
+.segno.picc { background: var(--brace); transform: rotate(45deg) scale(.88); }
 
 .menu-layout {
   display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start;
@@ -409,3 +410,11 @@ footer a { color: #EAF2F0; }
   .orari-scelta label:has(input:checked) { border: 3px solid Highlight; }
   .segno, .pallino { forced-color-adjust: none; }
 }
+
+/* la barra fissa non deve coprire l'elemento che riceve il focus (WCAG 2.2, 2.4.11) */
+@media (max-width: 820px) {
+  html { scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* campo da completare dopo un invio */
+.campo input[aria-invalid="true"] { border: 2px solid #B42318; }

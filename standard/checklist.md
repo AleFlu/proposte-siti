@@ -8,6 +8,7 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] Brief, architettura, direzione di design e token in `docs/<nome>/`, approvati
 - [ ] Coppia di font scelta e motivata, scaricata con `scarica_font.py`
 - [ ] Tre riferimenti fuori dal settore, un anti-riferimento
+- [ ] Nessun mese o anno nei testi fissi («fuori menu di ottobre»): o si usa una formula senza data, o la data entra nel calendario degli aggiornamenti
 
 ## 2. Anti-slop (critica di design su screenshot, prima di mostrare)
 - [ ] Domanda esplicita: "cosa sembra generico o generato da un'AI?". Correggere ciò che emerge.
@@ -24,6 +25,7 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] Testo di lettura ≥ 16 px, righe sotto i 70 caratteri
 - [ ] Aree toccabili ≥ 44 × 44 px
 - [ ] Barra fissa in basso con le 1–2 azioni principali e `env(safe-area-inset-bottom)`
+- [ ] «Arrivare» a un tocco: link alle indicazioni (Google Maps) nella pagina Dove siamo, anche nella sua barra
 - [ ] Contenuti lunghi con indice che resta visibile
 - [ ] Moduli: `type`, `inputmode`, `autocomplete` giusti ⚙ (in parte)
 - [ ] Nessuna informazione raggiungibile solo con l'hover
@@ -36,6 +38,9 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] Un solo h1, nessun salto di livello ⚙
 - [ ] `<main>`, link "Vai al contenuto", campi con `<label>`, pulsanti e link con testo ⚙
 - [ ] Il nome accessibile contiene il testo visibile (niente `aria-label` che lo sostituisce)
+- [ ] Nessuna informazione affidata solo al colore: segni e stati hanno anche forma o testo (WCAG 1.4.1)
+- [ ] Il focus non finisce sotto barre fisse o testate appiccicose: `scroll-padding` (WCAG 2.4.11)
+- [ ] Campi facoltativi dichiarati; dopo un invio, i campi mancanti hanno `aria-invalid` e un messaggio
 - [ ] Reflow a 320 px e zoom al 200% senza perdita di contenuto
 - [ ] Spaziatura del testo aumentata (WCAG 1.4.12) senza testo tagliato o sbordato
 - [ ] Colori forzati (contrasto elevato di Windows): stati selezionati visibili anche senza sfondo
@@ -59,9 +64,12 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] Foto in WebP/AVIF, più misure con `srcset`, `width`/`height`, `loading="lazy"` sotto la piega,
       `fetchpriority="high"` sulla foto principale
 - [ ] Font solo latin e latin-ext, `font-display: swap`
+- [ ] Orari e stato «aperto ora» calcolati sull'ora italiana (`oraItalia()`), non sul fuso del telefono
+- [ ] Il testo scritto da chi visita non entra mai come HTML (`esc()` o `textContent`)
 
 ## 7. Legale (Italia / UE)
 - [ ] Partita IVA nel piede di ogni pagina (società: anche sede, REA, capitale) ⚙
+- [ ] Email di contatto nel piede (D.Lgs. 70/2003, art. 7) ⚙; professioni regolamentate: anche ordine o albo e numero di iscrizione
 - [ ] Informativa privacy dedicata, nel piede e vicino a ogni modulo ⚙
 - [ ] Nessuna risorsa di terze parti senza consenso: font, mappe, video, statistiche ⚙
 - [ ] Mappa come link a Google Maps o immagine statica. Se incorporata, solo dopo un clic.
@@ -85,7 +93,9 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
       - servizio di moduli con server in UE e contratto di trattamento dati, citato nell'informativa;
       - gestionale di prenotazione già usato dal cliente, linkato e non incorporato.
 - [ ] Dominio intestato al cliente, HTTPS attivo, pagina 404 personalizzata alla radice
-- [ ] Hosting: GitHub Pages va bene. Per intestazioni di sicurezza, redirect o moduli integrati, Netlify o Cloudflare Pages.
+- [ ] Hosting: GitHub Pages solo per le demo, perché i suoi termini non lo consentono per siti commerciali.
+      Per i clienti: Cloudflare Pages o Netlify, che oggi permettono l'uso commerciale anche gratis (ricontrollare i
+      termini al momento), con redirect, intestazioni di sicurezza e moduli. Vercel gratuito no: solo uso non commerciale.
 - [ ] Google Search Console: proprietà verificata, sitemap inviata
 - [ ] Google Business Profile collegato al sito
 - [ ] Dichiarazione di accessibilità, se il cliente non è una microimpresa (European Accessibility Act)
