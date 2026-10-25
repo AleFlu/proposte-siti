@@ -42,7 +42,9 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] Title 50–60 e description 140–160 caratteri, unici ⚙
 - [ ] Canonical assoluto, Open Graph completo, `og:locale` it_IT ⚙
 - [ ] Anteprima `anteprima.jpg` 1200 × 630, controllata intera (non tagliata)
-- [ ] JSON-LD valido con il tipo più specifico ⚙. Validato con Rich Results Test e Schema Markup Validator.
+- [ ] JSON-LD valido con il tipo più specifico ⚙. Validato con Schema Markup Validator (validator.schema.org,
+      funziona anche con il `noindex`) e con il Rich Results Test di Google: sulle demo con `noindex` risponde
+      "URL non disponibile per Google", quindi si usa la scheda "Codice" incollando il sorgente della pagina.
 - [ ] Menu, prezzi, orari, indirizzo nell'HTML, non solo in JavaScript, mai in PDF o immagine
 - [ ] Favicon SVG e icone PNG (iPhone 180, Android 192/512), manifest ⚙
 - [ ] `sitemap.xml` generata ⚙. `robots.txt` alla radice del dominio, senza bloccare le pagine.

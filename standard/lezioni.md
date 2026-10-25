@@ -47,6 +47,8 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
   e controllato intero.
 
 ## Strumenti
+- **Rich Results Test: "L'URL non è disponibile per Google" sulle demo.** Rifiuta le pagine con `noindex`.
+  Per le demo: validator.schema.org con l'URL, oppure il Rich Results Test con il sorgente incollato nella scheda "Codice".
 - **Playwright mostrava file vecchi dalla cache.** Disattivare la cache via CDP (`Network.setCacheDisabled`)
   prima di verificare una modifica.
 - **Comandi concatenati con `&&` dopo uno script fallito.** Un `git rm` è partito anche se lo script prima
