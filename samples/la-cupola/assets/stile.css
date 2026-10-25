@@ -403,3 +403,9 @@ footer a { color: #EAF2F0; }
   .piatto { break-inside: avoid; }
   a { text-decoration: none; }
 }
+
+/* ---------- colori forzati (contrasto elevato di Windows): gli stati non possono affidarsi allo sfondo ---------- */
+@media (forced-colors: active) {
+  .orari-scelta label:has(input:checked) { border: 3px solid Highlight; }
+  .segno, .pallino { forced-color-adjust: none; }
+}

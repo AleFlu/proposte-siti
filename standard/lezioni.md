@@ -35,6 +35,11 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
 - **`aria-label` diverso dal testo visibile** (label-content-name-mismatch). Per dare più contesto si usa
   testo nascosto visivamente (`.vh`) dentro il link, non `aria-label`.
 - **Schede del banco senza tastiera.** Ruoli `tablist`/`tab`/`tabpanel`, frecce, Home e Fine, `tabindex` mobile.
+- **Stati selezionati invisibili con i colori forzati.** L'orario scelto in Prenota e il giorno attivo al
+  banco si distinguevano solo per lo sfondo, che il contrasto elevato di Windows cancella. Serve sempre un bordo
+  (`Highlight`) in `@media (forced-colors: active)`.
+- **Orari della pizzeria generati solo da JavaScript** in "Dove siamo": per Google non esistevano. Ora
+  `controlla.py` segnala tabelle, liste e tendine vuote nell'HTML.
 - **Salto di livello h1 → h3** nella pagina Formati del pastificio, trovato da `controlla.py`.
 
 ## SEO e legale

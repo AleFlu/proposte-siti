@@ -324,8 +324,6 @@ if (pagina === "prenota") {
 }
 
 if (pagina === "dove") {
-  const ordine = [1, 2, 3, 4, 5, 6, 0];
-  $("orari-settimana").innerHTML = ordine.map(g =>
-    `<tr class="${g === adesso.getDay() ? "oggi" : ""}"><th scope="row">${maiuscola(GIORNI[g])}</th><td>${fasceTesto(g)}</td></tr>`
-  ).join("");
+  // la tabella è già nell'HTML: qui si evidenzia solo il giorno di oggi
+  document.querySelectorAll("#orari-settimana tr[data-giorno]").forEach(tr => tr.classList.toggle("oggi", +tr.dataset.giorno === adesso.getDay()));
 }

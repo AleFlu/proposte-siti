@@ -149,6 +149,8 @@ def controlla_sito(cartella, demo, problemi):
                     avv(f"immagine senza width/height (spostamenti di layout): {a.get('src')}")
             if tag in ("a", "button") and not testo.strip() and not a.get("aria-label") and not a.get("aria-labelledby"):
                 err(f"<{tag}> senza testo leggibile: {a.get('href') or a.get('class')}")
+            if tag in ("select", "tbody", "ul", "ol", "table") and not testo.strip():
+                avv(f"<{tag}{' id=' + a['id'] if a.get('id') else ''}> vuoto nell'HTML: senza JavaScript (e per Google) non c'è niente")
             if tag == "a" and a.get("href", "").startswith("tel:") and not a["href"].startswith("tel:+39"):
                 avv(f"link telefonico senza +39: {a['href']}")
             if tag == "input" and a.get("type") not in ("hidden", "submit", "radio", "checkbox"):

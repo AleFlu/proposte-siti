@@ -391,3 +391,14 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px
   .scheda, li { break-inside: avoid; }
   a { text-decoration: none; }
 }
+
+/* ---------- colori forzati (contrasto elevato di Windows): gli stati non possono affidarsi allo sfondo ---------- */
+@media (forced-colors: active) {
+  .giorni button[aria-selected="true"] { border: 3px solid Highlight; }
+  .formato button[aria-expanded="true"] { outline: 3px solid Highlight; outline-offset: -3px; }
+  .pallino { forced-color-adjust: none; }
+}
+
+/* spaziatura del testo aumentata (WCAG 1.4.12): i nomi lunghi vanno a capo invece di sbordare */
+.formato, .formato button { min-width: 0; }
+.formato .nome, .formato .regione { overflow-wrap: anywhere; }

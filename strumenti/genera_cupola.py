@@ -84,6 +84,11 @@ VARIANTI = [
     ("Margherita piccola, per bambini", "5,00"),
 ]
 SEGNI = {"veg": "vegetariana", "picc": "piccante"}
+# orari scritti nell'HTML (Google e senza JavaScript); cupola.js evidenzia solo il giorno di oggi
+ORARI_SETTIMANA = [(1, "Lunedì", "Chiuso"), (2, "Martedì", "19:00 – 23:30"), (3, "Mercoledì", "19:00 – 23:30"),
+                   (4, "Giovedì", "19:00 – 23:30"), (5, "Venerdì", "19:00 – 23:30"),
+                   (6, "Sabato", "12:30 – 14:30, 19:00 – 23:30"), (0, "Domenica", "12:30 – 14:30, 19:00 – 23:30")]
+righe_orari = "\n".join(f'          <tr data-giorno="{g}"><th scope="row">{n}</th><td>{o}</td></tr>' for g, n, o in ORARI_SETTIMANA)
 
 prezzo = lambda p: f"{p:.2f}".replace(".", ",")
 e = html.escape
@@ -450,11 +455,11 @@ pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria napoletana a Tor
       <form id="modulo" novalidate>
         <div class="campo">
           <label for="f-giorno">Giorno</label>
-          <select id="f-giorno" name="giorno"></select>
+          <select id="f-giorno" name="giorno">{"".join(f'<option>{n}</option>' for g, n, o in ORARI_SETTIMANA if o != "Chiuso")}</select>
         </div>
         <div class="campo">
           <label for="f-persone">Persone</label>
-          <select id="f-persone" name="persone"></select>
+          <select id="f-persone" name="persone">{"".join(f'<option value="{i}"{" selected" if i == 2 else ""}>{i} {"persona" if i == 1 else "persone"}</option>' for i in range(1, 9))}</select>
         </div>
         <fieldset class="campo largo">
           <legend>Orario</legend>
@@ -518,7 +523,9 @@ pagina("dove.html", "Dove siamo e orari | La Cupola, pizzeria napoletana a Torin
       </div>
       <table class="orari">
         <caption>Orari</caption>
-        <tbody id="orari-settimana"></tbody>
+        <tbody id="orari-settimana">
+{righe_orari}
+        </tbody>
       </table>
     </div>
   </section>

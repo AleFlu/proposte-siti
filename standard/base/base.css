@@ -101,6 +101,13 @@ label { display: block; font-weight: 600; margin-bottom: .35rem; }
 .testo-legale p { margin: 0; max-width: 64ch; }
 .nota-demo { font-size: .875rem; color: var(--muted); }
 
+/* ---------- colori forzati (contrasto elevato di Windows) ----------
+   Il browser sostituisce sfondi e colori: lo stato selezionato deve vedersi anche con un bordo. */
+@media (forced-colors: active) {
+  [role="tab"][aria-selected="true"], [aria-pressed="true"] { border: 3px solid Highlight; }
+  label:has(input:checked) { outline: 3px solid Highlight; outline-offset: 1px; }
+}
+
 /* ---------- movimento ridotto ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

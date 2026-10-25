@@ -37,6 +37,9 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] `<main>`, link "Vai al contenuto", campi con `<label>`, pulsanti e link con testo ⚙
 - [ ] Il nome accessibile contiene il testo visibile (niente `aria-label` che lo sostituisce)
 - [ ] Reflow a 320 px e zoom al 200% senza perdita di contenuto
+- [ ] Spaziatura del testo aumentata (WCAG 1.4.12) senza testo tagliato o sbordato
+- [ ] Colori forzati (contrasto elevato di Windows): stati selezionati visibili anche senza sfondo
+- [ ] Pagina completa senza JavaScript: orari, menu, tendine dei moduli già nell'HTML ⚙
 
 ## 5. SEO
 - [ ] Title 50–60 e description 140–160 caratteri, unici ⚙
