@@ -130,7 +130,9 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; letter-spacing: -.01
 .orari-brevi a:hover { border-color: var(--mosaico-scuro); }
 .orari-brevi b { font-weight: 600; }
 .orari-brevi span { font-size: .8125rem; color: var(--tenue); }
-.orari-brevi .pieno { opacity: .55; }
+.orari-brevi .pieno { background: transparent; border-style: dashed; color: var(--tenue); }
+.orari-brevi .pieno b { text-decoration: line-through; text-decoration-thickness: 1px; }
+.orari-brevi .pieno span { color: var(--tenue); }
 
 /* ---------- sezioni ---------- */
 section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
@@ -315,7 +317,8 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--mosaico-scu
 .orari-scelta label:has(input:checked) { background: var(--forno); border-color: var(--forno); color: var(--piastrella); }
 .orari-scelta label:has(input:checked) span { color: var(--tenue-scuro); }
 .orari-scelta label:has(input:focus-visible) { outline: 3px solid var(--mosaico-scuro); outline-offset: 2px; }
-.orari-scelta label:has(input:disabled) { cursor: not-allowed; opacity: .5; background: transparent; }
+.orari-scelta label:has(input:disabled) { cursor: not-allowed; background: transparent; border-style: dashed; color: var(--tenue); }
+.orari-scelta label:has(input:disabled) b { text-decoration: line-through; text-decoration-thickness: 1px; }
 .orari-scelta .vuoto { grid-column: 1 / -1; margin: 0; color: var(--tenue); }
 .aiuto { margin: 0; font-size: var(--s-1); color: var(--tenue); }
 form .bottone { grid-column: 1 / -1; justify-self: start; }

@@ -209,6 +209,13 @@ def controlla_sito(cartella, demo, problemi):
                 if f'id="{ancora}"' not in testo_dest:
                     err(f"ancora inesistente: {href}")
 
+    # testo reso tenue con la trasparenza: il contrasto cala e Lighthouse lo boccia (vedi standard/lezioni.md)
+    for css in sorted((cartella / "assets").glob("*.css")):
+        for n, riga in enumerate(css.read_text().splitlines(), 1):
+            if re.search(r"opacity:\s*0?\.\d", riga) and "transition" not in riga:
+                problemi.append(("avviso", f"{cartella.name}/{css.name}:{n}",
+                                 "opacity sotto 1: se riguarda del testo usa un colore, non la trasparenza"))
+
     if pagine and not (cartella / "sitemap.xml").exists() and cartella.name != "samples":
         problemi.append(("avviso", cartella.name, "manca sitemap.xml"))
 

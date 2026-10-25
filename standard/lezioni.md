@@ -27,7 +27,8 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
 - **Una regola generica `section { padding }` colpiva le sezioni del menu.** Regole generiche solo sui
   contenitori di pagina. I componenti si azzerano esplicitamente.
 - **Testo con `opacity` ridotta: contrasto bocciato da Lighthouse.** Il colore tenue va scritto come colore,
-  non come trasparenza.
+  non come trasparenza. Ricapitato con gli orari "pieno" della pizzeria, che compaiono solo quando un turno
+  è pieno: ora `controlla.py` segnala ogni `opacity` sotto 1 nei CSS.
 - **`[hidden]` annullato da un `display: grid` del componente.** Serve una regola `.componente[hidden] { display: none }`.
 
 ## Accessibilità
