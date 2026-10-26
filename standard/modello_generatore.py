@@ -31,6 +31,7 @@ DATI = {
     "ragione_sociale": "__NOME__",
     "piva": "00000000000",
     "fascia_prezzo": "€€",
+    "profili": [],                      # Instagram, Facebook, TripAdvisor…: gli stessi del Google Business Profile
     "colore_tema": "#222222", "colore_fondo": "#FFFFFF",
 }
 # 0 = domenica … 6 = sabato; fasce in ore decimali (7.5 = 7:30)
@@ -72,6 +73,7 @@ ATTIVITA = {
           for g, fasce in sorted(ORARI.items()) for a, b in fasce),
         *comune.orari_ld(CHIUSURE),
     ],
+    **({"sameAs": DATI["profili"]} if DATI["profili"] else {}),
 }
 json_ld = lambda dati: f'<script type="application/ld+json">\n{json.dumps(dati, ensure_ascii=False, indent=1)}\n</script>'
 orari_dati = f'<script type="application/json" id="orari-dati">{json.dumps({str(g): f for g, f in ORARI.items()})}</script>'
@@ -122,6 +124,8 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head=""):
 <link rel="stylesheet" href="{comune.con_versione(OUT, "assets/stile.css")}">
 {orari_dati}
 {comune.dati_chiusure(CHIUSURE)}
+{comune.script(OUT, "assets/base.js")}
+{comune.script(OUT, "assets/sito.js")}
 {extra_head}
 </head>
 <body data-pagina="{chiave}">
@@ -152,8 +156,6 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head=""):
 
 <nav class="barra-azioni" aria-label="Azioni rapide">{azioni}</nav>
 
-<script src="{comune.con_versione(OUT, "assets/base.js")}"></script>
-<script src="{comune.con_versione(OUT, "assets/sito.js")}"></script>
 </body>
 </html>
 """

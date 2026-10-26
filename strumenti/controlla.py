@@ -193,12 +193,16 @@ def controlla_sito(cartella, demo, problemi):
                 err(f"JSON-LD non valido: {ex}")
                 continue
             tipo = dati.get("@type")
-            if tipo in ("Restaurant", "Bakery", "Store", "LocalBusiness", "ProfessionalService", "FoodEstablishment"):
+            if tipo in ("Restaurant", "Bakery", "Store", "LocalBusiness", "ProfessionalService", "FoodEstablishment") \
+                    or "address" in dati:
                 for k in ("name", "address", "telephone", "url", "image", "openingHoursSpecification"):
                     if k not in dati:
                         err(f"JSON-LD {tipo} senza {k}")
                 if not str(dati.get("telephone", "")).startswith("+39"):
                     avv("JSON-LD: telefono senza +39")
+                # i profili social e di recensione legano il sito all'attività su Google (nelle demo non ce ne sono)
+                if not demo and not dati.get("sameAs"):
+                    avv("JSON-LD senza sameAs: aggiungi i profili (Instagram, Facebook…) uguali al Google Business Profile")
 
         # CSS e JS con "?v=impronta" (comune.con_versione): senza, dopo un aggiornamento i telefoni possono
         # tenere per minuti la copia vecchia; con un'impronta vecchia la tengono comunque
@@ -208,6 +212,9 @@ def controlla_sito(cartella, demo, problemi):
                 continue
             percorso, _, versione = risorsa.partition("?v=")
             file = cartella / percorso
+            # script in fondo al body: la pagina può comparire prima e poi spostarsi quando lo script cambia testi e tendine
+            if el[0] == "script" and not ("defer" in el[1] and "blocking" in el[1]):
+                avv(f"{percorso} senza defer e blocking=\"render\": usa comune.script(), nel <head>")
             if not versione:
                 avv(f"{percorso} senza ?v=: dopo un aggiornamento i telefoni possono usare la copia vecchia")
             elif file.exists() and versione != hashlib.sha256(file.read_bytes()).hexdigest()[:8]:
@@ -255,6 +262,11 @@ def controlla_sito(cartella, demo, problemi):
         if len(nomi) > 1:
             problemi.append(("ERRORE", f"{cartella.name}/assets/font",
                              f"file identici ({', '.join(nomi)}): rigenera con scarica_font.py"))
+
+    # Android ritaglia l'icona a cerchio o goccia: senza un'icona "maskable" la mette in un riquadro bianco
+    manifest = cartella / "assets" / "sito.webmanifest"
+    if manifest.exists() and not any("maskable" in i.get("purpose", "") for i in json.loads(manifest.read_text()).get("icons", [])):
+        problemi.append(("avviso", f"{cartella.name}/assets", "manifest senza icona adattiva (purpose maskable): rigenera con comune.scrivi_icone()"))
 
     if pagine and not (cartella / "sitemap.xml").exists() and cartella.name != "samples":
         problemi.append(("avviso", cartella.name, "manca sitemap.xml"))

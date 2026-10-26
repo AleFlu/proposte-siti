@@ -53,9 +53,10 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] JSON-LD valido con il tipo più specifico ⚙. Validato con Schema Markup Validator (validator.schema.org,
       funziona anche con il `noindex`) e con il Rich Results Test di Google: sulle demo con `noindex` risponde
       "URL non disponibile per Google", quindi si usa la scheda "Codice" incollando il sorgente della pagina.
+- [ ] `sameAs` con i profili social e di recensione, uguali al Google Business Profile ⚙ (sito vero)
 - [ ] Menu, prezzi, orari, indirizzo nell'HTML, non solo in JavaScript, mai in PDF o immagine
-- [ ] Favicon SVG e icone PNG (iPhone 180, Android 192/512), manifest ⚙
-- [ ] `sitemap.xml` generata ⚙. `robots.txt` alla radice del dominio, senza bloccare le pagine.
+- [ ] Favicon SVG e icone PNG (iPhone 180, Android 192/512 e adattiva), manifest ⚙
+- [ ] `sitemap.xml` generata, con `lastmod` che cambia solo quando cambia la pagina ⚙. `robots.txt` alla radice del dominio, senza bloccare le pagine.
 - [ ] Link interni senza errori, ancore esistenti ⚙
 - [ ] HTML valido al validatore W3C (validator.w3.org/nu)
 
@@ -68,6 +69,8 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] Chiusure, festivi e orari speciali in `CHIUSURE` (`comune.festivi()` se l'attività chiude nelle feste):
       avviso in cima alle pagine, stato, giorni prenotabili, tabella «Prossime chiusure», JSON-LD ⚙ (date valide, nessuna passata)
 - [ ] CSS e JS con `?v=` e l'impronta del file (`comune.con_versione()`), rigenerando dopo ogni modifica ⚙
+- [ ] Script nel `<head>` con `comune.script()`: nessuno spostamento quando cambia testi e tendine ⚙. CLS misurato
+      anche senza rallentare la rete: è lì che si vede la pagina disegnata prima dello script.
 - [ ] Il testo scritto da chi visita non entra mai come HTML (`esc()` o `textContent`)
 
 ## 7. Legale (Italia / UE)

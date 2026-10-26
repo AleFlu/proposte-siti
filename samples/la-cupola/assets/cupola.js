@@ -114,11 +114,8 @@ document.querySelectorAll("[data-orari-oggi]").forEach(el => {
   el.textContent = fasceDel(adesso).length ? `Oggi ${fasceTesto(adesso)}` : `Oggi ${chiusoPer(chiusuraDel(adesso)) || "chiuso"}`;
 });
 
-// ---------- chiusure: l'avviso in cima compare qualche giorno prima, la tabella mostra solo le prossime ----------
+// ---------- chiusure: la tabella mostra solo le prossime (gli avvisi in cima li mostra lo script accanto a loro) ----------
 const oggiIso = iso(adesso);
-// al massimo due avvisi alla volta, i più vicini (sono già in ordine di data)
-let avvisi = 0;
-document.querySelectorAll(".avviso-chiusura").forEach(el => { el.hidden = !(el.dataset.da <= oggiIso && oggiIso <= el.dataset.al && avvisi++ < 2); });
 document.querySelectorAll(".chiusure").forEach(box => {
   const fino = iso(giornoDopo(adesso, +box.dataset.orizzonte));
   box.querySelectorAll("tr[data-dal]").forEach(tr => {

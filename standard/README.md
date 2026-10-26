@@ -22,7 +22,7 @@ E in `strumenti/`:
 |---|---|
 | `nuovo_sito.py <nome>` | Crea `docs/<nome>/`, `samples/<nome>/` e `strumenti/genera_<nome>.py` dai modelli. |
 | `genera_<nome>.py` | Rigenera tutte le pagine del sito. Si modifica questo, mai gli HTML a mano. |
-| `comune.py` | Condiviso da tutti i generatori: icone (favicon SVG, PNG per iPhone e Android, manifest), sitemap, link a CSS e JS con impronta, chiusure e festivi (avvisi, tabella, dati per lo script e per Google). |
+| `comune.py` | Condiviso da tutti i generatori: icone (favicon SVG, PNG per iPhone e Android, icona adattiva, manifest), sitemap con date vere, link a CSS e JS con impronta, script nel `<head>`, chiusure e festivi (avvisi, tabella, dati per lo script e per Google). |
 | `scarica_font.py` | Scarica i font e li serve dal sito (niente richieste a Google). |
 | `controlla.py` | Controllo automatico di SEO, legale, accessibilità di base, link interni, impronte di CSS e JS e chiusure. Gira anche su GitHub prima di ogni pubblicazione. |
 | `prepara_artifact.py` | Copia per l'artifact su claude.ai, sempre generata da git. |

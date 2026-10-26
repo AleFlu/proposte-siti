@@ -20,6 +20,9 @@ PIVA = "00000000000"
 EMAIL = "bottega@cartablu.example"
 # indicazioni a un tocco: apre Google Maps (app o sito) sull'indirizzo
 MAPPA = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote_plus("Borgo Riccio 14, 43121 Parma")
+# profili dell'attività (Instagram, Facebook, TripAdvisor…), gli stessi del Google Business Profile:
+# vanno nei dati per Google come sameAs. Nella demo nessuno: non si inventano.
+PROFILI = []
 CUR = ' aria-current="page"'
 e = html.escape
 
@@ -90,6 +93,7 @@ NEGOZIO = {
         {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "08:00", "closes": "12:00"},
         *comune.orari_ld(CHIUSURE),
     ],
+    **({"sameAs": PROFILI} if PROFILI else {}),
 }
 json_ld = lambda d: f'<script type="application/ld+json">\n{json.dumps(d, ensure_ascii=False, indent=1)}\n</script>'
 ICONA_SVG = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#2F4C93"/>'
@@ -163,6 +167,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 <link rel="stylesheet" href="{comune.con_versione(OUT, "assets/font.css")}">
 <link rel="stylesheet" href="{comune.con_versione(OUT, "assets/stile.css")}">
 {comune.dati_chiusure(CHIUSURE)}
+{comune.script(OUT, "assets/sito.js")}
 {extra_head}
 </head>
 <body data-pagina="{chiave}">
@@ -216,7 +221,6 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 
 <nav class="barra-azioni" aria-label="Azioni rapide">{azioni}</nav>
 
-<script src="{comune.con_versione(OUT, "assets/sito.js")}"></script>
 </body>
 </html>
 """

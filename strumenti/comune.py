@@ -1,9 +1,10 @@
 """Pezzi comuni a tutti i generatori di sito (vedi standard/README.md).
 
-- icone: favicon SVG, icone PNG per iPhone/Android e manifest, da un solo SVG;
-- sitemap.xml del sito;
+- icone: favicon SVG, icone PNG per iPhone/Android (anche quella adattiva) e manifest, da un solo SVG;
+- sitemap.xml del sito, con la data dell'ultima modifica vera di ogni pagina;
 - testa_icone(): i tag <link> da mettere nel <head> di ogni pagina;
 - con_versione(): link a CSS e JS che cambia quando cambia il file;
+- script(): il tag dello script del sito, nel <head>, applicato prima che la pagina compaia;
 - chiusure, festivi e orari speciali: avvisi, tabella, dati per lo script e per Google.
 Le icone PNG si ricavano dall'SVG con qlmanage (macOS) e Pillow.
 """
@@ -12,14 +13,19 @@ import hashlib
 import html
 import json
 import pathlib
+import re
 import subprocess
 import tempfile
 
 
 def scrivi_icone(assets, svg, nome, colore_tema, colore_fondo):
-    """Scrive in assets/: favicon.svg, icona-180.png, icona-192.png, icona-512.png, sito.webmanifest.
+    """Scrive in assets/: favicon.svg, icona-180.png, icona-192.png, icona-512.png, icona-adattiva-512.png,
+    sito.webmanifest.
 
     svg: un'icona quadrata a tutto campo (niente angoli arrotondati: iPhone li arrotonda da solo).
+    L'icona adattiva ("maskable") è per Android, che ritaglia l'icona a cerchio, goccia o quadrato:
+    l'SVG rimpicciolito al 70% su un fondo del suo stesso colore, così il ritaglio non tocca il disegno
+    se questo sta dentro il cerchio inscritto nel quadrato.
     """
     from PIL import Image
 
@@ -34,10 +40,14 @@ def scrivi_icone(assets, svg, nome, colore_tema, colore_fondo):
         grande = Image.open(pathlib.Path(tmp) / "icona.svg.png").convert("RGB")
     for lato in (180, 192, 512):
         grande.resize((lato, lato), Image.LANCZOS).save(assets / f"icona-{lato}.png", optimize=True)
+    adattiva = Image.new("RGB", (512, 512), grande.getpixel((0, 0)))
+    adattiva.paste(grande.resize((358, 358), Image.LANCZOS), (77, 77))
+    adattiva.save(assets / "icona-adattiva-512.png", optimize=True)
     manifest = {
         "name": nome, "short_name": nome, "start_url": "../", "display": "browser",
         "theme_color": colore_tema, "background_color": colore_fondo,
-        "icons": [{"src": f"icona-{l}.png", "sizes": f"{l}x{l}", "type": "image/png"} for l in (192, 512)],
+        "icons": [{"src": f"icona-{l}.png", "sizes": f"{l}x{l}", "type": "image/png"} for l in (192, 512)]
+                 + [{"src": "icona-adattiva-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}],
     }
     (assets / "sito.webmanifest").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n")
 
@@ -49,12 +59,31 @@ def testa_icone(cartella="assets/"):
             f'<link rel="manifest" href="{cartella}sito.webmanifest">')
 
 
+def _da_git(cartella, file):
+    """Il file com'è nell'ultimo commit, o None se git non lo conosce."""
+    r = subprocess.run(["git", "-C", str(cartella), "show", f"HEAD:./{file}"], capture_output=True, text=True)
+    return r.stdout if r.returncode == 0 else None
+
+
 def scrivi_sitemap(out, base, pagine):
-    """pagine: i nomi dei file HTML da indicizzare (la home come "index.html")."""
+    """pagine: i nomi dei file HTML da indicizzare (la home come "index.html").
+
+    lastmod è il giorno in cui il contenuto della pagina è cambiato davvero. Se la pagina è uguale a quella
+    dell'ultimo commit (a parte le impronte ?v=), resta la data scritta nella sitemap di quel commit.
+    Una data che cambia a ogni rigenerazione Google la impara a ignorare.
+    """
+    out = pathlib.Path(out)
     oggi = datetime.date.today().isoformat()
-    righe = "\n".join(
-        f"  <url><loc>{base}{'' if p == 'index.html' else p}</loc><lastmod>{oggi}</lastmod></url>" for p in pagine)
-    (pathlib.Path(out) / "sitemap.xml").write_text(
+    senza_impronte = lambda testo: re.sub(r"\?v=[0-9a-f]{8}", "", testo)
+    date = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", _da_git(out, "sitemap.xml") or ""))
+    righe = []
+    for p in pagine:
+        loc = f"{base}{'' if p == 'index.html' else p}"
+        prima = _da_git(out, p)
+        uguale = prima is not None and senza_impronte(prima) == senza_impronte((out / p).read_text())
+        righe.append(f"  <url><loc>{loc}</loc><lastmod>{date[loc] if uguale and loc in date else oggi}</lastmod></url>")
+    righe = "\n".join(righe)
+    (out / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         f"{righe}\n</urlset>\n")
@@ -68,6 +97,15 @@ def con_versione(sito, percorso):
     """
     impronta = hashlib.sha256((pathlib.Path(sito) / percorso).read_bytes()).hexdigest()[:8]
     return f"{percorso}?v={impronta}"
+
+
+def script(sito, percorso):
+    """Lo script del sito nel <head>: parte quando l'HTML è letto (defer) e la pagina compare solo dopo
+    (blocking="render", Chrome 105 e Safari 18.2). Così stato «aperto ora», titoli e testi calcolati
+    sull'ora, tendine chiuse sono già al loro posto alla prima immagine: niente salti (CLS).
+    Dove blocking non c'è (Firefox) resta un normale defer. Senza JavaScript la pagina è comunque completa.
+    """
+    return f'<script src="{con_versione(sito, percorso)}" defer blocking="render"></script>'
 
 
 # ---------- chiusure, festivi e orari speciali ----------
@@ -186,12 +224,21 @@ def testo_avviso(c):
 
 
 def avvisi_chiusure(chiusure, preavviso=PREAVVISO):
-    """Un avviso per chiusura, nascosto: lo script lo mostra da `preavviso` giorni prima fino all'ultimo giorno."""
+    """Un avviso per chiusura, nascosto, da `preavviso` giorni prima fino all'ultimo giorno.
+
+    Li mostra il piccolo script subito dopo, mentre la pagina viene letta: l'avviso è già al suo posto
+    prima che compaia il resto, in ogni browser, quindi non spinge giù la pagina. Al massimo due alla
+    volta, i più vicini (sono già in ordine di data). La data è quella italiana ("sv-SE" scrive 2026-10-26).
+    """
     righe = []
     for c in chiusure:
         da = (_data(c["dal"]) - datetime.timedelta(days=preavviso)).isoformat()
         righe.append(f'<div class="avviso-chiusura" data-da="{da}" data-al="{c["al"]}" hidden>'
                      f'<p class="wrap">{html.escape(testo_avviso(c))}</p></div>')
+    if righe:
+        righe.append('<script>(() => { const oggi = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Rome" })'
+                     '.format(new Date()); let n = 0; document.querySelectorAll(".avviso-chiusura").forEach(el => '
+                     '{ el.hidden = !(el.dataset.da <= oggi && oggi <= el.dataset.al && n++ < 2); }); })();</script>')
     return "\n".join(righe)
 
 

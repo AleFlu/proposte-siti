@@ -19,6 +19,9 @@ PIVA = "00000000000"
 EMAIL = "ciao@lacupola.example"
 # indicazioni a un tocco: apre Google Maps (app o sito) sull'indirizzo
 MAPPA = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote_plus("Via Belfiore 31, 10125 Torino")
+# profili dell'attività (Instagram, Facebook, TripAdvisor…), gli stessi del Google Business Profile:
+# vanno nei dati per Google come sameAs. Nella demo nessuno: non si inventano.
+PROFILI = []
 CUR = ' aria-current="page"'
 
 # ---------- allergeni (Regolamento UE 1169/2011, allegato II) ----------
@@ -126,6 +129,7 @@ RISTORANTE = {
         {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "19:00", "closes": "23:30"},
         *comune.orari_ld(CHIUSURE),
     ],
+    **({"sameAs": PROFILI} if PROFILI else {}),
 }
 MENU_LD = {
     "@context": "https://schema.org",
@@ -219,6 +223,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 <link rel="stylesheet" href="{comune.con_versione(OUT, "assets/font.css")}">
 <link rel="stylesheet" href="{comune.con_versione(OUT, "assets/stile.css")}">
 {comune.dati_chiusure(CHIUSURE)}
+{comune.script(OUT, "assets/cupola.js")}
 {extra_head}
 </head>
 <body data-pagina="{chiave}">
@@ -273,7 +278,6 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 
 <nav class="barra-azioni" aria-label="Azioni rapide">{azioni}</nav>
 
-<script src="{comune.con_versione(OUT, "assets/cupola.js")}"></script>
 </body>
 </html>
 """
@@ -503,7 +507,7 @@ pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria napoletana a Tor
         <p class="esito" id="esito" role="status"></p>
       </form>
 
-      <aside aria-labelledby="t-buono">
+      <div class="da-sapere">
         <h2 id="t-buono">Buono a sapersi</h2>
         <ul class="buono">
           <li><div><h3>Il tavolo resta tuo per 15 minuti</h3><p>Se fai tardi, chiamaci: lo teniamo volentieri, basta saperlo.</p></div></li>
@@ -511,7 +515,7 @@ pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria napoletana a Tor
           <li><div><h3>Gruppi oltre le 8 persone</h3><p>Al telefono: uniamo i tavoli e prepariamo i fritti da dividere.</p></div></li>
           <li><div><h3>Il lunedì siamo chiusi</h3><p>Il forno riposa e si fa l’impasto per martedì.</p></div></li>
         </ul>
-      </aside>
+      </div>
     </div>
   </section>
 """, barra="solo-chiama")

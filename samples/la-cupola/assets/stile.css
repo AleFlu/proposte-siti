@@ -370,7 +370,7 @@ footer a { color: #EAF2F0; }
 .prenota-veloce { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
 .prenota-veloce > p { margin: 0; font-weight: 600; }
 .esito:empty { display: none; }
-.prenota-griglia aside h2 { font-size: var(--s2); margin: 0 0 1.25rem; }
+.da-sapere h2 { font-size: var(--s2); margin: 0 0 1.25rem; }
 .scuro .pallino { background: var(--oro); }
 .scuro .chiuso .pallino, .scuro .chiuso.pallino { background: transparent; box-shadow: inset 0 0 0 2px var(--tenue-scuro); }
 .testa-pagina p strong { color: #EAF2F0; font-weight: 600; }

@@ -88,16 +88,17 @@ Obbligatoria per ogni sito di un cliente. Fonti: Google Search Central (dati str
 - URL leggibili e in italiano (`/menu`, `/prenota`), link interni con testo descrittivo (mai "clicca qui").
 
 **Dati strutturati (JSON-LD)**
-- L'attività con il tipo più specifico (`Restaurant`, `Bakery`, `Store`, `ProfessionalService`… altrimenti `LocalBusiness`): `name`, `address` (`PostalAddress`), `geo`, `telephone` con +39, `url`, `image`, `openingHoursSpecification`, `priceRange`; per i ristoranti anche `servesCuisine`, `menu` (URL della pagina menu) e `acceptsReservations`.
+- L'attività con il tipo più specifico (`Restaurant`, `Bakery`, `Store`, `ProfessionalService`… altrimenti `LocalBusiness`): `name`, `address` (`PostalAddress`), `geo`, `telephone` con +39, `url`, `image`, `openingHoursSpecification`, `priceRange`, `sameAs` con i profili social (gli stessi del Google Business Profile); per i ristoranti anche `servesCuisine`, `menu` (URL della pagina menu) e `acceptsReservations`.
 - Nome, indirizzo e telefono identici su sito, Google Business Profile e social.
 - Validare con il Rich Results Test e con il Schema Markup Validator prima della messa online.
 
 **Sito intero**
-- `sitemap.xml` (la scrive `comune.scrivi_sitemap()`) e `robots.txt` alla radice del dominio, senza `Disallow` sulle pagine; sitemap inviata in Google Search Console.
-- Favicon SVG e icone PNG per iPhone e Android con manifest (`comune.scrivi_icone()`), mai solo un'icona `data:` incorporata.
+- `sitemap.xml` (la scrive `comune.scrivi_sitemap()`, con la data dell'ultima modifica vera di ogni pagina) e `robots.txt` alla radice del dominio, senza `Disallow` sulle pagine; sitemap inviata in Google Search Console.
+- Favicon SVG e icone PNG per iPhone e Android, compresa l'icona adattiva, con manifest (`comune.scrivi_icone()`), mai solo un'icona `data:` incorporata.
 - HTML valido al validatore W3C.
 - Chiusure, festivi e orari speciali nel generatore (`CHIUSURE`, `comune.festivi()`): avviso in cima alle pagine, stato «aperto ora» e JSON-LD con `validFrom`/`validThrough`. Gli stessi su Google Business Profile.
 - CSS e JS linkati con `?v=` e l'impronta del file (`comune.con_versione()`), così dopo un aggiornamento nessun telefono usa la copia vecchia.
+- Lo script del sito nel `<head>` con `comune.script()` (`defer` e `blocking="render"`): testi calcolati sull'ora e tendine sono già al loro posto quando la pagina compare, niente spostamenti (CLS).
 - Google Business Profile creato e collegato al sito: per un'attività locale conta quanto il sito.
 - HTTPS, nessun link interno rotto, pagina 404 personalizzata.
 - Core Web Vitals sul telefono: LCP < 2,5 s (nostro obiettivo 2,0), CLS < 0,1 (nostro obiettivo 0,05), INP < 200 ms.

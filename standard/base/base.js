@@ -69,10 +69,7 @@ const esc = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "
   // il giorno della settimana si evidenzia solo se oggi non è un giorno di chiusura
   document.querySelectorAll("tr[data-giorno]").forEach(tr => tr.classList.toggle("oggi", +tr.dataset.giorno === adesso.getDay() && !chiusa));
 
-  // avviso in cima alle pagine: compare qualche giorno prima (data-da) e sparisce dopo l'ultimo giorno
-  // al massimo due avvisi alla volta, i più vicini (sono già in ordine di data)
-  let avvisi = 0;
-  document.querySelectorAll(".avviso-chiusura").forEach(el => { el.hidden = !(el.dataset.da <= oggiIso && oggiIso <= el.dataset.al && avvisi++ < 2); });
+  // gli avvisi in cima alle pagine li mostra lo script accanto a loro (comune.avvisi_chiusure), prima che la pagina compaia
   // tabella delle prossime chiusure: niente righe passate, niente oltre l'orizzonte
   document.querySelectorAll(".chiusure").forEach(box => {
     const fino = iso(giornoDopo(adesso, +box.dataset.orizzonte));

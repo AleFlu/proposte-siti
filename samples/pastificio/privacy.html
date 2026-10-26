@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="assets/font.css?v=fd9a097e">
 <link rel="stylesheet" href="assets/stile.css?v=f769348c">
 <script type="application/json" id="chiusure-dati">[{"dal": "2026-11-01", "al": "2026-11-01", "motivo": "Ognissanti", "fasce": []}, {"dal": "2026-12-08", "al": "2026-12-08", "motivo": "l’Immacolata", "fasce": []}, {"dal": "2026-12-24", "al": "2026-12-24", "motivo": "vigilia di Natale", "fasce": [[7, 14]]}, {"dal": "2026-12-25", "al": "2026-12-26", "motivo": "Natale e Santo Stefano", "fasce": []}, {"dal": "2027-01-01", "al": "2027-01-01", "motivo": "Capodanno", "fasce": []}, {"dal": "2027-01-06", "al": "2027-01-06", "motivo": "l’Epifania", "fasce": []}, {"dal": "2027-01-13", "al": "2027-01-13", "motivo": "Sant’Ilario", "fasce": []}, {"dal": "2027-03-28", "al": "2027-03-29", "motivo": "Pasqua e Pasquetta", "fasce": []}, {"dal": "2027-04-25", "al": "2027-04-25", "motivo": "la Festa della Liberazione", "fasce": []}, {"dal": "2027-05-01", "al": "2027-05-01", "motivo": "la Festa dei lavoratori", "fasce": []}, {"dal": "2027-06-02", "al": "2027-06-02", "motivo": "la Festa della Repubblica", "fasce": []}, {"dal": "2027-08-15", "al": "2027-08-15", "motivo": "Ferragosto", "fasce": []}, {"dal": "2027-10-04", "al": "2027-10-04", "motivo": "San Francesco", "fasce": []}, {"dal": "2027-11-01", "al": "2027-11-01", "motivo": "Ognissanti", "fasce": []}, {"dal": "2027-12-08", "al": "2027-12-08", "motivo": "l’Immacolata", "fasce": []}, {"dal": "2027-12-25", "al": "2027-12-26", "motivo": "Natale e Santo Stefano", "fasce": []}]</script>
+<script src="assets/sito.js?v=d0c2941b" defer blocking="render"></script>
 
 </head>
 <body data-pagina="privacy">
@@ -69,6 +70,7 @@
 <div class="avviso-chiusura" data-da="2027-10-18" data-al="2027-11-01" hidden><p class="wrap">Lunedì 1° novembre chiuso per Ognissanti.</p></div>
 <div class="avviso-chiusura" data-da="2027-11-24" data-al="2027-12-08" hidden><p class="wrap">Mercoledì 8 dicembre chiuso per l’Immacolata.</p></div>
 <div class="avviso-chiusura" data-da="2027-12-11" data-al="2027-12-26" hidden><p class="wrap">Chiuso per Natale e Santo Stefano il 25 e il 26 dicembre.</p></div>
+<script>(() => { const oggi = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Rome" }).format(new Date()); let n = 0; document.querySelectorAll(".avviso-chiusura").forEach(el => { el.hidden = !(el.dataset.da <= oggi && oggi <= el.dataset.al && n++ < 2); }); })();</script>
 <div class="wrap testa-pagina">
     <h1>Privacy e cookie</h1>
     <p>Chi tratta i tuoi dati, quali, perché e per quanto tempo. Testo di esempio per la demo, da far verificare prima della messa online.</p>
@@ -125,6 +127,5 @@
 
 <nav class="barra-azioni" aria-label="Azioni rapide"><a href="tel:+390521000000">Chiama</a><a class="primaria" href="ordina.html">Ordina per domenica</a></nav>
 
-<script src="assets/sito.js?v=4e0c4588"></script>
 </body>
 </html>

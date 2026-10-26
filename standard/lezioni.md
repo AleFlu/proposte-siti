@@ -65,6 +65,11 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
   Nell'HTML ci va sempre un ripiego statico, che il JS sostituisce.
 - **Anteprima social tagliata.** Lo screenshot 1200 × 630 va fatto con la pagina rimpicciolita (zoom 0,78)
   e controllato intero.
+- **`lastmod` della sitemap sempre uguale al giorno in cui si rigenera il sito.** Una data che cambia sempre Google
+  smette di leggerla. Ora `scrivi_sitemap()` confronta ogni pagina con l'ultimo commit (impronte `?v=` escluse) e
+  cambia la data solo se la pagina è cambiata davvero.
+- **Profili social assenti dai dati per Google.** La raccolta contenuti li chiedeva, il generatore non li scriveva:
+  ora vanno in `sameAs` e `controlla.py` li chiede sui siti veri. Nelle demo non si inventano.
 
 ## Codice
 - **«Aperto ora» calcolato sull'ora del telefono**: un turista con il telefono su un altro fuso vedeva l'orario sbagliato.
@@ -80,6 +85,11 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
   ferma la pubblicazione se l'impronta non corrisponde.
 - **Le date scritte a mano sbagliano le elisioni**: si dice «dall’8», «l’11», «1° maggio». Le frasi delle chiusure
   le scrive `comune.periodo()`.
+- **La pagina si spostava mentre caricava (CLS fino a 0,16).** Lo script in fondo al body arrivava dopo che il browser
+  aveva già disegnato la pagina: l'avviso di chiusura spingeva giù tutto, i nomi degli allergeni si chiudevano, il
+  titolo dell'impasto cambiava lunghezza. Con la rete rallentata delle misure di Chrome non si vedeva (0,00), senza
+  rallentamenti sì. Ora lo script sta nel `<head>` con `defer` e `blocking="render"` (`comune.script()`) e gli avvisi
+  li mostra un mini-script scritto accanto a loro: 0,02–0,05, e quel che resta è il cambio di font.
 
 ## Strumenti
 - **Rich Results Test: "L'URL non è disponibile per Google" sulle demo.** Rifiuta le pagine con `noindex`.
