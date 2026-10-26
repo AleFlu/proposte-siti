@@ -247,6 +247,15 @@ def controlla_sito(cartella, demo, problemi):
                 problemi.append(("avviso", f"{cartella.name}/{css.name}:{n}",
                                  "opacity sotto 1: se riguarda del testo usa un colore, non la trasparenza"))
 
+    # lo stesso font variabile salvato una volta per peso: il browser lo scarica più volte (vedi standard/lezioni.md)
+    copie = {}
+    for f in sorted((cartella / "assets" / "font").glob("*.woff2")):
+        copie.setdefault(hashlib.sha256(f.read_bytes()).hexdigest(), []).append(f.name)
+    for nomi in copie.values():
+        if len(nomi) > 1:
+            problemi.append(("ERRORE", f"{cartella.name}/assets/font",
+                             f"file identici ({', '.join(nomi)}): rigenera con scarica_font.py"))
+
     if pagine and not (cartella / "sitemap.xml").exists() and cartella.name != "samples":
         problemi.append(("avviso", cartella.name, "manca sitemap.xml"))
 

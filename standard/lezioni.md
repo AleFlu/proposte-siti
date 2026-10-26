@@ -30,6 +30,10 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
   non come trasparenza. Ricapitato con gli orari "pieno" della pizzeria, che compaiono solo quando un turno
   è pieno: ora `controlla.py` segnala ogni `opacity` sotto 1 nei CSS.
 - **`[hidden]` annullato da un `display: grid` del componente.** Serve una regola `.componente[hidden] { display: none }`.
+- **Lo stesso font scaricato tre volte.** Chiedendo a Google un font variabile con più pesi (`wght@400;500;600`)
+  arriva lo stesso file ripetuto in un `@font-face` per peso, e il browser lo scarica una volta per peso (+68 KB
+  sulla pizzeria). Ora `scarica_font.py` li unisce in un `@font-face` con l'intervallo (`font-weight: 400 600`) e
+  `controlla.py` dà errore se trova due font identici.
 
 ## Accessibilità
 - **Vegetariana e piccante distinti solo dal colore** (quadratino verde e quadratino arancio): per chi non distingue

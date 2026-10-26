@@ -63,7 +63,7 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] LCP < 2,0 s, CLS < 0,05, INP < 200 ms, nessun errore in console
 - [ ] Foto in WebP/AVIF, più misure con `srcset`, `width`/`height`, `loading="lazy"` sotto la piega,
       `fetchpriority="high"` sulla foto principale
-- [ ] Font solo latin e latin-ext, `font-display: swap`
+- [ ] Font solo latin e latin-ext, `font-display: swap`, un solo file per font variabile ⚙
 - [ ] Orari e stato «aperto ora» calcolati sull'ora italiana (`oraItalia()`), non sul fuso del telefono
 - [ ] Chiusure, festivi e orari speciali in `CHIUSURE` (`comune.festivi()` se l'attività chiude nelle feste):
       avviso in cima alle pagine, stato, giorni prenotabili, tabella «Prossime chiusure», JSON-LD ⚙ (date valide, nessuna passata)
