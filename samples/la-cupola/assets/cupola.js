@@ -27,19 +27,26 @@ const oreDa = s => { const [h, m] = s.split(":").map(Number); return h + m / 60;
 const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const giornoDopo = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); x.setHours(0, 0, 0, 0); return x; };
 const conOra = (d, h) => { const x = new Date(d); x.setHours(Math.floor(h), Math.round((h % 1) * 60), 0, 0); return x; };
-const fasceTesto = g => SERVIZI[g].length ? SERVIZI[g].map(([a, b]) => `${hhmm(a)} – ${hhmm(b)}`).join(", ") : "Chiuso";
+const fasceTesto = d => fasceDel(d).map(([a, b]) => `${hhmm(a)} – ${hhmm(b)}`).join(", ") || "Chiuso";
+// oltre la settimana il nome del giorno non basta: "martedì 3 novembre"
 const nomeGiorno = (d, rispetto = adesso) => {
   const diff = Math.round((giornoDopo(d, 0) - giornoDopo(rispetto, 0)) / 864e5);
-  return diff === 0 ? "oggi" : diff === 1 ? "domani" : GIORNI[d.getDay()];
+  return diff === 0 ? "oggi" : diff === 1 ? "domani" : diff < 7 ? GIORNI[d.getDay()] : dataLunga(d);
 };
-const dataLunga = d => `${GIORNI[d.getDay()]} ${d.getDate()} ${MESI[d.getMonth()]}`;
+const dataLunga = d => `${GIORNI[d.getDay()]} ${d.getDate() === 1 ? "1°" : d.getDate()} ${MESI[d.getMonth()]}`;
 const maiuscola = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-// il prossimo servizio che non è ancora finito
+// chiusure e orari speciali scritti dal generatore (comune.py): "al" compreso, senza fasce il giorno è chiuso
+const CHIUSURE = JSON.parse($("chiusure-dati")?.textContent || "[]");
+const chiusuraDel = d => CHIUSURE.find(c => c.dal <= iso(d) && iso(d) <= c.al);
+const fasceDel = d => { const c = chiusuraDel(d); return c ? c.fasce : SERVIZI[d.getDay()]; };
+const chiusoPer = c => c && !c.fasce.length ? `chiuso${c.motivo ? ` per ${c.motivo}` : ""}` : "";
+
+// il prossimo servizio che non è ancora finito (le chiusure per ferie possono durare settimane)
 function prossimoServizio(da = adesso) {
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 120; i++) {
     const giorno = giornoDopo(da, i);
-    for (const [a, b] of SERVIZI[giorno.getDay()]) {
+    for (const [a, b] of fasceDel(giorno)) {
       const fine = conOra(giorno, b);
       if (fine > da) return { inizio: conOra(giorno, a), fine, giorno };
     }
@@ -55,10 +62,8 @@ function postiLiberi(giornoIso, orario) {
   const caso = (hash(giornoIso + orario) % 1000) / 1000 - .5;
   return Math.max(0, Math.round(POSTI_SALA * (1 - Math.min(1, base + picco + caso * .5))));
 }
-const orariDelGiorno = d => {
-  const g = d.getDay();
-  return SERVIZI[g].length ? [...(SERVIZI[g].length > 1 ? ORARI_PRANZO : []), ...ORARI_CENA] : [];
-};
+// orari prenotabili: quelli che stanno nelle fasce del giorno, fino a un'ora prima della chiusura
+const orariDelGiorno = d => fasceDel(d).flatMap(([a, b]) => [...ORARI_PRANZO, ...ORARI_CENA].filter(o => oreDa(o) >= a && oreDa(o) <= b - 1));
 const orarioPassato = (d, orario) => conOra(d, oreDa(orario)) - adesso < 30 * 60e3;
 
 // stato dell'impasto per il prossimo servizio
@@ -97,15 +102,31 @@ if (menuApri && nav) {
 // ---------- stato di apertura ----------
 function testoApertura() {
   const s = prossimoServizio();
-  const quale = nomeGiorno(s.giorno);
+  const quale = nomeGiorno(s.giorno), chiuso = chiusoPer(chiusuraDel(adesso));
   if (s.inizio <= adesso) return { aperto: true, testo: `<span class="pallino"></span><strong>Aperti adesso</strong>, fino alle ${hhmm(s.fine.getHours() + s.fine.getMinutes() / 60)}` };
   const quando = quale === "oggi" ? (s.inizio.getHours() >= 18 ? "Stasera" : "Oggi") : maiuscola(quale);
-  const prefisso = quale === "oggi" ? "" : "Oggi chiuso. ";
-  return { aperto: false, testo: `<span class="pallino"></span><strong>${prefisso}${quando} apriamo alle ${hhmm(s.inizio.getHours() + s.inizio.getMinutes() / 60)}</strong>` };
+  const prefisso = quale === "oggi" ? "" : chiuso ? `${maiuscola(chiuso)}. ` : "Oggi chiuso. ";
+  return { aperto: false, testo: `<span class="pallino"></span><strong>${prefisso}${quando} ${chiuso ? "riapriamo" : "apriamo"} alle ${hhmm(s.inizio.getHours() + s.inizio.getMinutes() / 60)}</strong>` };
 }
 const apertura = testoApertura();
 document.querySelectorAll("[data-apertura]").forEach(el => { el.innerHTML = apertura.testo; el.classList.toggle("chiuso", !apertura.aperto); });
-document.querySelectorAll("[data-orari-oggi]").forEach(el => { el.textContent = SERVIZI[adesso.getDay()].length ? `Oggi ${fasceTesto(adesso.getDay())}` : "Oggi chiuso"; });
+document.querySelectorAll("[data-orari-oggi]").forEach(el => {
+  el.textContent = fasceDel(adesso).length ? `Oggi ${fasceTesto(adesso)}` : `Oggi ${chiusoPer(chiusuraDel(adesso)) || "chiuso"}`;
+});
+
+// ---------- chiusure: l'avviso in cima compare qualche giorno prima, la tabella mostra solo le prossime ----------
+const oggiIso = iso(adesso);
+// al massimo due avvisi alla volta, i più vicini (sono già in ordine di data)
+let avvisi = 0;
+document.querySelectorAll(".avviso-chiusura").forEach(el => { el.hidden = !(el.dataset.da <= oggiIso && oggiIso <= el.dataset.al && avvisi++ < 2); });
+document.querySelectorAll(".chiusure").forEach(box => {
+  const fino = iso(giornoDopo(adesso, +box.dataset.orizzonte));
+  box.querySelectorAll("tr[data-dal]").forEach(tr => {
+    tr.hidden = tr.dataset.al < oggiIso || tr.dataset.dal > fino;
+    tr.classList.toggle("oggi", tr.dataset.dal <= oggiIso && oggiIso <= tr.dataset.al);
+  });
+  box.hidden = !box.querySelector("tr[data-dal]:not([hidden])");
+});
 
 // ---------- il mosaico del forno ----------
 function mosaico(tela, anima) {
@@ -288,7 +309,7 @@ if (pagina === "prenota") {
   const selGiorno = $("f-giorno"), selPersone = $("f-persone"), orari = $("orari"), esito = $("esito");
   const parametri = new URLSearchParams(location.search);
   const giorni = [];
-  for (let i = 0; i < 15 && giorni.length < 14; i++) {
+  for (let i = 0; i < 60 && giorni.length < 14; i++) {
     const d = giornoDopo(adesso, i);
     if (orariDelGiorno(d).some(o => !orarioPassato(d, o))) giorni.push(d);
   }
@@ -336,6 +357,6 @@ if (pagina === "prenota") {
 }
 
 if (pagina === "dove") {
-  // la tabella è già nell'HTML: qui si evidenzia solo il giorno di oggi
-  document.querySelectorAll("#orari-settimana tr[data-giorno]").forEach(tr => tr.classList.toggle("oggi", +tr.dataset.giorno === adesso.getDay()));
+  // la tabella è già nell'HTML: qui si evidenzia solo il giorno di oggi, se non è un giorno di chiusura
+  document.querySelectorAll("#orari-settimana tr[data-giorno]").forEach(tr => tr.classList.toggle("oggi", +tr.dataset.giorno === adesso.getDay() && !chiusuraDel(adesso)));
 }

@@ -65,6 +65,9 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
       `fetchpriority="high"` sulla foto principale
 - [ ] Font solo latin e latin-ext, `font-display: swap`
 - [ ] Orari e stato «aperto ora» calcolati sull'ora italiana (`oraItalia()`), non sul fuso del telefono
+- [ ] Chiusure, festivi e orari speciali in `CHIUSURE` (`comune.festivi()` se l'attività chiude nelle feste):
+      avviso in cima alle pagine, stato, giorni prenotabili, tabella «Prossime chiusure», JSON-LD ⚙ (date valide, nessuna passata)
+- [ ] CSS e JS con `?v=` e l'impronta del file (`comune.con_versione()`), rigenerando dopo ogni modifica ⚙
 - [ ] Il testo scritto da chi visita non entra mai come HTML (`esc()` o `textContent`)
 
 ## 7. Legale (Italia / UE)
@@ -83,6 +86,7 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] Nota "proposta dimostrativa" nel piede
 - [ ] Link aggiunto all'hub `samples/index.html`, con anteprima, palette e campioni dei caratteri
 - [ ] Se c'è un artifact: rigenerato con `prepara_artifact.py`, ripubblicato, hash verificati
+- [ ] Dopo il push, la pubblicazione su GitHub è andata a buon fine: `controlla.py` gira nel workflow e con un errore la ferma
 
 ## 9. Messa online (quando il cliente accetta)
 - [ ] Via `noindex` e nota demo. `controlla.py` senza `--demo` deve passare.
@@ -97,6 +101,6 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
       Per i clienti: Cloudflare Pages o Netlify, che oggi permettono l'uso commerciale anche gratis (ricontrollare i
       termini al momento), con redirect, intestazioni di sicurezza e moduli. Vercel gratuito no: solo uso non commerciale.
 - [ ] Google Search Console: proprietà verificata, sitemap inviata
-- [ ] Google Business Profile collegato al sito
+- [ ] Google Business Profile collegato al sito, con gli stessi orari e le stesse chiusure («Orari speciali»)
 - [ ] Dichiarazione di accessibilità, se il cliente non è una microimpresa (European Accessibility Act)
 - [ ] Consegna: chi aggiorna menu e orari, come, con che tempi. Credenziali intestate al cliente.

@@ -3,7 +3,7 @@ name: Pubblica i sample su GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ["samples/**", ".github/workflows/pages.yml"]
+    paths: ["samples/**", "strumenti/controlla.py", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -23,6 +23,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      # SEO, legale, accessibilità di base, link e impronte di CSS e JS: con un errore non si pubblica
+      - name: Controllo delle pagine
+        run: python3 strumenti/controlla.py samples --demo
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

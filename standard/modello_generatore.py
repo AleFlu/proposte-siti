@@ -36,6 +36,13 @@ DATI = {
 # 0 = domenica … 6 = sabato; fasce in ore decimali (7.5 = 7:30)
 ORARI = {2: [(9, 13), (15.5, 19.5)], 3: [(9, 13), (15.5, 19.5)], 4: [(9, 13), (15.5, 19.5)],
          5: [(9, 13), (15.5, 19.5)], 6: [(9, 13)]}
+# chiusure e orari speciali (regole in comune.py): avviso in cima alle pagine, stato «aperto ora», tabella
+# sotto gli orari e dati per Google. Vanno messe anche su Google Business Profile («Orari speciali»).
+# Se l'attività chiude in tutti i festivi: comune.festivi(2026, 2027, patrono=("MM-GG", "nome del santo")).
+CHIUSURE = comune.prossime_chiusure([
+    # {"dal": "2026-08-10", "al": "2026-08-23", "motivo": "ferie"},
+    # {"dal": "2026-12-24", "al": "2026-12-24", "motivo": "vigilia di Natale", "fasce": [(9, 13)]},
+])
 # azioni della barra su telefono: al massimo due, la principale per ultima
 AZIONI = [(f"tel:{DATI['telefono_link']}", "Chiama", False), ("dove.html", "Come arrivare", True)]
 NAV = [("dove.html", "Orari e dove siamo")]
@@ -49,6 +56,7 @@ PRIMARIA = ' class="primaria"'
 GIORNI = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"]
 GIORNI_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 ora = lambda h: f"{int(h)}:{round(h % 1 * 60):02d}"
+hhmm = lambda h: f"{int(h):02d}:{round(h % 1 * 60):02d}"   # per Google: "09:00"
 indirizzo = f"{DATI['via']}, {DATI['cap']} {DATI['citta']}"
 
 # ---------- dati strutturati ----------
@@ -60,8 +68,10 @@ ATTIVITA = {
                 "postalCode": DATI["cap"], "addressRegion": DATI["provincia"], "addressCountry": "IT"},
     "geo": {"@type": "GeoCoordinates", "latitude": DATI["lat"], "longitude": DATI["lng"]},
     "openingHoursSpecification": [
-        {"@type": "OpeningHoursSpecification", "dayOfWeek": GIORNI_EN[g], "opens": ora(a), "closes": ora(b)}
-        for g, fasce in sorted(ORARI.items()) for a, b in fasce],
+        *({"@type": "OpeningHoursSpecification", "dayOfWeek": GIORNI_EN[g], "opens": hhmm(a), "closes": hhmm(b)}
+          for g, fasce in sorted(ORARI.items()) for a, b in fasce),
+        *comune.orari_ld(CHIUSURE),
+    ],
 }
 json_ld = lambda dati: f'<script type="application/ld+json">\n{json.dumps(dati, ensure_ascii=False, indent=1)}\n</script>'
 orari_dati = f'<script type="application/json" id="orari-dati">{json.dumps({str(g): f for g, f in ORARI.items()})}</script>'
@@ -72,7 +82,11 @@ def tabella_orari():
     for g in [1, 2, 3, 4, 5, 6, 0]:
         fasce = ", ".join(f"{ora(a)} – {ora(b)}" for a, b in ORARI.get(g, [])) or "chiuso"
         righe.append(f'<tr data-giorno="{g}"><th scope="row">{GIORNI[g].capitalize()}</th><td>{fasce}</td></tr>')
-    return '<table class="orari"><caption class="vh">Orari di apertura</caption><tbody>\n' + "\n".join(righe) + "\n</tbody></table>"
+    tabella = '<table class="orari"><caption class="vh">Orari di apertura</caption><tbody>\n' + "\n".join(righe) + "\n</tbody></table>"
+    if CHIUSURE:
+        tabella += (f'\n<div class="chiusure" data-orizzonte="{comune.ORIZZONTE}">\n<h2 id="t-chiusure">Prossime chiusure</h2>\n'
+                    f'<table class="orari" aria-labelledby="t-chiusure"><tbody>\n{comune.righe_chiusure(CHIUSURE)}\n</tbody></table>\n</div>')
+    return tabella
 
 
 def pagina(file, titolo, descrizione, chiave, corpo, extra_head=""):
@@ -103,10 +117,11 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head=""):
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 {comune.testa_icone()}
-<link rel="stylesheet" href="assets/font.css">
-<link rel="stylesheet" href="assets/base.css">
-<link rel="stylesheet" href="assets/stile.css">
+<link rel="stylesheet" href="{comune.con_versione(OUT, "assets/font.css")}">
+<link rel="stylesheet" href="{comune.con_versione(OUT, "assets/base.css")}">
+<link rel="stylesheet" href="{comune.con_versione(OUT, "assets/stile.css")}">
 {orari_dati}
+{comune.dati_chiusure(CHIUSURE)}
 {extra_head}
 </head>
 <body data-pagina="{chiave}">
@@ -121,6 +136,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head=""):
 </header>
 
 <main id="contenuto">
+{comune.avvisi_chiusure(CHIUSURE)}
 {corpo.strip()}
 </main>
 
@@ -136,13 +152,17 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head=""):
 
 <nav class="barra-azioni" aria-label="Azioni rapide">{azioni}</nav>
 
-<script src="assets/base.js"></script>
-<script src="assets/sito.js"></script>
+<script src="{comune.con_versione(OUT, "assets/base.js")}"></script>
+<script src="{comune.con_versione(OUT, "assets/sito.js")}"></script>
 </body>
 </html>
 """
     (OUT / file).write_text(testo)
 
+
+# la base dello standard si copia prima delle pagine: i link portano l'impronta della copia appena fatta
+for nome in ("base.css", "base.js"):
+    shutil.copy(RADICE / "standard" / "base" / nome, OUT / "assets" / nome)
 
 # ---------- pagine ----------
 # Ogni pagina nasce da docs/__SITO__/02-ia.md. Title "Cosa | Nome attività, Città" (50–60 caratteri),
@@ -193,9 +213,7 @@ pagina("privacy.html", f"Informativa privacy e cookie | {DATI['nome']}, {DATI['c
   </section>
 """)
 
-# ---------- file comuni: base dello standard, icone, sitemap ----------
-for nome in ("base.css", "base.js"):
-    shutil.copy(RADICE / "standard" / "base" / nome, OUT / "assets" / nome)
+# ---------- file comuni: icone, sitemap ----------
 comune.scrivi_icone(OUT / "assets", ICONA_SVG, DATI["nome"], DATI["colore_tema"], DATI["colore_fondo"])
 comune.scrivi_sitemap(OUT, BASE, ["index.html", "dove.html", "privacy.html"])
 print("ok")

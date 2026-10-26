@@ -93,6 +93,12 @@ ORARI_SETTIMANA = [(1, "Lunedì", "Chiuso"), (2, "Martedì", "19:00 – 23:30"),
                    (4, "Giovedì", "19:00 – 23:30"), (5, "Venerdì", "19:00 – 23:30"),
                    (6, "Sabato", "12:30 – 14:30, 19:00 – 23:30"), (0, "Domenica", "12:30 – 14:30, 19:00 – 23:30")]
 righe_orari = "\n".join(f'          <tr data-giorno="{g}"><th scope="row">{n}</th><td>{o}</td></tr>' for g, n, o in ORARI_SETTIMANA)
+# chiusure e orari speciali (regole in comune.py): avviso in cima alle pagine, stato «aperto ora», giorni
+# prenotabili, tabella in Dove siamo e dati per Google. Vanno messe anche su Google Business Profile.
+CHIUSURE = comune.prossime_chiusure([
+    {"dal": "2026-11-03", "al": "2026-11-03", "motivo": "la manutenzione del forno"},
+    {"dal": "2026-12-24", "al": "2026-12-25", "motivo": "Natale"},
+])
 
 prezzo = lambda p: f"{p:.2f}".replace(".", ",")
 e = html.escape
@@ -118,6 +124,7 @@ RISTORANTE = {
         {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "19:00", "closes": "23:30"},
         {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "12:30", "closes": "14:30"},
         {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "19:00", "closes": "23:30"},
+        *comune.orari_ld(CHIUSURE),
     ],
 }
 MENU_LD = {
@@ -209,8 +216,9 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 {comune.testa_icone()}
-<link rel="stylesheet" href="assets/font.css">
-<link rel="stylesheet" href="assets/stile.css">
+<link rel="stylesheet" href="{comune.con_versione(OUT, "assets/font.css")}">
+<link rel="stylesheet" href="{comune.con_versione(OUT, "assets/stile.css")}">
+{comune.dati_chiusure(CHIUSURE)}
 {extra_head}
 </head>
 <body data-pagina="{chiave}">
@@ -228,6 +236,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 </div>
 
 <main id="contenuto">
+{comune.avvisi_chiusure(CHIUSURE)}
 {corpo.strip()}
 </main>
 
@@ -264,7 +273,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 
 <nav class="barra-azioni" aria-label="Azioni rapide">{azioni}</nav>
 
-<script src="assets/cupola.js"></script>
+<script src="{comune.con_versione(OUT, "assets/cupola.js")}"></script>
 </body>
 </html>
 """
@@ -507,6 +516,13 @@ pagina("prenota.html", "Prenota un tavolo | La Cupola, pizzeria napoletana a Tor
   </section>
 """, barra="solo-chiama")
 
+tabella_chiusure = f"""<table class="orari chiusure" data-orizzonte="{comune.ORIZZONTE}">
+          <caption>Prossime chiusure</caption>
+          <tbody>
+{comune.righe_chiusure(CHIUSURE)}
+          </tbody>
+        </table>""" if CHIUSURE else ""
+
 pagina("dove.html", "Dove siamo e orari | La Cupola, pizzeria napoletana a Torino",
   "La Cupola è in via Belfiore 31, nel quartiere San Salvario a Torino. Come arrivare in metro, treno o bici e gli orari di apertura giorno per giorno.",
   "dove", f"""
@@ -530,12 +546,15 @@ pagina("dove.html", "Dove siamo e orari | La Cupola, pizzeria napoletana a Torin
           <dt>Telefono</dt><dd>{TELEFONO}, dalle 17 in poi.</dd>
         </dl>
       </div>
-      <table class="orari">
-        <caption>Orari</caption>
-        <tbody id="orari-settimana">
+      <div>
+        <table class="orari">
+          <caption>Orari</caption>
+          <tbody id="orari-settimana">
 {righe_orari}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+        {tabella_chiusure}
+      </div>
     </div>
   </section>
 """, extra_head=json_ld(RISTORANTE), barra="indicazioni")

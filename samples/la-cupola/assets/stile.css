@@ -347,6 +347,13 @@ form .bottone { grid-column: 1 / -1; justify-self: start; }
 .orari tr.oggi th, .orari tr.oggi td { font-weight: 600; color: var(--inchiostro); }
 .orari tr.oggi th::after { content: "oggi"; margin-left: .5rem; font: 600 .75rem/1 var(--testo); color: var(--piastrella); background: var(--mosaico-scuro); padding: .2rem .45rem; border-radius: var(--r-pillola); vertical-align: .1em; }
 
+/* ---------- chiusure: avviso in cima alle pagine e prossime chiusure in Dove siamo ---------- */
+/* il bordo trasparente diventa visibile con i colori forzati, quando lo sfondo oro sparisce */
+.avviso-chiusura { background: var(--oro); color: var(--forno); border-bottom: 2px solid transparent; }
+.avviso-chiusura p { margin-block: 0; padding-block: .85rem; font-weight: 600; }
+.chiusure { margin-top: 2.5rem; }
+.chiusure th { width: auto; padding-right: 1rem; }
+
 /* ---------- piede ---------- */
 footer { background: var(--forno); color: #EAF2F0; padding-block: 3rem 2.5rem; font-size: var(--s-1); }
 footer a { color: #EAF2F0; }
@@ -396,7 +403,7 @@ footer a { color: #EAF2F0; }
 
 /* ---------- stampa: il menu su carta, senza navigazione né fondi scuri ---------- */
 @media print {
-  .salta, .testata-fondo, .barra-azioni, .indice-menu, .forno-tela, .azioni, .stasera, .allergeni, .fila-tessere, .nota-demo { display: none !important; }
+  .salta, .testata-fondo, .avviso-chiusura, .barra-azioni, .indice-menu, .forno-tela, .azioni, .stasera, .allergeni, .fila-tessere, .nota-demo { display: none !important; }
   body, .scuro, .in-evidenza, footer { background: #fff !important; color: #000 !important; }
   .scuro *, .in-evidenza *, footer * { color: #000 !important; }
   .menu-layout { display: block; padding: 0; }

@@ -327,6 +327,14 @@ form .bottone { grid-column: 1 / -1; }
 .orari tr.oggi td, .orari tr.oggi th { font-weight: 600; color: var(--farina); }
 @media (max-width: 760px) { .dove-griglia { grid-template-columns: 1fr; } }
 
+/* ---------- chiusure: avviso in cima alle pagine e prossime chiusure sotto gli orari ---------- */
+/* il bordo trasparente diventa visibile con i colori forzati, quando lo sfondo semola sparisce */
+.avviso-chiusura { background: var(--semola); color: var(--carta-scura); border-bottom: 2px solid transparent; }
+.avviso-chiusura p { margin-block: 0; padding-block: .85rem; font-weight: 600; }
+.chiusure { margin-top: 2.25rem; }
+.chiusure .sottotitolo { font-size: var(--s1); }
+.chiusure th { width: auto; padding-right: 1rem; }
+
 /* ---------- piede ---------- */
 footer { border-top: 1px solid var(--riga); padding: 3rem 0 2.5rem; font-size: var(--s-1); }
 .piede { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 4fr); gap: 2rem var(--gutter); }
@@ -384,7 +392,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px
 
 /* ---------- stampa: orari, formati e prezzi su carta, senza navigazione ---------- */
 @media print {
-  .salta, .nav, .menu-apri, .barra-azioni, .nota-demo, .disegna { display: none !important; }
+  .salta, .nav, .menu-apri, .avviso-chiusura, .barra-azioni, .nota-demo, .disegna { display: none !important; }
   body, footer, section { background: #fff !important; color: #000 !important; }
   footer * { color: #000 !important; }
   .scheda[hidden] { display: grid !important; }

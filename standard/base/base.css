@@ -91,6 +91,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .orari th, .orari td { text-align: left; padding: .35rem 1.25rem .35rem 0; vertical-align: top; }
 .orari tr.oggi { font-weight: 600; }
 
+/* ---------- chiusure: avviso in cima alle pagine e prossime chiusure sotto gli orari ---------- */
+/* il bordo trasparente diventa visibile con i colori forzati, quando lo sfondo sparisce */
+.avviso-chiusura { background: var(--accent); color: var(--accent-ink); border-bottom: 2px solid transparent; }
+.avviso-chiusura p { margin-block: 0; padding-block: .85rem; font-weight: 600; }
+.chiusure { margin-top: 2rem; }
+
 /* ---------- moduli ---------- */
 input, select, textarea { min-height: 2.75rem; border: 1px solid var(--line); border-radius: var(--radius-control); padding: .6rem .8rem; background: var(--paper); }
 label { display: block; font-weight: 600; margin-bottom: .35rem; }
@@ -119,7 +125,7 @@ label { display: block; font-weight: 600; margin-bottom: .35rem; }
 
 /* ---------- stampa: contenuto su carta, senza navigazione né fondi ---------- */
 @media print {
-  .salta, .menu-apri, .nav, .barra-azioni, .indice, .nota-demo, video, canvas { display: none !important; }
+  .salta, .menu-apri, .nav, .avviso-chiusura, .barra-azioni, .indice, .nota-demo, video, canvas { display: none !important; }
   body, section, header, footer { background: #fff !important; color: #000 !important; }
   a { text-decoration: none; }
   li, tr, figure { break-inside: avoid; }

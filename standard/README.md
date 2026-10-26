@@ -22,9 +22,9 @@ E in `strumenti/`:
 |---|---|
 | `nuovo_sito.py <nome>` | Crea `docs/<nome>/`, `samples/<nome>/` e `strumenti/genera_<nome>.py` dai modelli. |
 | `genera_<nome>.py` | Rigenera tutte le pagine del sito. Si modifica questo, mai gli HTML a mano. |
-| `comune.py` | Icone (favicon SVG, PNG per iPhone e Android, manifest) e sitemap, condivisi da tutti i generatori. |
+| `comune.py` | Condiviso da tutti i generatori: icone (favicon SVG, PNG per iPhone e Android, manifest), sitemap, link a CSS e JS con impronta, chiusure e festivi (avvisi, tabella, dati per lo script e per Google). |
 | `scarica_font.py` | Scarica i font e li serve dal sito (niente richieste a Google). |
-| `controlla.py` | Controllo automatico di SEO, legale, accessibilità di base e link interni. |
+| `controlla.py` | Controllo automatico di SEO, legale, accessibilità di base, link interni, impronte di CSS e JS e chiusure. Gira anche su GitHub prima di ogni pubblicazione. |
 | `prepara_artifact.py` | Copia per l'artifact su claude.ai, sempre generata da git. |
 
 ## I passi
@@ -52,8 +52,9 @@ E in `strumenti/`:
    ```
    Poi i passi manuali di `checklist.md`: screenshot a 320/375/768/1280 px, Lighthouse, tastiera, critica di
    design con la domanda "cosa sembra generato da un'AI?".
-8. **Pubblicazione.** Commit e push su `main`: GitHub Pages ripubblica da solo. Se il sito ha un artifact,
-   rigeneralo e ripubblicalo subito (regola in `CLAUDE.md`).
+8. **Pubblicazione.** Commit e push su `main`: GitHub Pages ripubblica da solo, ma prima il workflow fa girare
+   `controlla.py` e con un errore si ferma. Se il sito ha un artifact, rigeneralo e ripubblicalo subito (regola in
+   `CLAUDE.md`).
 
 ## Da proposta a sito vero
 

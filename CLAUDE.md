@@ -96,6 +96,8 @@ Obbligatoria per ogni sito di un cliente. Fonti: Google Search Central (dati str
 - `sitemap.xml` (la scrive `comune.scrivi_sitemap()`) e `robots.txt` alla radice del dominio, senza `Disallow` sulle pagine; sitemap inviata in Google Search Console.
 - Favicon SVG e icone PNG per iPhone e Android con manifest (`comune.scrivi_icone()`), mai solo un'icona `data:` incorporata.
 - HTML valido al validatore W3C.
+- Chiusure, festivi e orari speciali nel generatore (`CHIUSURE`, `comune.festivi()`): avviso in cima alle pagine, stato «aperto ora» e JSON-LD con `validFrom`/`validThrough`. Gli stessi su Google Business Profile.
+- CSS e JS linkati con `?v=` e l'impronta del file (`comune.con_versione()`), così dopo un aggiornamento nessun telefono usa la copia vecchia.
 - Google Business Profile creato e collegato al sito: per un'attività locale conta quanto il sito.
 - HTTPS, nessun link interno rotto, pagina 404 personalizzata.
 - Core Web Vitals sul telefono: LCP < 2,5 s (nostro obiettivo 2,0), CLS < 0,1 (nostro obiettivo 0,05), INP < 200 ms.
@@ -132,4 +134,4 @@ Alcuni sample hanno anche una copia come artifact su claude.ai (l'elenco è in `
 4. Skill `design:design-critique` sugli screenshot, con la domanda esplicita: "cosa qui sembra generico o generato da AI?" — correggere ciò che emerge.
 5. Copy rivisto con `design:ux-copy`.
 6. SEO: title e description unici, canonical, Open Graph, JSON-LD validato, Lighthouse SEO 100 sulla versione mobile.
-7. `python3 strumenti/controlla.py samples/<nome> --demo` senza errori (senza `--demo` per un sito vero).
+7. `python3 strumenti/controlla.py samples/<nome> --demo` senza errori (senza `--demo` per un sito vero). Gira anche nel workflow di GitHub: con un errore la pubblicazione si ferma.

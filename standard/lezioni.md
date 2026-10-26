@@ -67,6 +67,15 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
   Ora si usa l'ora di Roma (`oraItalia()` in `base.js`).
 - **Il nome scritto nel modulo veniva inserito come HTML** nel messaggio di conferma. Era un rischio solo per chi lo
   scriveva, ma è una cattiva abitudine: ora passa da `esc()`.
+- **Il sito avrebbe detto «Aperto ora» a Natale e in ferie.** Lo stato guardava solo la settimana tipo. Ora chiusure,
+  festivi e orari speciali stanno in `CHIUSURE` nel generatore (`comune.festivi()` per le feste nazionali, Pasqua
+  compresa): da lì escono l'avviso in cima alle pagine, lo stato, i giorni prenotabili, la domenica di ritiro degli
+  ordini, la tabella «Prossime chiusure» e i dati per Google.
+- **Dopo un aggiornamento la pagina nuova poteva arrivare con lo stile vecchio.** GitHub Pages fa tenere CSS e JS in
+  cache per 10 minuti. I link portano `?v=` con l'impronta del file (`comune.con_versione()`) e `controlla.py`
+  ferma la pubblicazione se l'impronta non corrisponde.
+- **Le date scritte a mano sbagliano le elisioni**: si dice «dall’8», «l’11», «1° maggio». Le frasi delle chiusure
+  le scrive `comune.periodo()`.
 
 ## Strumenti
 - **Rich Results Test: "L'URL non è disponibile per Google" sulle demo.** Rifiuta le pagine con `noindex`.
@@ -76,6 +85,8 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
 - **Comandi concatenati con `&&` dopo uno script fallito.** Un `git rm` è partito anche se lo script prima
   aveva dato errore. Prima si verifica l'esito, poi si cancella.
 - **Context7 con `@latest` non partiva.** Versioni MCP fissate quando `latest` non è ancora sul registro.
+- **Controllo dimenticato prima del push.** `controlla.py` ora gira anche nel workflow di GitHub prima della
+  pubblicazione: con un errore il sito online resta com'era.
 - **Artifact rimasto indietro rispetto a git.** L'artifact si rigenera sempre da `samples/` con
   `prepara_artifact.py` e si verificano gli hash dopo ogni pubblicazione.
 - **"Su git" per il cliente vuol dire online.** Le modifiche vanno committate e pushate su `main`, non

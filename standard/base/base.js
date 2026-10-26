@@ -30,30 +30,58 @@ const esc = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "
   });
 })();
 
-// ---------- aperto ora / chiuso, dagli orari scritti dal generatore in <script id="orari-dati"> ----------
+// ---------- aperto ora / chiuso, dagli orari e dalle chiusure scritti dal generatore ----------
+// <script id="orari-dati">     { "0": [[8, 12]], "2": [[7.5, 13.5], [16.5, 19.5]], … }   0 = domenica, ore decimali
+// <script id="chiusure-dati">  [{ "dal": "2026-12-25", "al": "2026-12-26", "motivo": "Natale", "fasce": [] }, …]
+//                              "al" compreso; con delle fasce il giorno ha un orario speciale invece di essere chiuso
 (function () {
   const dati = $("orari-dati");
   if (!dati) return;
-  const fasce = JSON.parse(dati.textContent);          // { "0": [[8, 12]], "2": [[7.5, 13.5], [16.5, 19.5]], … } 0 = domenica
+  const settimana = JSON.parse(dati.textContent);
+  const chiusure = JSON.parse($("chiusure-dati")?.textContent || "[]");
   const giorni = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
+  const mesi = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"];
   const ora = h => `${Math.floor(h)}:${String(Math.round(h % 1 * 60)).padStart(2, "0")}`;
-  const adesso = oraItalia(), oggi = adesso.getDay();
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const giornoDopo = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); x.setHours(0, 0, 0, 0); return x; };
+  const chiusuraDel = d => chiusure.find(c => c.dal <= iso(d) && iso(d) <= c.al);
+  const fasceDel = d => { const c = chiusuraDel(d); return c ? c.fasce : settimana[d.getDay()] || []; };
+  // "domani", "giovedì", e oltre la settimana "martedì 3 novembre"
+  const quando = (d, salto) => salto === 1 ? "domani" : salto < 7 ? giorni[d.getDay()] : `${giorni[d.getDay()]} ${d.getDate() === 1 ? "1°" : d.getDate()} ${mesi[d.getMonth()]}`;
+
+  const adesso = oraItalia(), oggiIso = iso(adesso), chiusa = chiusuraDel(adesso);
   const h = adesso.getHours() + adesso.getMinutes() / 60;
-  const diOggi = fasce[oggi] || [];
+  const diOggi = fasceDel(adesso);
   const aperta = diOggi.find(([a, b]) => h >= a && h < b);
   let testo;
   if (aperta) testo = `<strong>Aperto ora</strong>, fino alle ${ora(aperta[1])}`;
   else {
     const dopo = diOggi.find(([a]) => h < a);
-    let quando = dopo ? `riapre alle ${ora(dopo[0])}` : "";
-    for (let i = 1; !dopo && i <= 7; i++) {
-      const g = (oggi + i) % 7;
-      if (fasce[g]) { quando = `riapre ${i === 1 ? "domani" : giorni[g]} alle ${ora(fasce[g][0][0])}`; break; }
+    let riapre = dopo ? `riapre alle ${ora(dopo[0])}` : "";
+    for (let i = 1; !dopo && i <= 120; i++) {      // le ferie possono durare settimane
+      const d = giornoDopo(adesso, i), f = fasceDel(d);
+      if (f.length) { riapre = `riapre ${quando(d, i)} alle ${ora(f[0][0])}`; break; }
     }
-    testo = `<strong>Chiuso</strong>, ${quando}`;
+    const perche = chiusa && !chiusa.fasce.length && chiusa.motivo ? `Chiuso per ${esc(chiusa.motivo)}` : "Chiuso";
+    testo = `<strong>${perche}</strong>${riapre ? `, ${riapre}` : ""}`;
   }
   document.querySelectorAll("[data-stato]").forEach(el => { el.innerHTML = testo; el.classList.toggle("chiuso", !aperta); });
-  document.querySelectorAll("tr[data-giorno]").forEach(tr => tr.classList.toggle("oggi", +tr.dataset.giorno === oggi));
+  // il giorno della settimana si evidenzia solo se oggi non è un giorno di chiusura
+  document.querySelectorAll("tr[data-giorno]").forEach(tr => tr.classList.toggle("oggi", +tr.dataset.giorno === adesso.getDay() && !chiusa));
+
+  // avviso in cima alle pagine: compare qualche giorno prima (data-da) e sparisce dopo l'ultimo giorno
+  // al massimo due avvisi alla volta, i più vicini (sono già in ordine di data)
+  let avvisi = 0;
+  document.querySelectorAll(".avviso-chiusura").forEach(el => { el.hidden = !(el.dataset.da <= oggiIso && oggiIso <= el.dataset.al && avvisi++ < 2); });
+  // tabella delle prossime chiusure: niente righe passate, niente oltre l'orizzonte
+  document.querySelectorAll(".chiusure").forEach(box => {
+    const fino = iso(giornoDopo(adesso, +box.dataset.orizzonte));
+    box.querySelectorAll("tr[data-dal]").forEach(tr => {
+      tr.hidden = tr.dataset.al < oggiIso || tr.dataset.dal > fino;
+      tr.classList.toggle("oggi", tr.dataset.dal <= oggiIso && oggiIso <= tr.dataset.al);
+    });
+    box.hidden = !box.querySelector("tr[data-dal]:not([hidden])");
+  });
 })();
 
 // ---------- indice di un contenuto lungo: evidenzia la sezione che si sta leggendo ----------

@@ -54,6 +54,12 @@ BANCO = {
     "Sabato": dict(orari="7:30 – 13:30", lista=["tagliatelle", "tortellini", "anolini", "garganelli", "erbetta"]),
     "Domenica": dict(orari="8:00 – 12:00, solo ritiro ordini", lista=[]),
 }
+# chiusure e orari speciali (regole in comune.py): avviso in cima alle pagine, stato «aperto ora», banco del
+# giorno, domenica di ritiro degli ordini, tabelle degli orari e dati per Google. Anche su Google Business Profile.
+# La bottega chiude in tutti i festivi e per il patrono di Parma; la vigilia di Natale fa orario continuato.
+CHIUSURE = comune.prossime_chiusure(comune.festivi(2026, 2027, patrono=("01-13", "Sant’Ilario")) + [
+    {"dal": "2026-12-24", "al": "2026-12-24", "motivo": "vigilia di Natale", "fasce": [(7, 14)]},
+])
 euro = lambda n: f"{n:.2f}".replace(".", ",") + " €"
 slug = lambda s: s.lower().replace("ì", "i")
 
@@ -82,6 +88,7 @@ NEGOZIO = {
         {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "16:30", "closes": "19:30"},
         {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:30", "closes": "13:30"},
         {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "08:00", "closes": "12:00"},
+        *comune.orari_ld(CHIUSURE),
     ],
 }
 json_ld = lambda d: f'<script type="application/ld+json">\n{json.dumps(d, ensure_ascii=False, indent=1)}\n</script>'
@@ -108,6 +115,18 @@ def pannello_giorno(giorno, prefisso, compatto=False):
 
 def righe_orari():
     return "".join(f'<tr data-giorno="{JS_GIORNO[i]}"><th scope="row">{g}</th><td>{BANCO[g]["orari"] or "Chiuso"}</td></tr>' for i, g in enumerate(GIORNI))
+
+
+def chiusure(classe_tabella):
+    """Le prossime chiusure sotto la tabella degli orari; lo script nasconde quelle passate."""
+    if not CHIUSURE:
+        return ""
+    return f"""<div class="chiusure" data-orizzonte="{comune.ORIZZONTE}">
+          <h3 class="sottotitolo" id="t-chiusure">Prossime chiusure</h3>
+          <table class="{classe_tabella}" aria-labelledby="t-chiusure"><tbody>
+{comune.righe_chiusure(CHIUSURE)}
+          </tbody></table>
+        </div>"""
 
 
 def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte"):
@@ -141,8 +160,9 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 {comune.testa_icone()}
-<link rel="stylesheet" href="assets/font.css">
-<link rel="stylesheet" href="assets/stile.css">
+<link rel="stylesheet" href="{comune.con_versione(OUT, "assets/font.css")}">
+<link rel="stylesheet" href="{comune.con_versione(OUT, "assets/stile.css")}">
+{comune.dati_chiusure(CHIUSURE)}
 {extra_head}
 </head>
 <body data-pagina="{chiave}">
@@ -159,6 +179,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 </header>
 
 <main id="contenuto">
+{comune.avvisi_chiusure(CHIUSURE)}
 {corpo.strip()}
 </main>
 
@@ -195,7 +216,7 @@ def pagina(file, titolo, descrizione, chiave, corpo, extra_head="", barra="tutte
 
 <nav class="barra-azioni" aria-label="Azioni rapide">{azioni}</nav>
 
-<script src="assets/sito.js"></script>
+<script src="{comune.con_versione(OUT, "assets/sito.js")}"></script>
 </body>
 </html>
 """
@@ -351,6 +372,7 @@ pagina("banco.html", "Banco del giorno e prezzi al chilo | Pastificio Carta Blu"
       <div>
         <h2 class="sottotitolo" id="orari-settimana">Orari</h2>
         <table class="orari orari-chiari" aria-labelledby="orari-settimana"><tbody>{righe_orari()}</tbody></table>
+        {chiusure("orari orari-chiari")}
       </div>
       <div>
         <h2 class="sottotitolo">Buono a sapersi</h2>
@@ -408,7 +430,10 @@ pagina("bottega.html", "La bottega e dove siamo, Parma | Pastificio Carta Blu",
         <p>Telefono {TELEFONO}</p>
         <p><a class="rimando" href="{e(MAPPA)}">Apri le indicazioni in Google Maps</a></p>
       </div>
-      <table class="orari" aria-label="Orari di apertura"><tbody>{righe_orari()}</tbody></table>
+      <div>
+        <table class="orari" aria-label="Orari di apertura"><tbody>{righe_orari()}</tbody></table>
+        {chiusure("orari")}
+      </div>
     </div>
   </section>
 """, extra_head=json_ld(NEGOZIO), barra="indicazioni")
@@ -419,7 +444,7 @@ pagina("ordina.html", "Ordina la pasta per domenica | Pastificio Carta Blu, Parm
   "ordina", f"""
   <div class="wrap testa-pagina">
     <h1>Ordina per domenica</h1>
-    <p>Prenota entro venerdì alle 19, ritira domenica tra le 8 e le 12.</p>
+    <p id="quando-ritiro">Prenota entro venerdì alle 19, ritira domenica tra le 8 e le 12.</p>
   </div>
 
   <section class="ordina" aria-label="Modulo di prenotazione">

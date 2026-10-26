@@ -10,6 +10,10 @@ verosimili, scritti come li scriverebbe il titolare. Accanto a ogni voce: chi lo
 - Telefono fisso / cellulare / WhatsApp (con +39):
 - Email:
 - Orari per giorno, comprese pause e chiusure stagionali:
+- Ferie e chiusure già decise nell'anno (date):
+- Festivi: aperti o chiusi? (Capodanno, Epifania, Pasqua e Pasquetta, 25 aprile, 1° maggio, 2 giugno, Ferragosto,
+  4 ottobre, Ognissanti, Immacolata, Natale, Santo Stefano) E il patrono della città?
+- Orari speciali (vigilie, giorni di festa, stagione estiva):
 - Fascia di prezzo (€, €€, €€€):
 - Social e Google Business Profile (link):
 

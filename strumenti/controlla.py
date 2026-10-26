@@ -11,6 +11,8 @@ legale, accessibilità di base, link interni. Non sostituisce Lighthouse, gli sc
 ai 4 breakpoint e il Rich Results Test (vedi standard/checklist.md).
 Esce con codice 1 se trova errori.
 """
+import datetime
+import hashlib
 import json
 import pathlib
 import re
@@ -197,6 +199,31 @@ def controlla_sito(cartella, demo, problemi):
                         err(f"JSON-LD {tipo} senza {k}")
                 if not str(dati.get("telephone", "")).startswith("+39"):
                     avv("JSON-LD: telefono senza +39")
+
+        # CSS e JS con "?v=impronta" (comune.con_versione): senza, dopo un aggiornamento i telefoni possono
+        # tenere per minuti la copia vecchia; con un'impronta vecchia la tengono comunque
+        for el in par.elementi:
+            risorsa = el[1].get("href") if el[0] == "link" and el[1].get("rel") == "stylesheet" else el[1].get("src") if el[0] == "script" else None
+            if not risorsa or re.match(r"(https?:|//|/|data:)", risorsa):
+                continue
+            percorso, _, versione = risorsa.partition("?v=")
+            file = cartella / percorso
+            if not versione:
+                avv(f"{percorso} senza ?v=: dopo un aggiornamento i telefoni possono usare la copia vecchia")
+            elif file.exists() and versione != hashlib.sha256(file.read_bytes()).hexdigest()[:8]:
+                err(f"{percorso}: l'impronta ?v= non corrisponde al file, rigenera le pagine")
+
+        # chiusure e orari speciali (comune.py): date valide e nessuna chiusura già passata
+        blocco = re.search(r'<script type="application/json" id="chiusure-dati">(.*?)</script>', src, re.S)
+        if blocco:
+            try:
+                for c in json.loads(blocco.group(1)):
+                    if datetime.date.fromisoformat(c["dal"]) > datetime.date.fromisoformat(c["al"]):
+                        err(f"chiusura con «dal» dopo «al»: {c['dal']} → {c['al']}")
+                    elif c["al"] < datetime.date.today().isoformat():
+                        avv(f"chiusura già passata ({c['al']}): rigenera le pagine")
+            except (ValueError, KeyError, TypeError) as ex:
+                err(f"dati delle chiusure non validi: {ex}")
 
         # link interni
         for el in par.elementi:
