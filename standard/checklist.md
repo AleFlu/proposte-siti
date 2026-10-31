@@ -12,6 +12,11 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 
 ## 2. Anti-slop (critica di design su screenshot, prima di mostrare)
 - [ ] Domanda esplicita: "cosa sembra generico o generato da un'AI?". Correggere ciò che emerge.
+- [ ] Problemi di ogni revisione (design, accessibilità, copy) in ordine di gravità: **bloccante**, **importante**,
+      **rifinitura**, e si correggono in quest'ordine. Sempre bloccanti, anche su una pagina secondaria: controllo senza
+      nome, focus invisibile, qualcosa raggiungibile col dito ma non da tastiera, testo o controllo tagliato a 320 px o
+      con zoom al 200%, contrasto insufficiente, informazione affidata solo al colore, errore che non dice come rimediare,
+      movimento che ignora `prefers-reduced-motion`.
 - [ ] Nessuna griglia di 3 card uguali con icona, nessun hero centrato con due bottoni e mockup
 - [ ] Nessuna emoji come icona, nessuna icona di riempimento. Le icone sono disegnate per il sito.
 - [ ] Numeri e fatti nel testo, in una frase, non in caselle con il numero gigante
@@ -22,6 +27,10 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 
 ## 3. Telefono (si progetta a 375 px)
 - [ ] Screenshot a 320, 375, 768, 1280 px: niente scroll orizzontale
+- [ ] Componenti con testi variabili provati con contenuti estremi, a 320 px e a tutta larghezza: nome del piatto
+      o del prodotto lunghissimo e una parola senza spazi, prezzo a quattro cifre, motivo di chiusura lungo, due
+      avvisi insieme, dieci chiusure in tabella, piatto con tutti i 14 allergeni, lista vuota, nome lungo nel
+      modulo. Nessun testo tagliato o che esce dal riquadro; dove la lista è vuota, un messaggio.
 - [ ] Testo di lettura ≥ 16 px, righe sotto i 70 caratteri
 - [ ] Aree toccabili ≥ 44 × 44 px
 - [ ] Barra fissa in basso con le 1–2 azioni principali e `env(safe-area-inset-bottom)`
