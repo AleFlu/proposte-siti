@@ -187,10 +187,14 @@ def pagina(lingua, file, corpo, script=()):
     destinazione.write_text(testo)
 
 
-def voce(testo):
-    """Una condizione del modulo: la prima frase (cosa fare) in grassetto, il resto (perché) più tenue."""
+# condizioni la cui seconda frase spiega soltanto (1: i filtri falsano l'asse tritan; 5: l'angolo dei portatili):
+# nel modulo resta solo cosa fare, il perché sta in Come funziona («Perché contano»). Le altre seconde frasi sono azioni.
+SOLO_AZIONE = {1, 5}
+
+
+def voce(testo, i):
     m = re.match(r"(.+?[.!?])\s+(.+)", testo)
-    return f"<strong>{m.group(1)}</strong> <span class=\"tenue\">{m.group(2)}</span>" if m else f"<strong>{testo}</strong>"
+    return m.group(1) if m and i in SOLO_AZIONE else testo
 
 
 def corpo_test(l):
@@ -199,7 +203,7 @@ def corpo_test(l):
         f'<span class="etichetta">{t(l, k)}</span><span class="sr stato"></span></a></li>'
         for i, (v, k) in enumerate(PASSI, 1))
     caselle = "\n".join(
-        f'<li><span class="num" aria-hidden="true">{i:02d}</span><label for="c{i}">{voce(t(l, f"c{i}"))}</label>'
+        f'<li><span class="num" aria-hidden="true">{i:02d}</span><label for="c{i}">{voce(t(l, f"c{i}"), i)}</label>'
         f'<input type="checkbox" id="c{i}"></li>' for i in range(1, 7))
     pad = "".join(f'<button type="button" class="{c}" data-o="{o}" aria-label="{e(t(l, a))}">'
                   f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="{d}"/></svg></button>'

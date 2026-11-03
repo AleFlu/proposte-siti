@@ -1,5 +1,5 @@
 // Generato da strumenti/genera_notred.py: pagine e file per usare il sito senza rete.
-const CACHE = "notred-c4bef3cc";
+const CACHE = "notred-bb8a602a";
 const FILE = [
  "./assets/anteprima.jpg",
  "./assets/favicon.svg",
@@ -16,7 +16,7 @@ const FILE = [
  "./assets/simulatore.js?v=189b159e",
  "./assets/sito.js?v=97ebd752",
  "./assets/sito.webmanifest",
- "./assets/stile.css?v=de74fcfc",
+ "./assets/stile.css?v=d0b8e924",
  "./assets/test.js?v=d7894fec",
  "./de/",
  "./de/metodo.html",

@@ -205,8 +205,7 @@ html:not(.js) .vista + .vista { border-top: 1px solid var(--filo); padding-top: 
 .caselle { list-style: none; padding: 0; max-width: 46rem; border-top: 2px solid var(--inchiostro); counter-reset: none; }
 .caselle li { max-width: none; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) 44px; gap: var(--s-3); align-items: start; padding-block: var(--s-3); border-bottom: 1px solid var(--filo); }
 .caselle .num { font: 700 var(--t-0)/1.9 var(--numeri); color: var(--grafite); }
-.caselle label { cursor: pointer; line-height: 1.5; }
-.caselle label .tenue { display: block; font-size: var(--t-0); margin-top: var(--s-1); }
+.caselle label { cursor: pointer; line-height: 1.5; font-weight: 600; }
 .caselle input { width: 28px; height: 28px; margin: 0 0 0 8px; accent-color: var(--inchiostro); cursor: pointer; }
 .pronte { font: 700 var(--t-0)/1.3 var(--numeri); }
 .istruzioni { padding-left: 1.4em; display: grid; gap: var(--s-2); }
