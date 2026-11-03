@@ -72,10 +72,14 @@ def url(lingua, pagina):
 
 
 def rel(da, a, pagina):
-    """Link relativo dalla pagina nella lingua `da` alla stessa pagina nella lingua `a`."""
-    file = "" if pagina == "index.html" else pagina
+    """Link relativo dalla pagina nella lingua `da` alla stessa pagina nella lingua `a`.
+
+    I link nominano sempre il file (anche index.html): funzionano uguali su GitHub Pages e dentro l'artifact di
+    claude.ai, che non risolve le cartelle. Canonical e hreflang restano invece nella forma con la cartella.
+    """
+    file = pagina
     if da == a:
-        return file or "./"
+        return file
     if da == "it":
         return f"{a}/{file}"
     return f"../{file}" if a == "it" else f"../{a}/{file}"
@@ -98,12 +102,12 @@ def pagina(lingua, file, corpo, script=()):
     chiave = file.removesuffix(".html")
     titolo, descrizione = t(lingua, "seoTitle_" + chiave), t(lingua, "seoDesc_" + chiave)
     cur = lambda f: ' aria-current="page"' if f == file else ""
-    nav = "".join(f'<a href="{f if f != "index.html" else "./"}"{cur(f)}>{t(lingua, k)}</a>'
+    nav = "".join(f'<a href="{f}"{cur(f)}>{t(lingua, k)}</a>'
                   for f, k in (("index.html", "navTest"), ("simulatore.html", "navSim"), ("metodo.html", "navMetodo")))
     lingue = "\n".join(
         f'<li><a href="{rel(lingua, l, file)}" hreflang="{l}" lang="{l}"{CORRENTE if l == lingua else ""}>'
         f'<span class="sigla" aria-hidden="true">{l.upper()}</span> {t(l, "_nomeLingua")}</a></li>' for l in LINGUE)
-    piede_pagine = "".join(f'<li><a href="{f if f != "index.html" else "./"}">{t(lingua, k)}</a></li>'
+    piede_pagine = "".join(f'<li><a href="{f}">{t(lingua, k)}</a></li>'
                            for f, k in (("index.html", "navTest"), ("simulatore.html", "navSim"),
                                         ("metodo.html", "navMetodo"), ("privacy.html", "navPrivacy")))
     ld = ""
@@ -150,7 +154,7 @@ def pagina(lingua, file, corpo, script=()):
 <a class="salta" href="#contenuto">{t(lingua, "skip")}</a>
 <header class="testata">
   <div class="testata-riga">
-    <a class="marchio" href="./"{' aria-current="page"' if file == "index.html" else ""}>{NOME}</a>
+    <a class="marchio" href="index.html"{' aria-current="page"' if file == "index.html" else ""}>{NOME}</a>
     <button class="menu-apri solo-js" id="menuApri" type="button" aria-expanded="false" aria-controls="menu">{t(lingua, "menu")}</button>
     <div class="menu" id="menu">
     <nav class="nav" aria-label="{t(lingua, "navMain")}">{nav}</nav>
@@ -485,7 +489,7 @@ def corpo_metodo(l):
   <p>{t(l, "noteTritanRare")}</p>
   <h2>{t(l, "mFontiTitle")}</h2>
   <ul class="fonti">{fonti}</ul>
-  <p><a class="btn primario" href="./">{t(l, "doTest")}</a></p>
+  <p><a class="btn primario" href="index.html">{t(l, "doTest")}</a></p>
 </article>
 """
 
@@ -524,7 +528,9 @@ def scrivi_sw():
         r = p.relative_to(OUT).as_posix()
         if r.endswith(".css") or r.endswith(".js"):
             r = comune.con_versione(OUT, r)
-        elenco.append("./" + r.removesuffix("index.html"))
+        elenco.append("./" + r)
+        if r.endswith("index.html"):    # la stessa pagina chiesta con la cartella (link condivisi, canonical)
+            elenco.append("./" + r.removesuffix("index.html"))
     (OUT / "sw.js").write_text(f"""// Generato da strumenti/genera_notred.py: pagine e file per usare il sito senza rete.
 const CACHE = "notred-{impronta}";
 const FILE = {json.dumps(elenco, indent=1)};

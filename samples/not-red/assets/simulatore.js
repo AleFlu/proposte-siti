@@ -26,9 +26,9 @@ function renderBanner(){const b=$('#simBanner'),B=SIM.banner;if(!B){b.hidden=tru
   const nm=`${B.sev<0.05?t('noAlt'):cvdName(B.type,B.sev)}, ${t('intensityPct',{p:Math.round(B.sev*100)})}`;
   // un riquadro sopra il simulatore: di chi è il profilo che stai guardando
   const riga=(eti,suggerimento,azione)=>`<div><p class="etichetta-gruppo">${eti}</p><p class="profilo-nome">${nm}</p>${suggerimento?`<p class="tenue">${suggerimento}</p>`:''}</div>${azione}`;
-  if(B.kind==='shared')b.innerHTML=riga(t('sharedEyebrow'),t('sharedHint'),`<a class="btn" href="./">${t('doTestToo')}</a>`);
+  if(B.kind==='shared')b.innerHTML=riga(t('sharedEyebrow'),t('sharedHint'),`<a class="btn" href="index.html">${t('doTestToo')}</a>`);
   else if(B.kind==='mine')b.innerHTML=riga(t('yourProfile'),t('refineHint'),'');
-  else b.innerHTML=riga(t('exampleProfile'),t('exampleHint'),`<a class="btn primario" href="./">${t('doTest')}</a>`);}
+  else b.innerHTML=riga(t('exampleProfile'),t('exampleHint'),`<a class="btn primario" href="index.html">${t('doTest')}</a>`);}
 function initSim(){
   const all=store.get('cvd-sessions',[]);let mine=null;
   if(all.length){const R=resMode==='all'&&all.length>1?combine(all):{th:all[all.length-1].th,flicker:all[all.length-1].flicker||null,catch:all[all.length-1].catch};const A=analyze(R);if(A.status==='rg'||A.status==='tritan')mine={type:A.type,sev:A.sev}}

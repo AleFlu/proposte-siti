@@ -17,6 +17,7 @@ import sys
 ARTIFACT = {
     "pastificio": "https://claude.ai/code/artifact/0700d175-c57f-449d-ae4d-360a80249c14",
     "la-cupola": "https://claude.ai/artifact/5RsbSNaxjQyyr8X373NkvR",
+    "not-red": "(nuovo)",
 }
 
 radice = pathlib.Path(__file__).resolve().parent.parent
@@ -35,13 +36,18 @@ corpo = re.search(r"<body[^>]*>(.*)</body>", pagina, re.S).group(1)
 # gli attributi di <body> (es. data-pagina) si perdono nello scheletro: li rimette uno script
 attributi = re.findall(r'(data-[\w-]+)="([^"]*)"', apertura_body)
 rimetti = "".join(f'document.body.setAttribute("{k}", "{v}");' for k, v in attributi)
+# anche la lingua di <html>: lo scheletro dell'artifact non la conosce
+lingua = re.search(r'<html lang="([^"]+)"', pagina)
+if lingua:
+    rimetti = f'document.documentElement.lang = "{lingua.group(1)}";' + rimetti
 uscita = '<meta name="claude:viewport-fit-sides" content="cover">\n' + testa.strip() + "\n"
 if rimetti:
     uscita += f"<script>{rimetti}</script>\n"
 uscita += corpo.strip() + "\n"
 (dest / "index.html").write_text(uscita)
 
-altri = sorted(str(p.relative_to(dest)) for p in dest.rglob("*") if p.is_file() and p.name != "index.html")
+# tutto tranne la pagina principale (le index.html delle cartelle delle lingue sono pagine come le altre)
+altri = sorted(str(p.relative_to(dest)) for p in dest.rglob("*") if p.is_file() and p != dest / "index.html")
 print("pagina:", dest / "index.html")
 print("files:", altri)
 print("artifact:", ARTIFACT.get(nome, "(nuovo)"))
