@@ -345,6 +345,9 @@ figcaption { margin-top: var(--s-2); font: 600 var(--t-e)/1.3 var(--numeri); tex
 .dati dt { font: 500 var(--t-e)/1.6 var(--numeri); text-transform: uppercase; letter-spacing: .08em; color: var(--grafite); }
 .dati dd { margin: 0; }
 .fonti { font-size: var(--t-0); }
+.schema { display: grid; gap: var(--s-3); margin-block: var(--s-3); }
+.schema svg { width: 100%; max-width: 440px; height: auto; border: 1px solid var(--filo); }
+.schema figcaption { margin: 0; font: 400 var(--t-0)/1.5 var(--testo); text-transform: none; letter-spacing: 0; color: var(--grafite); }
 
 /* ---------- piede ---------- */
 .piede-riga { border-top: 2px solid var(--inchiostro); padding-block: var(--s-5) calc(var(--s-6) + env(safe-area-inset-bottom, 0px)); display: grid; gap: var(--s-3); font-size: var(--t-0); }

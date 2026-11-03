@@ -393,6 +393,62 @@ def corpo_simulatore(l):
 """
 
 
+def schema(l):
+    """Le tre linee di confusione nel piano u′v′ attorno al bianco dello schermo, disegnate a tratto e senza colore.
+
+    Stessa geometria del diagramma del risultato (assets/test.js): bianco D65, punti copuntali di Smith e Pokorny,
+    soglie normali ×10⁻⁴; l'esempio di deuteranomalia ha soglie 180 / 420 / 120.
+    """
+    import math
+    W, span = 440, 0.05      # più ingrandito del diagramma del risultato: qui contano le forme, non il gamut
+    k = (W / 2 - 36) / span
+    wu, wv = 0.1978, 0.4683
+    cop = {"P": (0.678, 0.501), "D": (-1.217, 0.782), "T": (0.257, 0.0)}
+    P = lambda u, v: (W / 2 + (u - wu) * k, W / 2 - (v - wv) * k)
+    assi = {}
+    for nome, (cu, cv) in cop.items():
+        du, dv = wu - cu, wv - cv
+        n = math.hypot(du, dv)
+        assi[nome] = (du / n, dv / n)
+
+    def poligono(soglie):
+        punti = []
+        for nome, s_ in zip("PDT", soglie):
+            du, dv = assi[nome]
+            punti += [P(wu + du * s_ * 1e-4, wv + dv * s_ * 1e-4), P(wu - du * s_ * 1e-4, wv - dv * s_ * 1e-4)]
+        punti.sort(key=lambda p: math.atan2(p[1] - W / 2, p[0] - W / 2))
+        return " ".join(f"{x:.1f},{y:.1f}" for x, y in punti)
+
+    righe = []
+    for g in (-0.04, -0.02, 0, 0.02, 0.04):
+        x, _ = P(wu + g, 0)
+        _, y = P(0, wv + g)
+        righe.append(f'<line x1="{x:.1f}" y1="0" x2="{x:.1f}" y2="{W}" stroke="var(--filo)"/>'
+                     f'<line x1="0" y1="{y:.1f}" x2="{W}" y2="{y:.1f}" stroke="var(--filo)"/>')
+    linee = []
+    for nome, (du, dv) in assi.items():
+        x1, y1 = P(wu - du * 0.1, wv - dv * 0.1)
+        x2, y2 = P(wu + du * 0.1, wv + dv * 0.1)
+        lx, ly = P(wu + du * 0.047, wv + dv * 0.047)
+        linee.append(f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="var(--grafite)" clip-path="url(#sch-clip)"/>'
+                     f'<text x="{lx:.1f}" y="{ly:.1f}" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="700" '
+                     f'fill="var(--inchiostro)" stroke="var(--carta)" stroke-width="5" paint-order="stroke">{nome}</text>')
+    return f"""<figure class="schema">
+    <svg viewBox="0 0 {W} {W}" role="img" aria-label="{e(t(l, "mSchemaAlt"))}" font-family="Atkinson Hyperlegible Mono, monospace">
+      <defs><clipPath id="sch-clip"><rect width="{W}" height="{W}"/></clipPath>
+      <pattern id="sch-trama" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--inchiostro)" stroke-width="1.5"/></pattern></defs>
+      <rect width="{W}" height="{W}" fill="var(--carta)"/>
+      {"".join(righe)}
+      {"".join(linee)}
+      <polygon points="{poligono((180, 420, 120))}" fill="url(#sch-trama)" stroke="var(--inchiostro)" stroke-width="2"/>
+      <polygon points="{poligono((100, 100, 150))}" fill="var(--carta)" stroke="var(--grafite)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <circle cx="{W / 2}" cy="{W / 2}" r="3" fill="var(--inchiostro)"/>
+      <text x="12" y="{W - 12}" font-size="11" fill="var(--grafite)">u′ →</text><text x="12" y="20" font-size="11" fill="var(--grafite)">v′ ↑</text>
+    </svg>
+    <figcaption>{t(l, "shapeP1")} {t(l, "mSchemaLeg")}</figcaption>
+  </figure>"""
+
+
 def corpo_metodo(l):
     caselle = "".join(f"<li>{t(l, f'c{i}')}</li>" for i in range(1, 7))
     fonti = "".join(f"<li>{f}</li>" for f in FONTI)
@@ -401,6 +457,7 @@ def corpo_metodo(l):
   <h1>{t(l, "mH1")}</h1>
   <p>{t(l, "how1")}</p>
   <p>{t(l, "how2")}</p>
+  {schema(l)}
   <p>{t(l, "how3")}</p>
   <dl class="dati">
     <dt>{t(l, "dtDur")}</dt><dd>{t(l, "ddDur")}</dd>

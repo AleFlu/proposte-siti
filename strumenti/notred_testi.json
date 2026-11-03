@@ -324,7 +324,9 @@
   "demoAria": "Esempio di prova: una C di puntini colorati",
   "prepCount": "{n} di 6 condizioni pronte",
   "sheetHead": "Scheda del test · {d}",
-  "menu": "Menu"
+  "menu": "Menu",
+  "mSchemaAlt": "Schema: le tre linee di confusione protan, deutan e tritan che passano per il bianco dello schermo, il limite normale e un esempio di deuteranomalia.",
+  "mSchemaLeg": "Tratteggio: il limite normale. Righe oblique: un esempio di deuteranomalia, allungato lungo la linea D."
  },
  "en": {
   "_locale": "en-GB",
@@ -651,7 +653,9 @@
   "demoAria": "Sample trial: a C made of coloured dots",
   "prepCount": "{n} of 6 conditions ready",
   "sheetHead": "Test summary · {d}",
-  "menu": "Menu"
+  "menu": "Menu",
+  "mSchemaAlt": "Diagram: the three protan, deutan and tritan confusion lines through the screen white, the normal limit and an example of deuteranomaly.",
+  "mSchemaLeg": "Dashed outline: the normal limit. Hatched area: an example of deuteranomaly, stretched along line D."
  },
  "de": {
   "_locale": "de-DE",
@@ -978,7 +982,9 @@
   "demoAria": "Beispiel eines Durchgangs: ein C aus farbigen Punkten",
   "prepCount": "{n} von 6 Bedingungen erfüllt",
   "sheetHead": "Testübersicht · {d}",
-  "menu": "Menü"
+  "menu": "Menü",
+  "mSchemaAlt": "Schema: die drei Verwechslungslinien Protan, Deutan und Tritan durch das Bildschirmweiß, die Normgrenze und ein Beispiel für Deuteranomalie.",
+  "mSchemaLeg": "Gestrichelt: die Normgrenze. Schraffiert: ein Beispiel für Deuteranomalie, entlang der Linie D gestreckt."
  },
  "fr": {
   "_locale": "fr-FR",
@@ -1305,7 +1311,9 @@
   "demoAria": "Exemple d’essai : un C fait de points colorés",
   "prepCount": "{n} conditions prêtes sur 6",
   "sheetHead": "Fiche du test · {d}",
-  "menu": "Menu"
+  "menu": "Menu",
+  "mSchemaAlt": "Schéma : les trois lignes de confusion protan, deutan et tritan qui passent par le blanc de l’écran, la limite normale et un exemple de deutéranomalie.",
+  "mSchemaLeg": "Pointillés : la limite normale. Hachures : un exemple de deutéranomalie, étiré le long de la ligne D."
  },
  "es": {
   "_locale": "es-ES",
@@ -1632,7 +1640,9 @@
   "demoAria": "Ejemplo de prueba: una C de puntos de colores",
   "prepCount": "{n} de 6 condiciones listas",
   "sheetHead": "Ficha del test · {d}",
-  "menu": "Menú"
+  "menu": "Menú",
+  "mSchemaAlt": "Esquema: las tres líneas de confusión protan, deutan y tritan que pasan por el blanco de la pantalla, el límite normal y un ejemplo de deuteranomalía.",
+  "mSchemaLeg": "Discontinuo: el límite normal. Rayado: un ejemplo de deuteranomalía, alargado a lo largo de la línea D."
  },
  "pt": {
   "_locale": "pt-PT",
@@ -1959,6 +1969,8 @@
   "demoAria": "Exemplo de ensaio: um C de pontos coloridos",
   "prepCount": "{n} de 6 condições prontas",
   "sheetHead": "Ficha do teste · {d}",
-  "menu": "Menu"
+  "menu": "Menu",
+  "mSchemaAlt": "Esquema: as três linhas de confusão protan, deutan e tritan que passam pelo branco do ecrã, o limite normal e um exemplo de deuteranomalia.",
+  "mSchemaLeg": "Tracejado: o limite normal. Tracejado oblíquo: um exemplo de deuteranomalia, esticado ao longo da linha D."
  }
 }
