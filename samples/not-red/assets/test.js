@@ -190,7 +190,8 @@ function updStatus(){
 }
 function answer(o){
   if(!T||!T.accept||T.paused)return;T.accept=false;const tr=T.trial;const ok=o===tr.ori;
-  if(tr.kind==='practice'){T.practice--;$('#feedback').textContent=ok?t('correct'):t('was'+tr.ori)}
+  // prove di pratica: nessuna correzione (scelta dell'utente, 2026-11-03), servono solo a prendere la mano
+  if(tr.kind==='practice'){T.practice--;$('#feedback').textContent=''}
   else{$('#feedback').textContent='';T.n++;
     if(tr.kind==='catch'){T.catchN++;if(ok)T.catchOk++}else T.st[tr.axis].update(ok)}
   nextTrial();
