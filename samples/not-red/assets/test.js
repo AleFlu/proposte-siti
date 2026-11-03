@@ -286,12 +286,13 @@ function renderResult(){
   const useAll=all.length>1&&resMode==='all';
   const R=useAll?combine(all):{th:last.th,flicker:last.flicker||null,catch:last.catch,n:1};
   const A=analyze(R);
-  let head,desc,sevBlock='';
+  let head,desc,sevBlock='',cifra='';
   if(A.status==='normal'){head=t('headNormal');desc=t('descNormal')}
   else if(A.status==='border'){head=t('headBorder');desc=t('descBorder')}
   else{head=A.name;const N=NM(A.type);
     desc=A.dich?t('descDich',{cone:N.cone,short:N.short.toLowerCase()}):t('descAnom',{cone:N.cone,short:N.short.toLowerCase(),x:fmt(R.th[A.type].v/NORM[A.type],1)});
-    sevBlock=`<div class="misura-intensita"><p class="etichette"><span>${t('sevLabel')}: <strong class="numeri">${Math.round(A.sev*100)}%</strong></span><span>${t('confLabel')}: ${t(A.conf)}</span></p>
+    cifra=`<div class="scheda-cifra"><p class="cifra numeri">${Math.round(A.sev*100)}%</p><p class="etichetta-gruppo">${t('sevLabel')}</p><p>${t('confLabel')}: ${t(A.conf)}</p></div>`;
+    sevBlock=`<div class="misura-intensita">
       <div class="barra" aria-hidden="true"><i style="width:${(A.sev*100).toFixed(1)}%"></i></div>
       <p class="scala" aria-hidden="true"><span>${t('scaleNormal')}</span>${D()._scale.map(x=>`<span>${x}</span>`).join('')}<span>${NM(A.type).opia.toLowerCase()}</span></p></div>`;}
   const rows=AXES.map(a=>{const t=R.th[a];return`<tr><th scope="row">${SHORT[a]}<span class="tenue">${NM(a).cone}</span></th>
@@ -309,7 +310,8 @@ function renderResult(){
   const quando=new Date(last.date).toLocaleString(D()._locale,{dateStyle:'long',timeStyle:'short'});
   $('#resBody').innerHTML=`
     <p class="solo-stampa">${t('printHead',{d:quando})}</p>
-    <section class="verdetto"><p class="etichetta-gruppo">${useAll?t('resCombined'):t('resLast')}</p><p class="esito">${head}</p><p>${desc}</p>${sevBlock}
+    <section class="verdetto"><div class="scheda-testa"><span>${t('sheetHead',{d:quando})}</span><span>${useAll?t('resCombined'):t('resLast')}</span></div>
+      <div class="scheda-corpo"><div class="scheda-esito"><p class="esito">${head}</p><p>${desc}</p></div>${cifra}</div>${sevBlock}
       ${A.notes.map(n=>`<p class="nota attenzione">${n}</p>`).join('')}
       <div class="azioni non-stampa">${A.status==='rg'||A.status==='tritan'?`<a class="btn primario" href="simulatore.html#profilo-${A.type}-${Math.round(A.sev*100)}">${t('openSim')}</a>`:`<a class="btn primario" href="simulatore.html">${t('trySim')}</a>`}
       <a class="btn" href="#test" id="redo">${t('redo')}</a><button type="button" class="btn" id="stampa">${t('printBtn')}</button></div>

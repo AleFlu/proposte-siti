@@ -254,8 +254,15 @@ html:not(.js) .vista + .vista { border-top: 1px solid var(--filo); padding-top: 
 
 /* ---------- risultato: una scheda da strumento ---------- */
 .scheda { display: grid; gap: var(--s-6); }
-.verdetto { display: grid; gap: var(--s-4); padding: var(--s-5) 0; border-block: 2px solid var(--inchiostro); }
-.esito { font-size: var(--t-3); font-weight: 800; line-height: 1.08; letter-spacing: -.01em; }
+/* il risultato come una scheda: intestazione con la data, esito grande, intensità in cifre da strumento */
+.verdetto { display: grid; gap: var(--s-4); padding-bottom: var(--s-5); border-top: 6px double var(--inchiostro); border-bottom: 2px solid var(--inchiostro); }
+.scheda-testa { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2) var(--s-4); padding-block: var(--s-2); border-bottom: 1px solid var(--filo); font: 500 var(--t-e)/1.4 var(--numeri); letter-spacing: .06em; text-transform: uppercase; color: var(--grafite); }
+.scheda-corpo { display: grid; gap: var(--s-4); }
+.scheda-esito { display: grid; gap: var(--s-3); min-width: 0; }
+.esito { font-size: clamp(2rem, 1.4rem + 3vw, 3.4rem); font-weight: 800; line-height: 1; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.scheda-cifra { display: grid; gap: var(--s-1); align-content: start; font-size: var(--t-0); }
+.cifra { font-size: clamp(2.6rem, 2rem + 3vw, 4.2rem); font-weight: 700; line-height: 1; letter-spacing: -.03em; }
+@media (min-width: 48rem) { .scheda-corpo { grid-template-columns: minmax(0, 1fr) 12rem; column-gap: var(--s-6); } .scheda-cifra { border-left: 1px solid var(--filo); padding-left: var(--s-5); } }
 .misura-intensita { display: grid; gap: var(--s-2); max-width: 36rem; }
 .etichette { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2); font-size: var(--t-0); }
 .barra { height: 14px; border: var(--bordo) solid var(--inchiostro); }

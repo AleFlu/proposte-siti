@@ -322,7 +322,8 @@
   "leaveWarn": "Lasciando questa pagina il test in corso si interrompe. Calibrazione e sessioni salvate restano. Continuare?",
   "demoCaption": "Così è una prova: una C di puntini tra altri puntini, che si distingue solo per il colore. Tu dici da che parte è aperta, oppure premi «Non la vedo».",
   "demoAria": "Esempio di prova: una C di puntini colorati",
-  "prepCount": "{n} di 6 condizioni pronte"
+  "prepCount": "{n} di 6 condizioni pronte",
+  "sheetHead": "Scheda del test · {d}"
  },
  "en": {
   "_locale": "en-GB",
@@ -647,7 +648,8 @@
   "leaveWarn": "Leaving this page stops the test in progress. Your calibration and saved sessions stay. Continue?",
   "demoCaption": "This is a trial: a C made of dots among other dots, set apart only by colour. You say which way it opens, or press “Can’t see it”.",
   "demoAria": "Sample trial: a C made of coloured dots",
-  "prepCount": "{n} of 6 conditions ready"
+  "prepCount": "{n} of 6 conditions ready",
+  "sheetHead": "Test summary · {d}"
  },
  "de": {
   "_locale": "de-DE",
@@ -972,7 +974,8 @@
   "leaveWarn": "Wenn du diese Seite verlässt, bricht der laufende Test ab. Kalibrierung und gespeicherte Sitzungen bleiben. Fortfahren?",
   "demoCaption": "So sieht ein Durchgang aus: ein C aus Punkten zwischen anderen Punkten, nur durch die Farbe zu erkennen. Du sagst, wohin es offen ist, oder drückst „Sehe ich nicht“.",
   "demoAria": "Beispiel eines Durchgangs: ein C aus farbigen Punkten",
-  "prepCount": "{n} von 6 Bedingungen erfüllt"
+  "prepCount": "{n} von 6 Bedingungen erfüllt",
+  "sheetHead": "Testübersicht · {d}"
  },
  "fr": {
   "_locale": "fr-FR",
@@ -1297,7 +1300,8 @@
   "leaveWarn": "Quitter cette page interrompt le test en cours. L’étalonnage et les sessions enregistrées restent. Continuer ?",
   "demoCaption": "Voici un essai : un C fait de points parmi d’autres points, qui ne se distingue que par la couleur. Tu indiques de quel côté il s’ouvre, ou tu appuies sur « Je ne le vois pas ».",
   "demoAria": "Exemple d’essai : un C fait de points colorés",
-  "prepCount": "{n} conditions prêtes sur 6"
+  "prepCount": "{n} conditions prêtes sur 6",
+  "sheetHead": "Fiche du test · {d}"
  },
  "es": {
   "_locale": "es-ES",
@@ -1622,7 +1626,8 @@
   "leaveWarn": "Si sales de esta página se interrumpe el test en curso. La calibración y las sesiones guardadas se conservan. ¿Continuar?",
   "demoCaption": "Así es una prueba: una C de puntos entre otros puntos, que solo se distingue por el color. Dices hacia dónde está abierta o pulsas «No la veo».",
   "demoAria": "Ejemplo de prueba: una C de puntos de colores",
-  "prepCount": "{n} de 6 condiciones listas"
+  "prepCount": "{n} de 6 condiciones listas",
+  "sheetHead": "Ficha del test · {d}"
  },
  "pt": {
   "_locale": "pt-PT",
@@ -1947,6 +1952,7 @@
   "leaveWarn": "Sair desta página interrompe o teste em curso. A calibração e as sessões guardadas ficam. Continuar?",
   "demoCaption": "Assim é um ensaio: um C de pontos entre outros pontos, que só se distingue pela cor. Dizes para que lado está aberto, ou carregas em «Não o vejo».",
   "demoAria": "Exemplo de ensaio: um C de pontos coloridos",
-  "prepCount": "{n} de 6 condições prontas"
+  "prepCount": "{n} de 6 condições prontas",
+  "sheetHead": "Ficha do teste · {d}"
  }
 }
