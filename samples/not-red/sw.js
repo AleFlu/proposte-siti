@@ -1,5 +1,5 @@
 // Generato da strumenti/genera_notred.py: pagine e file per usare il sito senza rete.
-const CACHE = "notred-83aac326";
+const CACHE = "notred-a7d1f28b";
 const FILE = [
  "./assets/anteprima.jpg",
  "./assets/favicon.svg",
@@ -13,11 +13,11 @@ const FILE = [
  "./assets/icona-512.png",
  "./assets/icona-adattiva-512.png",
  "./assets/misura.js?v=548fe531",
- "./assets/simulatore.js?v=927b172a",
- "./assets/sito.js?v=89f40a27",
+ "./assets/simulatore.js?v=ec9d58a5",
+ "./assets/sito.js?v=521acd31",
  "./assets/sito.webmanifest",
- "./assets/stile.css?v=29ebab36",
- "./assets/test.js?v=d9e1e95a",
+ "./assets/stile.css?v=90634fcc",
+ "./assets/test.js?v=719a5036",
  "./de/",
  "./de/metodo.html",
  "./de/privacy.html",
@@ -44,7 +44,8 @@ const FILE = [
  "./simulatore.html"
 ];
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILE)).then(() => self.skipWaiting()));
+  // cache: "reload" salta la cache HTTP: dopo un aggiornamento non entrano pagine vecchie con impronte che qui non ci sono
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILE.map(u => new Request(u, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n.startsWith("notred-") && n !== CACHE).map(n => caches.delete(n))))
@@ -55,7 +56,8 @@ self.addEventListener("fetch", e => {
   if (e.request.method !== "GET") return;
   if (e.request.mode === "navigate") {
     e.respondWith(fetch(e.request).then(r => {
-      const copia = r.clone(); caches.open(CACHE).then(c => c.put(e.request, copia)); return r;
+      if (r.ok) { const copia = r.clone(); e.waitUntil(caches.open(CACHE).then(c => c.put(e.request, copia))); }
+      return r;
     }).catch(() => caches.match(e.request, { ignoreSearch: true }).then(r => r || caches.match("./"))));
     return;
   }

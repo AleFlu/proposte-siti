@@ -274,7 +274,6 @@
   "prepIntro": "Spunta le condizioni prima di iniziare: restano segnate anche se torni più tardi.",
   "prepWhy": "Perché contano",
   "noscript": "Il test e il simulatore disegnano i colori con JavaScript: attivalo per usarli. Le istruzioni si leggono anche senza.",
-  "langWarn": "Cambiando lingua il test in corso si interrompe. Calibrazione e sessioni salvate restano. Continuare?",
   "langSuggest": "Questa pagina c’è anche in italiano.",
   "langSuggestGo": "Apri in italiano",
   "langSuggestNo": "No, grazie",
@@ -319,7 +318,8 @@
   "seoTitle_metodo": "Come funziona il test dei colori | This is not red!",
   "seoDesc_metodo": "Il metodo del Cambridge Colour Test, le linee di confusione, le soglie in unità u′v′, il tremolio rosso/verde e il filtro di Machado. Con limiti e fonti.",
   "seoTitle_privacy": "Privacy: i dati restano sul dispositivo | This is not red!",
-  "seoDesc_privacy": "Niente account, cookie o statistiche: risposte, calibrazione e foto restano nel tuo browser. Cosa viene salvato, dove sta il sito e come cancellare tutto."
+  "seoDesc_privacy": "Niente account, cookie o statistiche: risposte, calibrazione e foto restano nel tuo browser. Cosa viene salvato, dove sta il sito e come cancellare tutto.",
+  "leaveWarn": "Lasciando questa pagina il test in corso si interrompe. Calibrazione e sessioni salvate restano. Continuare?"
  },
  "en": {
   "_locale": "en-GB",
@@ -596,7 +596,6 @@
   "prepIntro": "Tick these conditions before you start: they stay ticked if you come back later.",
   "prepWhy": "Why they matter",
   "noscript": "The test and the simulator draw the colours with JavaScript: turn it on to use them. The instructions can be read without it.",
-  "langWarn": "Changing language stops the test in progress. Your calibration and saved sessions stay. Continue?",
   "langSuggest": "This page is also available in English.",
   "langSuggestGo": "Open in English",
   "langSuggestNo": "No, thanks",
@@ -641,7 +640,8 @@
   "seoTitle_metodo": "How the colour vision test works | This is not red!",
   "seoDesc_metodo": "The Cambridge Colour Test method, confusion lines, thresholds in u′v′ units, red/green flicker photometry and the Machado filter, with limits and sources.",
   "seoTitle_privacy": "Privacy: your data stays on your device | This is not red!",
-  "seoDesc_privacy": "No accounts, cookies or analytics: answers, calibration and photos stay in your browser. What is saved, where the site is hosted and how to delete it all."
+  "seoDesc_privacy": "No accounts, cookies or analytics: answers, calibration and photos stay in your browser. What is saved, where the site is hosted and how to delete it all.",
+  "leaveWarn": "Leaving this page stops the test in progress. Your calibration and saved sessions stay. Continue?"
  },
  "de": {
   "_locale": "de-DE",
@@ -918,7 +918,6 @@
   "prepIntro": "Hake diese Bedingungen vor dem Start ab: Die Haken bleiben, wenn du später zurückkommst.",
   "prepWhy": "Warum sie wichtig sind",
   "noscript": "Test und Simulator zeichnen die Farben mit JavaScript: Schalte es ein, um sie zu nutzen. Die Anleitung ist auch ohne lesbar.",
-  "langWarn": "Ein Sprachwechsel bricht den laufenden Test ab. Kalibrierung und gespeicherte Sitzungen bleiben. Fortfahren?",
   "langSuggest": "Diese Seite gibt es auch auf Deutsch.",
   "langSuggestGo": "Auf Deutsch öffnen",
   "langSuggestNo": "Nein, danke",
@@ -963,7 +962,8 @@
   "seoTitle_metodo": "So funktioniert der Farbsehtest | This is not red!",
   "seoDesc_metodo": "Die Methode des Cambridge Colour Test, Verwechslungslinien, Schwellen in u′v′, Rot-Grün-Flimmerphotometrie und der Machado-Filter, mit Grenzen und Quellen.",
   "seoTitle_privacy": "Datenschutz: Daten bleiben auf dem Gerät | This is not red!",
-  "seoDesc_privacy": "Keine Konten, Cookies oder Statistik: Antworten, Kalibrierung und Fotos bleiben im Browser. Was gespeichert wird, wo die Seite liegt, wie man alles löscht."
+  "seoDesc_privacy": "Keine Konten, Cookies oder Statistik: Antworten, Kalibrierung und Fotos bleiben im Browser. Was gespeichert wird, wo die Seite liegt, wie man alles löscht.",
+  "leaveWarn": "Wenn du diese Seite verlässt, bricht der laufende Test ab. Kalibrierung und gespeicherte Sitzungen bleiben. Fortfahren?"
  },
  "fr": {
   "_locale": "fr-FR",
@@ -1240,7 +1240,6 @@
   "prepIntro": "Cochez ces conditions avant de commencer : elles restent cochées si vous revenez plus tard.",
   "prepWhy": "Pourquoi elles comptent",
   "noscript": "Le test et le simulateur dessinent les couleurs avec JavaScript : activez-le pour les utiliser. Les instructions se lisent sans.",
-  "langWarn": "Changer de langue interrompt le test en cours. L’étalonnage et les sessions enregistrées restent. Continuer ?",
   "langSuggest": "Cette page existe aussi en français.",
   "langSuggestGo": "Ouvrir en français",
   "langSuggestNo": "Non, merci",
@@ -1285,7 +1284,8 @@
   "seoTitle_metodo": "Comment fonctionne le test des couleurs | This is not red!",
   "seoDesc_metodo": "La méthode du Cambridge Colour Test, les lignes de confusion, les seuils en u′v′, le papillotement rouge/vert et le filtre de Machado. Avec limites et sources.",
   "seoTitle_privacy": "Confidentialité : données sur l’appareil | This is not red!",
-  "seoDesc_privacy": "Ni compte, ni cookie, ni statistiques : réponses, étalonnage et photos restent dans le navigateur. Ce qui est gardé, l’hébergement et comment tout effacer."
+  "seoDesc_privacy": "Ni compte, ni cookie, ni statistiques : réponses, étalonnage et photos restent dans le navigateur. Ce qui est gardé, l’hébergement et comment tout effacer.",
+  "leaveWarn": "Quitter cette page interrompt le test en cours. L’étalonnage et les sessions enregistrées restent. Continuer ?"
  },
  "es": {
   "_locale": "es-ES",
@@ -1562,7 +1562,6 @@
   "prepIntro": "Marca estas condiciones antes de empezar: siguen marcadas si vuelves más tarde.",
   "prepWhy": "Por qué importan",
   "noscript": "El test y el simulador dibujan los colores con JavaScript: actívalo para usarlos. Las instrucciones se leen también sin él.",
-  "langWarn": "Al cambiar de idioma se interrumpe el test en curso. La calibración y las sesiones guardadas se conservan. ¿Continuar?",
   "langSuggest": "Esta página también está en español.",
   "langSuggestGo": "Abrir en español",
   "langSuggestNo": "No, gracias",
@@ -1607,7 +1606,8 @@
   "seoTitle_metodo": "Cómo funciona el test de colores | This is not red!",
   "seoDesc_metodo": "El método del Cambridge Colour Test, las líneas de confusión, los umbrales en u′v′, el parpadeo rojo/verde y el filtro de Machado. Con límites y fuentes.",
   "seoTitle_privacy": "Privacidad: tus datos no salen del equipo | This is not red!",
-  "seoDesc_privacy": "Sin cuentas, cookies ni estadísticas: respuestas, calibración y fotos se quedan en tu navegador. Qué se guarda, dónde está alojado y cómo borrarlo todo."
+  "seoDesc_privacy": "Sin cuentas, cookies ni estadísticas: respuestas, calibración y fotos se quedan en tu navegador. Qué se guarda, dónde está alojado y cómo borrarlo todo.",
+  "leaveWarn": "Si sales de esta página se interrumpe el test en curso. La calibración y las sesiones guardadas se conservan. ¿Continuar?"
  },
  "pt": {
   "_locale": "pt-PT",
@@ -1884,7 +1884,6 @@
   "prepIntro": "Marca estas condições antes de começar: ficam marcadas se voltares mais tarde.",
   "prepWhy": "Porque são importantes",
   "noscript": "O teste e o simulador desenham as cores com JavaScript: ativa-o para os usar. As instruções leem-se mesmo sem ele.",
-  "langWarn": "Mudar de idioma interrompe o teste em curso. A calibração e as sessões guardadas ficam. Continuar?",
   "langSuggest": "Esta página também está em português.",
   "langSuggestGo": "Abrir em português",
   "langSuggestNo": "Não, obrigado",
@@ -1929,6 +1928,7 @@
   "seoTitle_metodo": "Como funciona o teste das cores | This is not red!",
   "seoDesc_metodo": "O método do Cambridge Colour Test, as linhas de confusão, os limiares em u′v′, a cintilação vermelho/verde e o filtro de Machado, com limites e fontes.",
   "seoTitle_privacy": "Privacidade: os dados ficam no aparelho | This is not red!",
-  "seoDesc_privacy": "Sem contas, cookies ou estatísticas: respostas, calibração e fotos ficam no teu navegador. O que é guardado, onde está o site e como apagar tudo."
+  "seoDesc_privacy": "Sem contas, cookies ou estatísticas: respostas, calibração e fotos ficam no teu navegador. O que é guardado, onde está o site e como apagar tudo.",
+  "leaveWarn": "Sair desta página interrompe o teste em curso. A calibração e as sessões guardadas ficam. Continuar?"
  }
 }

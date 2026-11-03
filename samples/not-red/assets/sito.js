@@ -14,11 +14,9 @@ $('#tema').addEventListener('click',()=>{const n=scuro()?'light':'dark';document
 const lingue=$('#lingue');
 document.addEventListener('click',e=>{if(lingue.open&&!lingue.contains(e.target))lingue.open=false});
 lingue.addEventListener('keydown',e=>{if(e.key==='Escape'&&lingue.open){lingue.open=false;lingue.querySelector('summary').focus()}});
-$$('#lingue a').forEach(a=>a.addEventListener('click',e=>{
-  // la lingua è un'altra pagina: il test in corso si perderebbe
-  if(window.NR_testInCorso&&!confirm(TESTI.langWarn)){e.preventDefault();return}
-  prova(()=>localStorage.setItem('cvd-lang',a.hreflang));
-}));
+// la stessa pagina in un'altra lingua mantiene il punto in cui sei: passo del test o profilo condiviso
+const conHash=a=>{a.href=a.href.split('#')[0]+location.hash};
+$$('#lingue a').forEach(a=>a.addEventListener('click',()=>{conHash(a);prova(()=>localStorage.setItem('cvd-lang',a.hreflang))}));
 
 /* ---------- sulle pagine italiane, una proposta nella lingua del browser (una volta sola) ---------- */
 const datiLingue=$('#lingue-dati');
@@ -29,7 +27,7 @@ if(datiLingue&&!prova(()=>localStorage.getItem('cvd-lang'))){
     const [frase,vai,no,href]=voci[l];
     const p=document.createElement('div');p.className='proposta-lingua';p.lang=l;
     p.innerHTML=`<p>${frase}</p><a class="btn primario" hreflang="${l}" href="${href}">${vai}</a><button type="button" class="btn">${no}</button>`;
-    p.querySelector('a').addEventListener('click',()=>prova(()=>localStorage.setItem('cvd-lang',l)));
+    p.querySelector('a').addEventListener('click',e=>{conHash(e.currentTarget);prova(()=>localStorage.setItem('cvd-lang',l))});
     p.querySelector('button').addEventListener('click',()=>{prova(()=>localStorage.setItem('cvd-lang','it'));p.remove()});
     $('.testata').after(p);
   }

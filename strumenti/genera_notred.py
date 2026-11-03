@@ -140,7 +140,7 @@ def pagina(lingua, file, corpo, script=()):
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 {comune.testa_icone(pre + "assets/")}
-<script>document.documentElement.classList.add("js");try{{const s=localStorage.getItem("cvd-theme");if(s==="dark"||s==="light")document.documentElement.dataset.theme=s}}catch(_){{}}</script>
+<script>document.documentElement.classList.add("js");{{const h=location.hash.slice(1);document.documentElement.dataset.vista=["calibrazione","test","tremolio","risultato"].includes(h)?h:"preparazione"}}try{{const s=localStorage.getItem("cvd-theme");if(s==="dark"||s==="light")document.documentElement.dataset.theme=s}}catch(_){{}}</script>
 <link rel="stylesheet" href="{pre}{comune.con_versione(OUT, "assets/font.css")}">
 <link rel="stylesheet" href="{pre}{comune.con_versione(OUT, "assets/stile.css")}">
 <script type="application/json" id="testi">{testi_script(lingua)}</script>
@@ -452,7 +452,8 @@ def scrivi_sw():
 const CACHE = "notred-{impronta}";
 const FILE = {json.dumps(elenco, indent=1)};
 self.addEventListener("install", e => {{
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILE)).then(() => self.skipWaiting()));
+  // cache: "reload" salta la cache HTTP: dopo un aggiornamento non entrano pagine vecchie con impronte che qui non ci sono
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILE.map(u => new Request(u, {{ cache: "reload" }})))).then(() => self.skipWaiting()));
 }});
 self.addEventListener("activate", e => {{
   e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n.startsWith("notred-") && n !== CACHE).map(n => caches.delete(n))))
@@ -463,7 +464,8 @@ self.addEventListener("fetch", e => {{
   if (e.request.method !== "GET") return;
   if (e.request.mode === "navigate") {{
     e.respondWith(fetch(e.request).then(r => {{
-      const copia = r.clone(); caches.open(CACHE).then(c => c.put(e.request, copia)); return r;
+      if (r.ok) {{ const copia = r.clone(); e.waitUntil(caches.open(CACHE).then(c => c.put(e.request, copia))); }}
+      return r;
     }}).catch(() => caches.match(e.request, {{ ignoreSearch: true }}).then(r => r || caches.match("./"))));
     return;
   }}

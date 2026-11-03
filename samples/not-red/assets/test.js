@@ -13,13 +13,16 @@ function route(){
   const h=decodeURIComponent(location.hash.slice(1));
   // i link al profilo e al simulatore dell'originale stavano su questa pagina: ora il simulatore ha la sua
   if(/^profilo-(protan|deutan|tritan)-(\d{1,3})$/.test(h)||h==='simulatore'){location.replace('simulatore.html'+(h==='simulatore'?'':'#'+h));return}
-  show(VIEWS.includes(h)?h:'preparazione',!!h);
+  if(h&&!VIEWS.includes(h)){if(!current)show('preparazione',false);return}
+  show(h||'preparazione',!!h);
 }
 function show(v,scorri){
   if(current==='test'&&v!=='test')pauseTest(true);
   if(current==='tremolio'&&v!=='tremolio')stopFlicker();
-  current=v;window.NR_testInCorso=false;
+  current=v;document.documentElement.dataset.vista=v;
   VIEWS.forEach(x=>{$('#'+x).hidden=x!==v});
+  // durante il test la barra dei passi non resta in alto: su un telefono basso coprirebbe lo stimolo
+  $('.percorso').classList.toggle('in-test',v==='test');
   $$('.passi a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','step');else a.removeAttribute('aria-current')});
   // sul telefono i passi sono solo numeri: accanto c'è il nome di quello in corso
   $('#passoDi').textContent=$(`.passi a[data-v="${v}"] .etichetta`).textContent;
@@ -37,6 +40,19 @@ function markDone(){
   $$('.passi a').forEach(a=>{const d=!!done[a.dataset.v]&&a.dataset.v!==current;a.classList.toggle('fatto',d);a.querySelector('.stato').textContent=d?' ('+t('stepDone')+')':''});
 }
 window.addEventListener('hashchange',route);
+
+/* ---------- uscire dalla pagina con il test a metà ----------
+   Simulatore, altre pagine e lingue sono documenti diversi: il test in corso si perderebbe. Calibrazione e sessioni
+   salvate restano comunque. Per i link si chiede con il nostro testo, per tutto il resto (ricarica, chiusura,
+   indietro) con l'avviso del browser. */
+const inCorso=()=>!!T&&!T.finished;
+let uscitaConfermata=false;
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href]');if(!a||!inCorso()||e.defaultPrevented)return;
+  const u=new URL(a.href,location.href);if(u.origin===location.origin&&u.pathname===location.pathname)return;
+  if(confirm(t('leaveWarn')))uscitaConfermata=true;else{e.preventDefault();e.stopImmediatePropagation()}
+},true);
+window.addEventListener('beforeunload',e=>{if(inCorso()&&!uscitaConfermata){e.preventDefault();e.returnValue=''}});
 
 /* ---------- 1 preparazione ---------- */
 (()=>{const ck=store.get('cvd-check',{});$$('.caselle input').forEach(i=>{i.checked=!!ck[i.id];i.addEventListener('change',()=>{ck[i.id]=i.checked;store.set('cvd-check',ck)})});
@@ -100,12 +116,16 @@ function prepTest(){
     ['#stage','#pad','#stageActions','#stageStatus','#progBar'].forEach(s=>$(s).hidden=true);$('#feedback').textContent='';
   }
 }
-function sizeStage(){const dpr=window.devicePixelRatio||1;const css=Math.min(500,$('#stageWrap').clientWidth-32);const S=Math.round(css*dpr);stage.width=S;stage.height=S;stage.style.width=(S/dpr)+'px';stage.style.height=(S/dpr)+'px';}
+function sizeStage(){const dpr=window.devicePixelRatio||1;const w=$('#stageWrap'),cs=getComputedStyle(w);
+  // lo stimolo prende la larghezza utile del palco, ma lascia sullo schermo stato e frecce (pausa e interruzione possono stare sotto)
+  const resto=w.getBoundingClientRect().height-stage.getBoundingClientRect().height-$('#stageActions').getBoundingClientRect().height;
+  const css=Math.max(160,Math.min(500,w.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),innerHeight-resto));const S=Math.round(css*dpr);stage.width=S;stage.height=S;stage.style.width=(S/dpr)+'px';stage.style.height=(S/dpr)+'px';}
 $('#testStart').addEventListener('click',()=>{
   T={st:{},practice:4,n:0,catchOk:0,catchN:0,trial:null,accept:false,paused:false,finished:false,started:Date.now()};
   AXES.forEach(a=>T.st[a]=new Stair(a));
   $('#testIntro').hidden=true;['#stage','#pad','#stageActions','#stageStatus','#progBar'].forEach(s=>$(s).hidden=false);
-  sizeStage();window.NR_testInCorso=true;
+  // due misure: la seconda con lo stimolo già alla sua misura, che cambia l'altezza del resto del palco
+  sizeStage();sizeStage();window.scrollTo({top:$('#stageWrap').getBoundingClientRect().top+scrollY});
   try{navigator.wakeLock&&navigator.wakeLock.request('screen').catch(()=>{})}catch(e){}
   nextTrial();
 });
@@ -183,9 +203,9 @@ function pauseTest(force){if(!T||T.finished||$('#stage').hidden)return;
   if(T.paused){T.accept=false;blank();$('#feedback').textContent=t('pausedMsg')}
   else{$('#feedback').textContent='';nextTrial()}}
 $('#testPause').addEventListener('click',()=>pauseTest());
-$('#testAbort').addEventListener('click',()=>{T=null;window.NR_testInCorso=false;prepTest()});
+$('#testAbort').addEventListener('click',()=>{T=null;prepTest()});
 function finishTest(){
-  T.finished=true;T.accept=false;window.NR_testInCorso=false;
+  T.finished=true;T.accept=false;
   const th={};AXES.forEach(a=>th[a]=T.st[a].result());
   const sess={date:new Date().toISOString(),gamma:{...gamma},dpr:window.devicePixelRatio||1,th,catch:{ok:T.catchOk,n:T.catchN},trials:T.n,mins:(Date.now()-T.started)/60000};
   const all=store.get('cvd-sessions',[]);all.push(sess);store.set('cvd-sessions',all.slice(-10));

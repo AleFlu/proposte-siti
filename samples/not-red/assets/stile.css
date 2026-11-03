@@ -172,6 +172,11 @@ main { padding-block: var(--s-6) var(--s-7); display: grid; gap: var(--s-6); }
 html:not(.js) .passi { position: static; }
 
 .vista { display: grid; gap: var(--s-5); align-content: start; min-width: 0; }
+/* con JavaScript si vede un passo solo, scelto nel <head> prima che la pagina compaia */
+.js[data-vista] .vista { display: none; }
+.js[data-vista="preparazione"] #preparazione, .js[data-vista="calibrazione"] #calibrazione, .js[data-vista="test"] #test,
+.js[data-vista="tremolio"] #tremolio, .js[data-vista="risultato"] #risultato { display: grid; }
+.percorso.in-test .passi { position: static; }
 html:not(.js) .vista + .vista { border-top: 1px solid var(--filo); padding-top: var(--s-6); }
 .caselle { list-style: none; padding: 0; display: grid; gap: var(--s-1); max-width: 62ch; }
 .caselle li { display: grid; grid-template-columns: 44px 1fr; align-items: start; }
@@ -213,6 +218,13 @@ html:not(.js) .vista + .vista { border-top: 1px solid var(--filo); padding-top: 
 .croce button:active { background: var(--palco-filo); }
 @media (hover: hover) { .croce button:hover { background: var(--palco-filo); } }
 .palco-comandi { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; }
+/* telefoni bassi: meno aria nel palco e frecce da 56 px (sopra i 44 richiesti), così stimolo e frecce stanno insieme */
+@media (max-height: 700px) {
+  .palco { gap: var(--s-2); padding-block: var(--s-3); }
+  .croce { grid-template-columns: 56px auto 56px; grid-template-rows: 56px auto 56px; gap: var(--s-1); }
+  .croce button:not(.nessuna) { width: 56px; height: 56px; }
+  .croce .nessuna { min-height: 56px; }
+}
 .palco .btn { min-height: 44px; }
 .palco :focus-visible { outline-color: var(--palco-testo); box-shadow: 0 0 0 5px var(--palco); }
 

@@ -127,10 +127,10 @@ async function loadFile(f){
 }
 $('#file').addEventListener('change',e=>{loadFile(e.target.files[0]);e.target.value=''});
 const dropTargets=[$('#drop'),$('#viewSplit'),$('#viewSide'),$('#viewSim')];
-dropTargets.forEach(t=>{
-  ['dragenter','dragover'].forEach(ev=>t.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();try{e.dataTransfer.dropEffect='copy'}catch(_){}$('#drop').classList.add('over')}));
-  t.addEventListener('dragleave',e=>{e.preventDefault();$('#drop').classList.remove('over')});
-  t.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();$('#drop').classList.remove('over');const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)loadFile(f);else imgMsg(t('noFile'))});
+dropTargets.forEach(bersaglio=>{
+  ['dragenter','dragover'].forEach(ev=>bersaglio.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();try{e.dataTransfer.dropEffect='copy'}catch(_){}$('#drop').classList.add('over')}));
+  bersaglio.addEventListener('dragleave',e=>{e.preventDefault();$('#drop').classList.remove('over')});
+  bersaglio.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();$('#drop').classList.remove('over');const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)loadFile(f);else imgMsg(t('noFile'))});
 });
 window.addEventListener('dragover',e=>{if(current==='simulatore')e.preventDefault()});
 window.addEventListener('drop',e=>{if(current==='simulatore'){e.preventDefault();const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)loadFile(f)}});
@@ -140,7 +140,7 @@ function simBlob(){return new Promise(r=>{const c=document.createElement('canvas
 function immagineDaSalvare(){let img=$('#outImg');if(!img){img=Object.assign(document.createElement('img'),{id:'outImg',className:'da-salvare',alt:t('outAlt')});$('#mkImg').closest('.strumento').append(img)}return img}
 $('#mkImg').addEventListener('click',async()=>{if(!SIM.out)return;const b=await simBlob();const img=immagineDaSalvare();if(img.src)URL.revokeObjectURL(img.src);img.src=URL.createObjectURL(b);img.hidden=false;$('#imgMsg').textContent=t('readyBelow')});
 $('#cpImg').addEventListener('click',async()=>{if(!SIM.out)return;try{const b=await simBlob();await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);$('#imgMsg').textContent=t('copiedImg')}catch(e){$('#imgMsg').textContent=t('copyImgFail')}});
-function copyText(el,msg){const t=el.textContent;navigator.clipboard.writeText(t).then(()=>msg.textContent=t('copied')).catch(()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);msg.textContent=t('selected')})}
+function copyText(el,msg){const testo=el.textContent;navigator.clipboard.writeText(testo).then(()=>msg.textContent=t('copied')).catch(()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);msg.textContent=t('selected')})}
 $('#cpLink').addEventListener('click',()=>copyText($('#shareLink'),$('#linkMsg')));
 $('#cpSvg').addEventListener('click',()=>copyText($('#svgCode'),$('#svgMsg')));
 
