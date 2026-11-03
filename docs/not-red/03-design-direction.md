@@ -80,3 +80,16 @@ forma. Il testo vero del titolo resta nell'HTML.
 - **Scheda stampabile del risultato** (`@media print`): tipo, intensità, soglie e data su un foglio da portare
   all'oculista.
 - **«Cancella i miei dati»** nella pagina Privacy: svuota calibrazione, sessioni e preferenze salvate nel browser.
+
+## Revisione del 2026-11-03 (dopo la prima versione)
+L'utente ha trovato il frontend «pigro»: grigio e pulito era diventato spoglio. Sei interventi, ognuno in un commit
+separato perché si possa tornare indietro su uno solo:
+1. **Apertura con un palco di prova**: accanto al titolo una prova vera (C di puntini) disegnata con lo stesso calcolo
+   del test, così si capisce cosa si farà prima di iniziare.
+2. **Preparazione come modulo stampato**: righe numerate con il filo, casella grande a destra, contatore
+   «4 di 6 condizioni pronte».
+3. **Risultato come scheda**: intestazione con la data, esito grande, intensità in cifre da strumento accanto.
+4. **Simulatore con l'immagine protagonista**: foto a tutta larghezza, controlli in una barra sotto.
+5. **Testata su una riga sul telefono**: marchio e «Menu»; dentro pagine, tema e lingua.
+6. **Come funziona con uno schema**: le tre linee di confusione disegnate a tratto, senza colore.
+Nelle prove di pratica il test non dice più se la risposta era giusta (scelta dell'utente).
