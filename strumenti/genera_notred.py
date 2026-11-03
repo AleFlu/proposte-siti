@@ -151,6 +151,8 @@ def pagina(lingua, file, corpo, script=()):
 <header class="testata">
   <div class="testata-riga">
     <a class="marchio" href="./"{' aria-current="page"' if file == "index.html" else ""}>{NOME}</a>
+    <button class="menu-apri solo-js" id="menuApri" type="button" aria-expanded="false" aria-controls="menu">{t(lingua, "menu")}</button>
+    <div class="menu" id="menu">
     <nav class="nav" aria-label="{t(lingua, "navMain")}">{nav}</nav>
     <div class="comandi">
       <button class="tema" id="tema" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 2a8 8 0 0 1 0 16z" fill="currentColor"/></svg><span class="se-chiaro">{t(lingua, "themeDark")}</span><span class="se-scuro">{t(lingua, "themeLight")}</span></button>
@@ -160,6 +162,7 @@ def pagina(lingua, file, corpo, script=()):
 {lingue}
         </ul>
       </details>
+    </div>
     </div>
   </div>
 </header>

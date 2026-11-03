@@ -108,7 +108,13 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 24px; background: v
 .testata { padding-block: var(--s-4); border-bottom: 1px solid var(--filo); }
 .testata-riga { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-5); }
 .marchio { font: 700 1rem/1 var(--numeri); text-decoration: none; padding-block: var(--s-3); margin-right: auto; }
-.nav { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-4); order: 3; width: 100%; }
+/* sul telefono la testata è una riga sola: marchio e «Menu»; dentro, pagine, tema e lingua */
+.menu-apri { min-height: 44px; padding: 0 var(--s-4); border: var(--bordo) solid var(--inchiostro); border-radius: var(--r-controllo); background: transparent; color: inherit; font: 600 1rem/1 var(--testo); cursor: pointer; }
+.menu-apri[aria-expanded="true"] { background: var(--inchiostro); color: var(--carta); }
+.menu { display: grid; gap: var(--s-3); width: 100%; }
+.js .menu:not(.aperto) { display: none; }
+.js .menu.aperto { padding-block: var(--s-3) var(--s-2); border-top: 1px solid var(--filo); }
+.nav { display: flex; flex-direction: column; }
 .nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; font-weight: 500; }
 .nav a[aria-current="page"] { font-weight: 800; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .35em; }
 .comandi { display: flex; align-items: center; gap: var(--s-2); }
@@ -134,7 +140,11 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 24px; background: v
 .sigla { font: 700 var(--t-e)/1 var(--numeri); width: 2ch; }
 .proposta-lingua { margin-top: var(--s-3); padding-top: var(--s-3); display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; border-top: 1px solid var(--filo); }
 .proposta-lingua p { margin-right: auto; font-weight: 600; }
-@media (min-width: 48rem) { .nav { order: 0; width: auto; } }
+@media (min-width: 48rem) {
+  .menu-apri { display: none; }
+  .menu, .js .menu:not(.aperto), .js .menu.aperto { display: flex; align-items: center; gap: var(--s-5); width: auto; padding: 0; border: 0; }
+  .nav { flex-direction: row; flex-wrap: wrap; gap: var(--s-1) var(--s-4); }
+}
 
 /* ---------- apertura del test ---------- */
 main { padding-block: var(--s-6) var(--s-7); display: grid; gap: var(--s-6); }

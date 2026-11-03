@@ -10,6 +10,12 @@ const prova=f=>{try{return f()}catch(_){return null}};
 const scuro=()=>{const a=document.documentElement.dataset.theme;return a?a==='dark':matchMedia('(prefers-color-scheme: dark)').matches};
 $('#tema').addEventListener('click',()=>{const n=scuro()?'light':'dark';document.documentElement.dataset.theme=n;prova(()=>localStorage.setItem('cvd-theme',n));disegnaTitolo()});
 
+/* ---------- menu del telefono: si apre e chiude con il pulsante, Esc lo chiude ---------- */
+const menuApri=$('#menuApri'),menu=$('#menu');
+const apriMenu=a=>{menu.classList.toggle('aperto',a);menuApri.setAttribute('aria-expanded',String(a))};
+menuApri.addEventListener('click',()=>apriMenu(!menu.classList.contains('aperto')));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.classList.contains('aperto')&&!lingue.open){apriMenu(false);menuApri.focus()}});
+
 /* ---------- lingue: un menu <details>; si chiude cliccando fuori o con Esc ---------- */
 const lingue=$('#lingue');
 document.addEventListener('click',e=>{if(lingue.open&&!lingue.contains(e.target))lingue.open=false});

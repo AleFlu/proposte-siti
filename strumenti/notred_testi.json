@@ -323,7 +323,8 @@
   "demoCaption": "Così è una prova: una C di puntini tra altri puntini, che si distingue solo per il colore. Tu dici da che parte è aperta, oppure premi «Non la vedo».",
   "demoAria": "Esempio di prova: una C di puntini colorati",
   "prepCount": "{n} di 6 condizioni pronte",
-  "sheetHead": "Scheda del test · {d}"
+  "sheetHead": "Scheda del test · {d}",
+  "menu": "Menu"
  },
  "en": {
   "_locale": "en-GB",
@@ -649,7 +650,8 @@
   "demoCaption": "This is a trial: a C made of dots among other dots, set apart only by colour. You say which way it opens, or press “Can’t see it”.",
   "demoAria": "Sample trial: a C made of coloured dots",
   "prepCount": "{n} of 6 conditions ready",
-  "sheetHead": "Test summary · {d}"
+  "sheetHead": "Test summary · {d}",
+  "menu": "Menu"
  },
  "de": {
   "_locale": "de-DE",
@@ -975,7 +977,8 @@
   "demoCaption": "So sieht ein Durchgang aus: ein C aus Punkten zwischen anderen Punkten, nur durch die Farbe zu erkennen. Du sagst, wohin es offen ist, oder drückst „Sehe ich nicht“.",
   "demoAria": "Beispiel eines Durchgangs: ein C aus farbigen Punkten",
   "prepCount": "{n} von 6 Bedingungen erfüllt",
-  "sheetHead": "Testübersicht · {d}"
+  "sheetHead": "Testübersicht · {d}",
+  "menu": "Menü"
  },
  "fr": {
   "_locale": "fr-FR",
@@ -1301,7 +1304,8 @@
   "demoCaption": "Voici un essai : un C fait de points parmi d’autres points, qui ne se distingue que par la couleur. Tu indiques de quel côté il s’ouvre, ou tu appuies sur « Je ne le vois pas ».",
   "demoAria": "Exemple d’essai : un C fait de points colorés",
   "prepCount": "{n} conditions prêtes sur 6",
-  "sheetHead": "Fiche du test · {d}"
+  "sheetHead": "Fiche du test · {d}",
+  "menu": "Menu"
  },
  "es": {
   "_locale": "es-ES",
@@ -1627,7 +1631,8 @@
   "demoCaption": "Así es una prueba: una C de puntos entre otros puntos, que solo se distingue por el color. Dices hacia dónde está abierta o pulsas «No la veo».",
   "demoAria": "Ejemplo de prueba: una C de puntos de colores",
   "prepCount": "{n} de 6 condiciones listas",
-  "sheetHead": "Ficha del test · {d}"
+  "sheetHead": "Ficha del test · {d}",
+  "menu": "Menú"
  },
  "pt": {
   "_locale": "pt-PT",
@@ -1953,6 +1958,7 @@
   "demoCaption": "Assim é um ensaio: um C de pontos entre outros pontos, que só se distingue pela cor. Dizes para que lado está aberto, ou carregas em «Não o vejo».",
   "demoAria": "Exemplo de ensaio: um C de pontos coloridos",
   "prepCount": "{n} de 6 condições prontas",
-  "sheetHead": "Ficha do teste · {d}"
+  "sheetHead": "Ficha do teste · {d}",
+  "menu": "Menu"
  }
 }
