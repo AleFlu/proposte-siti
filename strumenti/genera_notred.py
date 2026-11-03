@@ -201,6 +201,10 @@ def corpo_test(l):
   <h1 class="titolo" id="titolo"><canvas aria-hidden="true"></canvas><span class="titolo-testo">{NOME}</span></h1>
   <p class="tagline">{t(l, "tagline")}</p>
   <p class="fatti">{t(l, "facts")}</p>
+  <figure class="esempio solo-js">
+    <canvas id="esempio" role="img" aria-label="{e(t(l, "demoAria"))}"></canvas>
+    <figcaption>{t(l, "demoCaption")}</figcaption>
+  </figure>
 </div>
 <noscript><p class="nota attenzione">{t(l, "noscript")}</p></noscript>
 

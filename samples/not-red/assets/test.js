@@ -324,5 +324,23 @@ function renderResult(){
 }
 let resMode='last';
 
+/* ---------- l'esempio nell'apertura: una prova vera, disegnata con lo stesso calcolo del test ----------
+   Livello delle prove di pratica (0,07 sull'asse deutan): ben visibile con una visione normale. Si disegna una volta;
+   a ogni visita l'apertura cambia lato. */
+function disegnaEsempio(){
+  const cv=$('#esempio');if(!cv)return;const dpr=Math.min(2,window.devicePixelRatio||1);const lato=Math.round(cv.getBoundingClientRect().width);if(!lato)return;
+  const S=Math.round(lato*dpr);cv.width=S;cv.height=S;
+  const ori=['up','right','down','left'][(Math.random()*4)|0],c=S/2,Ro=S*0.30,Ri=S*0.165,gh=(Ro-Ri)*0.55;
+  const {dots,map}=makeField(S),d=Math.min(0.07,AX.deutan.max),tu=WP.u+AX.deutan.du*d,tv=WP.v+AX.deutan.dv*d;
+  const col=dots.map(p=>{const x=p.x-c,y=p.y-c,rr=Math.hypot(x,y);
+    const gap=ori==='up'?y<0&&Math.abs(x)<gh:ori==='down'?y>0&&Math.abs(x)<gh:ori==='left'?x<0&&Math.abs(y)<gh:x>0&&Math.abs(y)<gh;
+    const inC=rr>=Ri&&rr<=Ro&&!gap,Y=Y_LEVELS[(Math.random()*Y_LEVELS.length)|0];
+    return lin2dev(uvY2lin(inC?tu:WP.u,inC?tv:WP.v,Y))});
+  const bg=lin2dev(uvY2lin(WP.u,WP.v,Y_BG)),ctx=cv.getContext('2d'),im=ctx.createImageData(S,S);
+  for(let q=0;q<S*S;q++){const id=map[q],v=id<0?bg:col[id];im.data[q*4]=v[0];im.data[q*4+1]=v[1];im.data[q*4+2]=v[2];im.data[q*4+3]=255}
+  ctx.putImageData(im,0,0);
+}
+disegnaEsempio();
+
 route();
 })();
