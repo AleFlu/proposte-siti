@@ -321,7 +321,8 @@
   "seoDesc_privacy": "Niente account, cookie o statistiche: risposte, calibrazione e foto restano nel tuo browser. Cosa viene salvato, dove sta il sito e come cancellare tutto.",
   "leaveWarn": "Lasciando questa pagina il test in corso si interrompe. Calibrazione e sessioni salvate restano. Continuare?",
   "demoCaption": "Così è una prova: una C di puntini tra altri puntini, che si distingue solo per il colore. Tu dici da che parte è aperta, oppure premi «Non la vedo».",
-  "demoAria": "Esempio di prova: una C di puntini colorati"
+  "demoAria": "Esempio di prova: una C di puntini colorati",
+  "prepCount": "{n} di 6 condizioni pronte"
  },
  "en": {
   "_locale": "en-GB",
@@ -645,7 +646,8 @@
   "seoDesc_privacy": "No accounts, cookies or analytics: answers, calibration and photos stay in your browser. What is saved, where the site is hosted and how to delete it all.",
   "leaveWarn": "Leaving this page stops the test in progress. Your calibration and saved sessions stay. Continue?",
   "demoCaption": "This is a trial: a C made of dots among other dots, set apart only by colour. You say which way it opens, or press “Can’t see it”.",
-  "demoAria": "Sample trial: a C made of coloured dots"
+  "demoAria": "Sample trial: a C made of coloured dots",
+  "prepCount": "{n} of 6 conditions ready"
  },
  "de": {
   "_locale": "de-DE",
@@ -969,7 +971,8 @@
   "seoDesc_privacy": "Keine Konten, Cookies oder Statistik: Antworten, Kalibrierung und Fotos bleiben im Browser. Was gespeichert wird, wo die Seite liegt, wie man alles löscht.",
   "leaveWarn": "Wenn du diese Seite verlässt, bricht der laufende Test ab. Kalibrierung und gespeicherte Sitzungen bleiben. Fortfahren?",
   "demoCaption": "So sieht ein Durchgang aus: ein C aus Punkten zwischen anderen Punkten, nur durch die Farbe zu erkennen. Du sagst, wohin es offen ist, oder drückst „Sehe ich nicht“.",
-  "demoAria": "Beispiel eines Durchgangs: ein C aus farbigen Punkten"
+  "demoAria": "Beispiel eines Durchgangs: ein C aus farbigen Punkten",
+  "prepCount": "{n} von 6 Bedingungen erfüllt"
  },
  "fr": {
   "_locale": "fr-FR",
@@ -1293,7 +1296,8 @@
   "seoDesc_privacy": "Ni compte, ni cookie, ni statistiques : réponses, étalonnage et photos restent dans le navigateur. Ce qui est gardé, l’hébergement et comment tout effacer.",
   "leaveWarn": "Quitter cette page interrompt le test en cours. L’étalonnage et les sessions enregistrées restent. Continuer ?",
   "demoCaption": "Voici un essai : un C fait de points parmi d’autres points, qui ne se distingue que par la couleur. Tu indiques de quel côté il s’ouvre, ou tu appuies sur « Je ne le vois pas ».",
-  "demoAria": "Exemple d’essai : un C fait de points colorés"
+  "demoAria": "Exemple d’essai : un C fait de points colorés",
+  "prepCount": "{n} conditions prêtes sur 6"
  },
  "es": {
   "_locale": "es-ES",
@@ -1617,7 +1621,8 @@
   "seoDesc_privacy": "Sin cuentas, cookies ni estadísticas: respuestas, calibración y fotos se quedan en tu navegador. Qué se guarda, dónde está alojado y cómo borrarlo todo.",
   "leaveWarn": "Si sales de esta página se interrumpe el test en curso. La calibración y las sesiones guardadas se conservan. ¿Continuar?",
   "demoCaption": "Así es una prueba: una C de puntos entre otros puntos, que solo se distingue por el color. Dices hacia dónde está abierta o pulsas «No la veo».",
-  "demoAria": "Ejemplo de prueba: una C de puntos de colores"
+  "demoAria": "Ejemplo de prueba: una C de puntos de colores",
+  "prepCount": "{n} de 6 condiciones listas"
  },
  "pt": {
   "_locale": "pt-PT",
@@ -1941,6 +1946,7 @@
   "seoDesc_privacy": "Sem contas, cookies ou estatísticas: respostas, calibração e fotos ficam no teu navegador. O que é guardado, onde está o site e como apagar tudo.",
   "leaveWarn": "Sair desta página interrompe o teste em curso. A calibração e as sessões guardadas ficam. Continuar?",
   "demoCaption": "Assim é um ensaio: um C de pontos entre outros pontos, que só se distingue pela cor. Dizes para que lado está aberto, ou carregas em «Não o vejo».",
-  "demoAria": "Exemplo de ensaio: um C de pontos coloridos"
+  "demoAria": "Exemplo de ensaio: um C de pontos coloridos",
+  "prepCount": "{n} de 6 condições prontas"
  }
 }

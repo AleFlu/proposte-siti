@@ -58,8 +58,9 @@ document.addEventListener('click',e=>{
 window.addEventListener('beforeunload',e=>{if(inCorso()&&!uscitaConfermata){e.preventDefault();e.returnValue=''}});
 
 /* ---------- 1 preparazione ---------- */
-(()=>{const ck=store.get('cvd-check',{});$$('.caselle input').forEach(i=>{i.checked=!!ck[i.id];i.addEventListener('change',()=>{ck[i.id]=i.checked;store.set('cvd-check',ck)})});
-  })();
+(()=>{const ck=store.get('cvd-check',{});const conta=()=>{$('#pronte').textContent=t('prepCount',{n:$$('.caselle input:checked').length})};
+  $$('.caselle input').forEach(i=>{i.checked=!!ck[i.id];i.addEventListener('change',()=>{ck[i.id]=i.checked;store.set('cvd-check',ck);conta()})});
+  conta();})();
 function prevHint(){const s=store.get('cvd-sessions',[]);$('#prevHint').innerHTML=s.length?(s.length===1?t('prevHint1'):t('prevHintN',{n:s.length})):''}
 
 /* ---------- 2 calibrazione ---------- */

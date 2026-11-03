@@ -11,6 +11,7 @@ import hashlib
 import html
 import json
 import pathlib
+import re
 
 import comune
 
@@ -183,13 +184,20 @@ def pagina(lingua, file, corpo, script=()):
     destinazione.write_text(testo)
 
 
+def voce(testo):
+    """Una condizione del modulo: la prima frase (cosa fare) in grassetto, il resto (perché) più tenue."""
+    m = re.match(r"(.+?[.!?])\s+(.+)", testo)
+    return f"<strong>{m.group(1)}</strong> <span class=\"tenue\">{m.group(2)}</span>" if m else f"<strong>{testo}</strong>"
+
+
 def corpo_test(l):
     passi = "\n".join(
         f'<li><a href="#{v}" data-v="{v}"><span class="n" aria-hidden="true">{i}</span>'
         f'<span class="etichetta">{t(l, k)}</span><span class="sr stato"></span></a></li>'
         for i, (v, k) in enumerate(PASSI, 1))
     caselle = "\n".join(
-        f'<li><input type="checkbox" id="c{i}"><label for="c{i}">{t(l, f"c{i}")}</label></li>' for i in range(1, 7))
+        f'<li><span class="num" aria-hidden="true">{i:02d}</span><label for="c{i}">{voce(t(l, f"c{i}"))}</label>'
+        f'<input type="checkbox" id="c{i}"></li>' for i in range(1, 7))
     pad = "".join(f'<button type="button" class="{c}" data-o="{o}" aria-label="{e(t(l, a))}">'
                   f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="{d}"/></svg></button>'
                   for c, o, a, d in (("su", "up", "ariaUp", "M12 4 4 14h5v6h6v-6h5z"),
@@ -223,6 +231,7 @@ def corpo_test(l):
       <ul class="caselle">
 {caselle}
       </ul>
+      <p class="pronte solo-js" id="pronte" aria-live="polite"></p>
       <p><a href="metodo.html#condizioni">{t(l, "prepWhy")}</a></p>
       <p class="nota">{t(l, "notDiag")}</p>
       <div class="azioni solo-js"><a class="btn primario" href="#calibrazione">{t(l, "goCal")}</a><span class="tenue" id="prevHint"></span></div>
