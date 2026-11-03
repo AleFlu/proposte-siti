@@ -364,9 +364,9 @@ def corpo_simulatore(l):
       <figure><canvas id="cvSim2"></canvas><figcaption>{t(l, "howISee")}</figcaption></figure>
     </div>
     <div id="viewSim" hidden><canvas id="cvSim3"></canvas></div>
-    <p class="tenue">{t(l, "simNote")}</p>
   </div>
 </div>
+<p class="tenue nota-sim solo-js">{t(l, "simNote")}</p>
 <section class="sim-strumenti solo-js" aria-labelledby="h-strumenti">
   <h2 id="h-strumenti">{t(l, "simTools")}</h2>
   <div class="strumento">

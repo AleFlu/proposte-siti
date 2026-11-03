@@ -290,7 +290,8 @@ td.num, th.num { text-align: right; white-space: nowrap; }
 .profilo-nome { font-size: var(--t-2); font-weight: 750; }
 .sim { display: grid; gap: var(--s-6); }
 .sim-controlli { display: grid; gap: var(--s-5); align-content: start; order: 2; }
-.scelta { display: grid; gap: var(--s-2); }
+.scelta { display: grid; gap: var(--s-2); align-content: start; }
+.nota-sim { font-size: var(--t-0); }
 .riga-etichetta { display: flex; justify-content: space-between; align-items: baseline; }
 .scelta output { font: 700 var(--t-0)/1.3 var(--numeri); }
 .btn.file { position: relative; overflow: hidden; }
@@ -310,10 +311,15 @@ td.num, th.num { text-align: right; white-space: nowrap; }
 .affiancate canvas, #viewSim canvas { width: 100%; height: auto; }
 figcaption { margin-top: var(--s-2); font: 600 var(--t-e)/1.3 var(--numeri); text-transform: uppercase; letter-spacing: .06em; color: var(--grafite); }
 @media (min-width: 40rem) { .affiancate { grid-template-columns: 1fr 1fr; } }
+/* l'immagine è la protagonista: a tutta larghezza, i controlli in una barra sotto */
+.sim { gap: var(--s-5); }
+.sim-controlli { padding-top: var(--s-4); border-top: 2px solid var(--inchiostro); }
+@media (min-width: 48rem) {
+  .sim-controlli { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); }
+}
 @media (min-width: 64rem) {
-  .sim { grid-template-columns: 20rem minmax(0, 1fr); align-items: start; }
-  .sim-controlli { order: 0; position: sticky; top: var(--s-4); }
-  .sim-vista { order: 0; }
+  .sim-controlli { grid-template-columns: auto minmax(12rem, 1fr) auto minmax(14rem, 1fr); align-items: start; }
+  .sim-controlli #useMine { grid-column: 1 / -1; justify-self: start; }
 }
 .sim-strumenti { display: grid; gap: var(--s-5); border-top: 2px solid var(--inchiostro); padding-top: var(--s-5); }
 .strumento { display: grid; gap: var(--s-3); padding-bottom: var(--s-5); border-bottom: 1px solid var(--filo); min-width: 0; }
