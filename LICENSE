@@ -1,0 +1,30 @@
+Copyright (c) 2026 Alessandro Piras. Tutti i diritti riservati.
+
+Questo repository è pubblico perché le proposte si possano consultare, ma non è software libero.
+Codice, strumenti, testi, design, grafiche e documenti contenuti qui sono di Alessandro Piras.
+Senza un permesso scritto non è consentito copiarli, modificarli, distribuirli, pubblicarli,
+concederli in licenza o usarli per altri siti o progetti, né in tutto né in parte.
+Resta possibile guardarli e farne un fork su GitHub, nei limiti dei Termini di servizio di GitHub.
+
+Le attività presentate nelle proposte (Pastificio Carta Blu, Pizzeria La Cupola) sono di fantasia.
+
+Eccezioni, che restano con la licenza dei rispettivi autori:
+
+- Font in samples/assets/font/ e samples/*/assets/font/: Alfa Slab One, Atkinson Hyperlegible Mono,
+  Atkinson Hyperlegible Next, Bodoni Moda, Hanken Grotesk, Instrument Sans, Instrument Serif.
+  Sono distribuiti con la SIL Open Font License 1.1 (https://openfontlicense.org) dai loro autori.
+- «This is not red!» (samples/not-red/) è il rifacimento di un prototipo creato da un altro autore,
+  usato con il suo permesso. Il calcolo del test e del simulatore viene da quel prototipo; il modello del
+  filtro è quello pubblicato da Machado, Oliveira e Fernandes (2009).
+
+Per richieste di permesso: contattare Alessandro Piras tramite GitHub (https://github.com/AleFlu).
+
+---
+
+Copyright (c) 2026 Alessandro Piras. All rights reserved.
+
+This repository is public for viewing only; it is not open source. No permission is granted to copy,
+modify, distribute, publish, sublicense or reuse any of its code, text, designs or graphics, in whole or
+in part, without written permission. Viewing and forking on GitHub remain allowed under GitHub's Terms of
+Service. The bundled fonts keep their SIL Open Font License 1.1, and samples/not-red/ is based on a
+prototype by another author, used with permission (see the Italian text above).
