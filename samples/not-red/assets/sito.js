@@ -19,8 +19,9 @@ const conHash=a=>{a.href=a.href.split('#')[0]+location.hash};
 $$('#lingue a').forEach(a=>a.addEventListener('click',()=>{conHash(a);prova(()=>localStorage.setItem('cvd-lang',a.hreflang))}));
 
 /* ---------- sulle pagine italiane, una proposta nella lingua del browser (una volta sola) ---------- */
+const inAnteprima=window.self!==window.top;
 const datiLingue=$('#lingue-dati');
-if(datiLingue&&!prova(()=>localStorage.getItem('cvd-lang'))){
+if(datiLingue&&!inAnteprima&&!prova(()=>localStorage.getItem('cvd-lang'))){
   const voci=JSON.parse(datiLingue.textContent);
   const l=(navigator.languages||[navigator.language||'']).map(x=>String(x).slice(0,2).toLowerCase()).find(x=>x==='it'||voci[x]);
   if(l&&l!=='it'){
@@ -29,7 +30,7 @@ if(datiLingue&&!prova(()=>localStorage.getItem('cvd-lang'))){
     p.innerHTML=`<p>${frase}</p><a class="btn primario" hreflang="${l}" href="${href}">${vai}</a><button type="button" class="btn">${no}</button>`;
     p.querySelector('a').addEventListener('click',e=>{conHash(e.currentTarget);prova(()=>localStorage.setItem('cvd-lang',l))});
     p.querySelector('button').addEventListener('click',()=>{prova(()=>localStorage.setItem('cvd-lang','it'));p.remove()});
-    $('.testata').after(p);
+    $('.testata').append(p);
   }
 }
 
@@ -96,5 +97,5 @@ if(cancella)cancella.addEventListener('click',async()=>{
 
 /* ---------- copia per l'uso senza rete (sw.js accanto alle pagine italiane) ---------- */
 const qui=document.currentScript&&document.currentScript.src;
-if('serviceWorker' in navigator&&qui&&!cancella)navigator.serviceWorker.register(new URL('../sw.js',qui)).catch(()=>{});
+if('serviceWorker' in navigator&&qui&&!cancella&&!inAnteprima)navigator.serviceWorker.register(new URL('../sw.js',qui)).catch(()=>{});
 })();

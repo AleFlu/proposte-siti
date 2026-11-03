@@ -23,7 +23,7 @@ function updProfileText(){const s=SIM.sev;$('#sevOut').textContent=Math.round(s*
 </svg>
 <style>img, video { filter: url(#mio-daltonismo); }</style>`;}
 function renderBanner(){const b=$('#simBanner'),B=SIM.banner;if(!B){b.hidden=true;return}b.hidden=false;
-  const nm=`${cvdName(B.type,B.sev)}, ${t('intensityPct',{p:Math.round(B.sev*100)})}`;
+  const nm=`${B.sev<0.05?t('noAlt'):cvdName(B.type,B.sev)}, ${t('intensityPct',{p:Math.round(B.sev*100)})}`;
   // un riquadro sopra il simulatore: di chi è il profilo che stai guardando
   const riga=(eti,suggerimento,azione)=>`<div><p class="etichetta-gruppo">${eti}</p><p class="profilo-nome">${nm}</p>${suggerimento?`<p class="tenue">${suggerimento}</p>`:''}</div>${azione}`;
   if(B.kind==='shared')b.innerHTML=riga(t('sharedEyebrow'),t('sharedHint'),`<a class="btn" href="./">${t('doTestToo')}</a>`);

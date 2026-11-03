@@ -17,6 +17,7 @@ function route(){
   show(h||'preparazione',!!h);
 }
 function show(v,scorri){
+  const primo=!current;
   if(current==='test'&&v!=='test')pauseTest(true);
   if(current==='tremolio'&&v!=='tremolio')stopFlicker();
   current=v;document.documentElement.dataset.vista=v;
@@ -33,6 +34,8 @@ function show(v,scorri){
   if(v==='test')prepTest();
   // il passo nuovo comincia dal suo titolo, non da metà pagina
   if(scorri)$('.percorso').scrollIntoView({block:'start'});
+  // cambiando passo l'elemento con il focus sparisce: lo si porta sul titolo del passo nuovo
+  if(!primo)$('#h-'+v).focus({preventScroll:true});
 }
 function markDone(){
   const s=store.get('cvd-sessions',[]);
@@ -210,7 +213,7 @@ function finishTest(){
   const sess={date:new Date().toISOString(),gamma:{...gamma},dpr:window.devicePixelRatio||1,th,catch:{ok:T.catchOk,n:T.catchN},trials:T.n,mins:(Date.now()-T.started)/60000};
   const all=store.get('cvd-sessions',[]);all.push(sess);store.set('cvd-sessions',all.slice(-10));
   ['#stage','#pad','#stageActions','#stageStatus','#progBar'].forEach(s=>$(s).hidden=true);$('#feedback').textContent='';
-  $('#testDone').hidden=false;
+  $('#testDone').hidden=false;$('#testDone h3').focus({preventScroll:true});
   $('#testDoneTxt').textContent=t('testDoneTxt',{n:sess.trials,m:fmt(Math.max(1,sess.mins),0)});
   markDone();
 }

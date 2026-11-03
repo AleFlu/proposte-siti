@@ -47,6 +47,8 @@ a:hover { text-decoration-thickness: 2px; }
 strong { font-weight: 700; }
 img, canvas, svg { display: block; max-width: 100%; }
 :focus-visible { outline: 2px solid var(--inchiostro); outline-offset: 2px; box-shadow: 0 0 0 5px var(--carta); }
+/* i titoli dei passi ricevono il focus solo per far sapere dove si è arrivati: non sono controlli, niente anello */
+h2[tabindex="-1"]:focus, h3[tabindex="-1"]:focus { outline: none; box-shadow: none; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .salta { position: absolute; left: var(--gutter); top: -4rem; z-index: 10; padding: var(--s-3) var(--s-4); background: var(--inchiostro); color: var(--carta); }
 .salta:focus { top: var(--s-2); }
@@ -130,7 +132,7 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 24px; background: v
 .lingue a[aria-current]::after { content: "✓"; margin-left: auto; }
 @media (hover: hover) { .lingue a:hover { background: var(--carta-2); } }
 .sigla { font: 700 var(--t-e)/1 var(--numeri); width: 2ch; }
-.proposta-lingua { max-width: var(--largo-app); margin: var(--s-3) auto 0; padding: var(--s-3) var(--gutter); display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; border-bottom: 1px solid var(--filo); }
+.proposta-lingua { margin-top: var(--s-3); padding-top: var(--s-3); display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; border-top: 1px solid var(--filo); }
 .proposta-lingua p { margin-right: auto; font-weight: 600; }
 @media (min-width: 48rem) { .nav { order: 0; width: auto; } }
 

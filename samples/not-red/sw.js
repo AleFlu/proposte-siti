@@ -1,5 +1,5 @@
 // Generato da strumenti/genera_notred.py: pagine e file per usare il sito senza rete.
-const CACHE = "notred-a7d1f28b";
+const CACHE = "notred-e63b7e50";
 const FILE = [
  "./assets/anteprima.jpg",
  "./assets/favicon.svg",
@@ -13,11 +13,11 @@ const FILE = [
  "./assets/icona-512.png",
  "./assets/icona-adattiva-512.png",
  "./assets/misura.js?v=548fe531",
- "./assets/simulatore.js?v=ec9d58a5",
- "./assets/sito.js?v=521acd31",
+ "./assets/simulatore.js?v=189b159e",
+ "./assets/sito.js?v=956017f9",
  "./assets/sito.webmanifest",
- "./assets/stile.css?v=90634fcc",
- "./assets/test.js?v=719a5036",
+ "./assets/stile.css?v=0f31322f",
+ "./assets/test.js?v=d99473b9",
  "./de/",
  "./de/metodo.html",
  "./de/privacy.html",

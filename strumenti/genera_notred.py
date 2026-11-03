@@ -89,7 +89,7 @@ def suggerimenti(pagina):
     """Sulle pagine italiane: la frase per proporre la stessa pagina nella lingua del browser."""
     voci = {l: [t(l, "langSuggest"), t(l, "langSuggestGo"), t(l, "langSuggestNo"), rel("it", l, pagina)]
             for l in LINGUE if l != "it"}
-    return json.dumps(voci, ensure_ascii=False, separators=(",", ":"))
+    return json.dumps(voci, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
 
 def pagina(lingua, file, corpo, script=()):
@@ -214,7 +214,7 @@ def corpo_test(l):
 
   <div class="viste">
     <section class="vista" id="preparazione" aria-labelledby="h-preparazione">
-      <h2 id="h-preparazione">{t(l, "prepTitle")}</h2>
+      <h2 id="h-preparazione" tabindex="-1">{t(l, "prepTitle")}</h2>
       <p>{t(l, "prepIntro")}</p>
       <ul class="caselle">
 {caselle}
@@ -225,7 +225,7 @@ def corpo_test(l):
     </section>
 
     <section class="vista" id="calibrazione" aria-labelledby="h-calibrazione">
-      <h2 id="h-calibrazione">{t(l, "calTitle")}</h2>
+      <h2 id="h-calibrazione" tabindex="-1">{t(l, "calTitle")}</h2>
       <p>{t(l, "calWhy")}</p>
       <ol class="istruzioni">{"".join(f"<li>{t(l, k)}</li>" for k in ("calS1", "calS2", "calS3", "calS4"))}</ol>
       <p class="nota attenzione" id="dprWarn" hidden>{t(l, "dprWarn")}</p>
@@ -238,7 +238,7 @@ def corpo_test(l):
     </section>
 
     <section class="vista" id="test" aria-labelledby="h-test">
-      <h2 id="h-test">{t(l, "testTitle")}</h2>
+      <h2 id="h-test" tabindex="-1">{t(l, "testTitle")}</h2>
       <div class="palco solo-js" id="stageWrap">
         <div class="palco-avvio" id="testIntro">
           <p>{t(l, "testP1")}</p>
@@ -255,7 +255,7 @@ def corpo_test(l):
           <button type="button" class="btn" id="testAbort">{t(l, "abort")}</button>
         </div>
         <div class="palco-avvio" id="testDone" hidden>
-          <h3>{t(l, "doneTitle")}</h3>
+          <h3 tabindex="-1">{t(l, "doneTitle")}</h3>
           <p id="testDoneTxt"></p>
           <div class="azioni"><a class="btn primario" href="#tremolio">{t(l, "goFlicker")}</a><a class="btn" href="#risultato">{t(l, "goResult")}</a></div>
         </div>
@@ -264,7 +264,7 @@ def corpo_test(l):
     </section>
 
     <section class="vista" id="tremolio" aria-labelledby="h-tremolio">
-      <h2 id="h-tremolio">{t(l, "flTitle")}</h2>
+      <h2 id="h-tremolio" tabindex="-1">{t(l, "flTitle")}</h2>
       <p>{t(l, "flWhy")}</p>
       <ol class="istruzioni">{"".join(f"<li>{t(l, k)}</li>" for k in ("flS1", "flS2", "flS3", "flS4"))}</ol>
       <p class="nota attenzione"><svg class="segnale" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20zm0 6v6m0 2.5v1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>{t(l, "flWarn")}</p>
@@ -290,7 +290,7 @@ def corpo_test(l):
     </section>
 
     <section class="vista" id="risultato" aria-labelledby="h-risultato">
-      <h2 id="h-risultato">{t(l, "resTitle")}</h2>
+      <h2 id="h-risultato" tabindex="-1">{t(l, "resTitle")}</h2>
       <div id="resEmpty">
         <p>{t(l, "resEmptyP")}</p>
         <div class="azioni solo-js"><a class="btn primario" href="#preparazione">{t(l, "resEmptyBtn")}</a></div>
