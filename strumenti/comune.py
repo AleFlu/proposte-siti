@@ -114,13 +114,14 @@ def con_versione(sito, percorso):
     return f"{percorso}?v={impronta}"
 
 
-def script(sito, percorso):
+def script(sito, percorso, prefisso=""):
     """Lo script del sito nel <head>: parte quando l'HTML è letto (defer) e la pagina compare solo dopo
     (blocking="render", Chrome 105 e Safari 18.2). Così stato «aperto ora», titoli e testi calcolati
     sull'ora, tendine chiuse sono già al loro posto alla prima immagine: niente salti (CLS).
     Dove blocking non c'è (Firefox) resta un normale defer. Senza JavaScript la pagina è comunque completa.
+    prefisso: "../" per le pagine nelle cartelle delle lingue (variante web app).
     """
-    return f'<script src="{con_versione(sito, percorso)}" defer blocking="render"></script>'
+    return f'<script src="{prefisso}{con_versione(sito, percorso)}" defer blocking="render"></script>'
 
 
 # ---------- chiusure, festivi e orari speciali ----------

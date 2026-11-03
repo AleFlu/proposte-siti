@@ -82,6 +82,7 @@ def controlla_sito(cartella, demo, problemi):
         par.feed(sorgente)
         lette[p.relative_to(cartella).as_posix()] = (par, sorgente)
     lingue_viste = {}
+    promemoria = set()
 
     titoli_visti, descrizioni_viste = {}, {}
     for nome, (par, src) in lette.items():
@@ -196,7 +197,9 @@ def controlla_sito(cartella, demo, problemi):
                 err(f"risorsa di terze parti senza consenso: {dominio}")
         if not e404:
             # l'hub delle proposte non è il sito di un'attività: lì è solo un promemoria
-            legale = avv if cartella.name == "samples" or app else err
+            legale = avv if cartella.name == "samples" else err
+            if app:
+                legale = lambda m: None if m in promemoria else (promemoria.add(m), problemi.append(("avviso", cartella.name, m)))
             if not re.search(r"Partita IVA|P\.\s?IVA", src):
                 legale("manca la partita IVA nel piede")
             if "mailto:" not in src:
@@ -303,7 +306,9 @@ def main():
     argomenti = [a for a in sys.argv[1:] if not a.startswith("--")]
     demo = "--demo" in sys.argv
     radice = pathlib.Path(argomenti[0] if argomenti else "samples")
-    cartelle = [radice] + sorted(p for p in radice.iterdir() if p.is_dir() and any(p.glob("*.html")))
+    app = lambda c: any('"WebApplication"' in p.read_text() for p in c.glob("*.html"))
+    # le cartelle delle lingue di una web app le controlla il sito stesso, insieme alle pagine principali
+    cartelle = [radice] + ([] if app(radice) else sorted(p for p in radice.iterdir() if p.is_dir() and any(p.glob("*.html"))))
     problemi = []
     for c in cartelle:
         controlla_sito(c, demo, problemi)
@@ -311,8 +316,7 @@ def main():
         print(f"{livello:7} {dove:28} {messaggio}")
     errori = sum(1 for l, *_ in problemi if l == "ERRORE")
     pagine = sum(len(list(c.glob('*.html'))) + (len([p for p in c.glob('*/*.html') if p.parent.name != "assets"])
-                 if c != radice and any('"WebApplication"' in p.read_text() for p in c.glob('*.html')) else 0)
-                 for c in cartelle)
+                 if app(c) else 0) for c in cartelle)
     print(f"\n{pagine} pagine controllate: {errori} errori, {len(problemi) - errori} avvisi.")
     sys.exit(1 if errori else 0)
 

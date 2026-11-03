@@ -7,6 +7,8 @@ Prima si decide, poi si costruisce: niente codice UI finché `docs/<nome>/01-bri
 **Ogni nuovo sito parte dallo standard** (`standard/README.md`): `python3 strumenti/nuovo_sito.py <nome> "<Nome>"`
 crea documenti, generatore e base tecnica. Prima di consegnare, `standard/checklist.md` e `standard/lezioni.md`.
 Quando un sito insegna qualcosa di nuovo, si aggiorna lo standard (base, modello, checklist o lezioni), non solo il sito.
+Per uno strumento invece che un'attività (test, calcolatore, simulatore) c'è la **variante web app** in
+`standard/README.md`: pagine per lingua, JSON-LD `WebApplication`, uso senza rete.
 
 ## Workflow obbligatorio
 

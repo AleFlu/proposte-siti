@@ -56,6 +56,25 @@ E in `strumenti/`:
    `controlla.py` e con un errore si ferma. Se il sito ha un artifact, rigeneralo e ripubblicalo subito (regola in
    `CLAUDE.md`).
 
+## Variante web app
+
+Per uno strumento (un test, un calcolatore, un simulatore) invece che per un'attività. Primo esempio: `samples/not-red/`,
+generato da `strumenti/genera_notred.py`. Il processo è lo stesso (documenti in `docs/<nome>/`, generatore, controlli,
+verifiche); cambiano queste cose:
+
+- **Lingue.** Ogni lingua ha le sue pagine in HTML: la principale alla radice, le altre in `en/`, `de/`… I testi stanno
+  in un file JSON accanto al generatore. Nel `<head>` i link `hreflang` li scrive `comune.alternative()`, gli script
+  di una cartella di lingua si includono con `comune.script(..., prefisso="../")` e la sitemap accetta `en/index.html`.
+- **Dati per Google.** JSON-LD `WebApplication` (gratuita, `inLanguage`, `applicationCategory`) al posto di
+  `LocalBusiness`: niente orari, indirizzo, chiusure. `controlla.py` riconosce la variante da questo tipo e controlla
+  lingue, `og:locale` e `hreflang` reciproci; partita IVA ed email diventano un promemoria.
+- **Installabile e senza rete.** `comune.scrivi_icone(..., display="standalone")` e un service worker (`sw.js`, scritto
+  dal generatore) che salva pagine e file alla prima visita. La cache prende il nome dall'impronta di tutti i file e le
+  pagine arrivano prima dalla rete: dopo un aggiornamento nessuna pagina incontra CSS o JS di un'altra versione.
+- **Dati di chi lo usa.** Restano nel browser; la pagina Privacy elenca cosa viene salvato e ha «Cancella i miei dati».
+- **Rifare un prototipo.** Il calcolo dell'originale si copia invariato e si confronta riga per riga; si rifanno
+  aspetto, struttura e testi.
+
 ## Da proposta a sito vero
 
 Quando un cliente accetta, il sito di fantasia diventa reale. In `checklist.md`, sezione "Messa online",

@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Proposte di siti su misura per attività locali italiane</title>
-<meta name="description" content="Due proposte di siti fatti da zero per attività locali, un pastificio a Parma e una pizzeria napoletana a Torino, con anteprime dal vivo, palette e caratteri.">
+<meta name="description" content="Tre proposte di siti fatti da zero: un pastificio a Parma, una pizzeria a Torino e un test del daltonismo, con anteprime dal vivo, palette e caratteri.">
 <link rel="canonical" href="https://aleflu.github.io/proposte-siti/">
 <meta name="theme-color" content="#ECEBE6">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="Proposte di siti su misura per attività locali italiane">
-<meta property="og:description" content="Due proposte di siti fatti da zero per attività locali, un pastificio a Parma e una pizzeria napoletana a Torino, con anteprime dal vivo, palette e caratteri.">
+<meta property="og:description" content="Tre proposte di siti fatti da zero: un pastificio a Parma, una pizzeria a Torino e un test del daltonismo, con anteprime dal vivo, palette e caratteri.">
 <meta property="og:url" content="https://aleflu.github.io/proposte-siti/">
 <meta property="og:image" content="https://aleflu.github.io/proposte-siti/assets/anteprima.jpg">
 <meta property="og:image:width" content="1200">
@@ -22,6 +22,7 @@
 <link rel="apple-touch-icon" href="assets/icona-180.png">
 <link rel="manifest" href="assets/sito.webmanifest">
 <link rel="stylesheet" href="assets/font.css?v=ec92f94f">
+<link rel="stylesheet" href="not-red/assets/font.css?v=6c7108fe">
 <style>
 /* Tavolo da lavoro: ogni proposta è una tavola con l'anteprima viva a sinistra e le scelte di progetto a destra. */
 :root {
@@ -174,10 +175,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   <div class="apertura-griglia">
     <h1>Siti che parlano il mestiere <em>di chi li usa</em></h1>
     <div>
-      <p>Due proposte per attività locali, progettate da zero. Ogni sito parte da un dettaglio che appartiene solo a quel lavoro: la carta in cui si incarta la pasta, il mosaico che riveste il forno.</p>
+      <p>Tre proposte progettate da zero: due attività locali e uno strumento web. Ogni sito parte da un dettaglio che appartiene solo a quel lavoro: la carta in cui si incarta la pasta, il mosaico che riveste il forno, una parola rossa che non tutti vedono rossa.</p>
       <ul class="indice" aria-label="Vai alla proposta">
         <li><a href="#pastificio"><i style="background:#2F4C93"></i>Pastificio</a></li>
         <li><a href="#la-cupola"><i style="background:#14807A; box-shadow: inset 0 0 0 3px #D9A62E"></i>Pizzeria</a></li>
+        <li><a href="#not-red"><i style="background:#484848; box-shadow: inset 0 0 0 3px #d03833"></i>Test dei colori</a></li>
       </ul>
     </div>
   </div>
@@ -286,6 +288,59 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <div class="azioni">
           <a class="apri" href="la-cupola/">Apri il sito</a>
           <button class="copia" type="button" data-percorso="la-cupola/">Copia il link</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="tavola" id="not-red" style="--punto:#161616; --hover:#484848">
+    <div class="wrap tavola-griglia">
+      <div class="anteprime">
+        <div class="schermo">
+          <div class="barra-browser" aria-hidden="true"><span class="pallini"><span></span><span></span><span></span></span><span class="indirizzo">thisisnotred.app</span></div>
+          <div class="vetro" data-larghezza="1440"><iframe src="not-red/" title="Anteprima desktop" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+        </div>
+        <div class="telefono" aria-hidden="true">
+          <div class="vetro" data-larghezza="375"><iframe src="not-red/simulatore.html" title="Anteprima mobile" loading="lazy" tabindex="-1"></iframe></div>
+        </div>
+        <span class="suggerimento" aria-hidden="true">Passa sopra per scorrere l’anteprima</span>
+        <a class="anteprime-link" href="not-red/"><span class="vh">Apri il test This is not red!</span></a>
+      </div>
+
+      <div class="scheda">
+        <div>
+          <p class="settore">Strumento web in sei lingue</p>
+          <h2>This is not red!</h2>
+        </div>
+        <p class="tesi">Un test del daltonismo con l’interfaccia tutta grigia, perché l’unico colore sullo schermo deve essere quello che si misura. Rifacimento di un prototipo nato come artifact.</p>
+        <div class="blocco">
+          <h3>Palette</h3>
+          <ul class="palette">
+            <li><i style="background:#f3f3f3"></i><span><b>Carta</b>#F3F3F3</span></li>
+            <li><i style="background:#161616"></i><span><b>Inchiostro</b>#161616</span></li>
+            <li><i style="background:#484848"></i><span><b>Grafite</b>#484848</span></li>
+            <li><i style="background:#d03833"></i><span><b>Solo «red»</b>#D03833</span></li>
+          </ul>
+        </div>
+        <div class="blocco">
+          <h3>Caratteri</h3>
+          <div class="caratteri">
+            <div><span class="campione" style="font-family:'Atkinson Hyperlegible Next',sans-serif; font-weight:800">Il tuo risultato</span><small>Atkinson Hyperlegible Next, disegnato per chi vede poco</small></div>
+            <div><span class="campione" style="font-family:'Atkinson Hyperlegible Mono',monospace; font-size:1.125rem">Protan ≥ 2176</span><small>Atkinson Hyperlegible Mono, per i valori</small></div>
+          </div>
+        </div>
+        <div class="blocco">
+          <h3>Cosa può provare chi lo usa</h3>
+          <ul class="prove">
+            <li>Calibrare lo schermo e fare il test adattivo sulle tre linee di confusione</li>
+            <li>Leggere tipo, intensità e soglie, e stampare la scheda</li>
+            <li>Guardare una foto come la vede una persona daltonica e condividere il profilo</li>
+            <li>Usarlo in sei lingue e anche senza rete, con i dati che restano sul telefono</li>
+          </ul>
+        </div>
+        <div class="azioni">
+          <a class="apri" href="not-red/">Apri il sito</a>
+          <button class="copia" type="button" data-percorso="not-red/">Copia il link</button>
         </div>
       </div>
     </div>

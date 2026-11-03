@@ -93,6 +93,13 @@ Le altre si controllano a mano o con gli MCP (Playwright, Chrome DevTools).
 - [ ] Senza cookie o con soli cookie tecnici non serve il banner. Statistiche solo senza cookie.
 - [ ] Stampa: il menu o il listino si stampano puliti (`@media print` in `base.css`)
 
+## 7b. Variante web app (solo per gli strumenti)
+- [ ] Pagine in HTML per ogni lingua, `hreflang` reciproci e `og:locale` della lingua ⚙
+- [ ] JSON-LD `WebApplication` ⚙; nessun testo che prometta una diagnosi o un risultato certificato
+- [ ] Prova senza rete: dopo la prima visita le pagine, i font e lo strumento funzionano offline
+- [ ] Cambio lingua durante un'operazione in corso: avviso prima di perdere il lavoro
+- [ ] Rifacimento di un prototipo: calcolo confrontato riga per riga con l'originale
+
 ## 8. Proposta per il cliente
 - [ ] `noindex` presente (attività di fantasia) ⚙
 - [ ] Nota "proposta dimostrativa" nel piede

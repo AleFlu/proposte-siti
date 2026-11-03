@@ -17,6 +17,10 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
   stessa scatola e poi corrette a occhio (la centrale più alta di un 22%).
 - **Hub "spartano".** Una lista di link non vende. Anteprime vive, palette e campioni dei caratteri sì.
 
+- **Un test dei colori con l'interfaccia colorata.** Indaco e giallo intorno al palco spostano l'adattamento
+  dell'occhio prima di ogni prova, e il pubblico è daltonico. In «This is not red!» l'interfaccia ha croma 0 e il
+  colore resta solo negli stimoli: il vincolo della misura è diventato l'identità del sito.
+
 ## Tipografia e CSS
 - **Bodoni con interlinea 1,02: le discendenti si sovrapponevano alla riga sotto.** Display con discendenti
   lunghe: interlinea ≥ 1,12.
@@ -30,6 +34,8 @@ Errori fatti sui primi due siti, con la correzione. Prima di consegnare, rilegge
   non come trasparenza. Ricapitato con gli orari "pieno" della pizzeria, che compaiono solo quando un turno
   è pieno: ora `controlla.py` segnala ogni `opacity` sotto 1 nei CSS.
 - **`[hidden]` annullato da un `display: grid` del componente.** Serve una regola `.componente[hidden] { display: none }`.
+  Ricapitato nell'artifact di «This is not red!»: fuori da claude.ai le sei sezioni comparivano tutte insieme. Nei siti
+  nuovi si mette una volta per tutte `[hidden] { display: none !important; }` in cima al CSS.
 - **Lo stesso font scaricato tre volte.** Chiedendo a Google un font variabile con più pesi (`wght@400;500;600`)
   arriva lo stesso file ripetuto in un `@font-face` per peso, e il browser lo scarica una volta per peso (+68 KB
   sulla pizzeria). Ora `scarica_font.py` li unisce in un `@font-face` con l'intervallo (`font-weight: 400 600`) e
