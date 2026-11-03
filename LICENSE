@@ -12,7 +12,8 @@ Eccezioni, che restano con la licenza dei rispettivi autori:
 
 - Font in samples/assets/font/ e samples/*/assets/font/: Alfa Slab One, Atkinson Hyperlegible Mono,
   Atkinson Hyperlegible Next, Bodoni Moda, Hanken Grotesk, Instrument Sans, Instrument Serif.
-  Sono distribuiti con la SIL Open Font License 1.1 (https://openfontlicense.org) dai loro autori.
+  Sono distribuiti con la SIL Open Font License 1.1 (https://openfontlicense.org) dai loro autori;
+  il testo della licenza di ogni famiglia è accanto ai file (OFL-<famiglia>.txt).
 - «This is not red!» (samples/not-red/) è il rifacimento di un prototipo creato da un altro autore,
   usato con il suo permesso. Il calcolo del test e del simulatore viene da quel prototipo; il modello del
   filtro è quello pubblicato da Machado, Oliveira e Fernandes (2009).

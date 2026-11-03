@@ -293,6 +293,14 @@ def controlla_sito(cartella, demo, problemi):
             problemi.append(("ERRORE", f"{cartella.name}/assets/font",
                              f"file identici ({', '.join(nomi)}): rigenera con scarica_font.py"))
 
+    # la SIL Open Font License deve accompagnare ogni font che il sito distribuisce
+    font_css = cartella / "assets" / "font.css"
+    if font_css.exists():
+        for famiglia in sorted(set(re.findall(r"font-family: '([^']+)'", font_css.read_text()))):
+            if not (cartella / "assets" / "font" / f"OFL-{famiglia.lower().replace(' ', '-')}.txt").exists():
+                problemi.append(("ERRORE", f"{cartella.name}/assets/font",
+                                 f"manca la licenza di {famiglia}: python3 strumenti/scarica_font.py {cartella}/assets --licenze"))
+
     # Android ritaglia l'icona a cerchio o goccia: senza un'icona "maskable" la mette in un riquadro bianco
     manifest = cartella / "assets" / "sito.webmanifest"
     if manifest.exists() and not any("maskable" in i.get("purpose", "") for i in json.loads(manifest.read_text()).get("icons", [])):

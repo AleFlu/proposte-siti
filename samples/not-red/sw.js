@@ -1,8 +1,10 @@
 // Generato da strumenti/genera_notred.py: pagine e file per usare il sito senza rete.
-const CACHE = "notred-b08e2d01";
+const CACHE = "notred-881cb735";
 const FILE = [
  "./assets/anteprima.jpg",
  "./assets/favicon.svg",
+ "./assets/font/OFL-atkinson-hyperlegible-mono.txt",
+ "./assets/font/OFL-atkinson-hyperlegible-next.txt",
  "./assets/font/atkinson-hyperlegible-mono-normal-400-700-latin-ext.woff2",
  "./assets/font/atkinson-hyperlegible-mono-normal-400-700-latin.woff2",
  "./assets/font/atkinson-hyperlegible-next-normal-400-800-latin-ext.woff2",
