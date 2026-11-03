@@ -6,6 +6,11 @@ Uso: python3 strumenti/controlla.py samples/<nome> [--demo]
 --demo: il sito è una proposta con attività di fantasia, quindi il noindex è obbligatorio.
 Senza --demo il noindex è un errore (un sito vero deve finire su Google).
 
+Variante web app (vedi standard/README.md): un sito con JSON-LD WebApplication è uno strumento, non un'attività.
+Le sue pagine stanno anche nelle cartelle delle lingue (en/, de/…): la lingua di ogni pagina deve essere una di
+quelle dichiarate con hreflang, og:locale deve corrispondere, tutte le pagine dichiarano le stesse lingue e partita
+IVA ed email sono solo un promemoria.
+
 Controlla le regole di CLAUDE.md che si possono verificare leggendo l'HTML: SEO,
 legale, accessibilità di base, link interni. Non sostituisce Lighthouse, gli screenshot
 ai 4 breakpoint e il Rich Results Test (vedi standard/checklist.md).
@@ -67,12 +72,16 @@ class Pagina(HTMLParser):
 
 def controlla_sito(cartella, demo, problemi):
     pagine = sorted(cartella.glob("*.html"))
+    app = any('"WebApplication"' in p.read_text() for p in pagine)
+    if app:
+        pagine += sorted(p for p in cartella.glob("*/*.html") if p.parent.name != "assets")
     lette = {}
     for p in pagine:
         par = Pagina()
         sorgente = p.read_text()
         par.feed(sorgente)
-        lette[p.name] = (par, sorgente)
+        lette[p.relative_to(cartella).as_posix()] = (par, sorgente)
+    lingue_viste = {}
 
     titoli_visti, descrizioni_viste = {}, {}
     for nome, (par, src) in lette.items():
@@ -82,10 +91,23 @@ def controlla_sito(cartella, demo, problemi):
                 for el in par.elementi if el[0] == "meta"}
         link = [el[1] for el in par.elementi if el[0] == "link"]
         e404 = nome == "404.html"
+        cartella_pagina = (cartella / nome).parent
+        lingua = next((el[1].get("lang", "") for el in par.elementi if el[0] == "html"), "")
+        alternative = {l["hreflang"]: l.get("href", "") for l in link if l.get("rel") == "alternate" and l.get("hreflang")}
 
         if not src.lower().startswith("<!doctype html>"):
             err("manca <!doctype html>")
-        if 'lang="it"' not in src[:200]:
+        if app:
+            if lingua not in alternative:
+                err(f'lingua <html lang="{lingua}"> non dichiarata tra gli hreflang')
+            canon = next((l.get("href") for l in link if l.get("rel") == "canonical"), None)
+            if lingua in alternative and canon and alternative[lingua] != canon:
+                err(f"hreflang {lingua} non punta alla pagina stessa ({alternative[lingua]} ≠ {canon})")
+            insieme = tuple(sorted(alternative))
+            if lingue_viste and insieme not in lingue_viste:
+                err(f"lingue hreflang diverse da {next(iter(lingue_viste.values()))}: {', '.join(insieme)}")
+            lingue_viste.setdefault(insieme, nome)
+        elif 'lang="it"' not in src[:200]:
             err('manca <html lang="it">')
         if "viewport" not in meta:
             err("manca il meta viewport")
@@ -108,7 +130,10 @@ def controlla_sito(cartella, demo, problemi):
             for k in ("og:title", "og:description", "og:url", "og:image"):
                 if not meta.get(k):
                     err(f"manca {k}")
-            if meta.get("og:locale") != "it_IT":
+            if app:
+                if not meta.get("og:locale", "").startswith(lingua + "_"):
+                    err(f"og:locale {meta.get('og:locale')!r} non corrisponde alla lingua {lingua}")
+            elif meta.get("og:locale") != "it_IT":
                 err("og:locale non è it_IT")
             if meta.get("og:image") and not meta["og:image"].startswith("https://"):
                 err("og:image non è un URL assoluto")
@@ -171,12 +196,12 @@ def controlla_sito(cartella, demo, problemi):
                 err(f"risorsa di terze parti senza consenso: {dominio}")
         if not e404:
             # l'hub delle proposte non è il sito di un'attività: lì è solo un promemoria
-            legale = avv if cartella.name == "samples" else err
+            legale = avv if cartella.name == "samples" or app else err
             if not re.search(r"Partita IVA|P\.\s?IVA", src):
                 legale("manca la partita IVA nel piede")
             if "mailto:" not in src:
                 legale("manca un'email di contatto (D.Lgs. 70/2003, art. 7)")
-            if 'href="privacy.html"' not in src and nome != "privacy.html":
+            if 'href="privacy.html"' not in src and not nome.endswith("privacy.html"):
                 legale("manca il link all'informativa privacy")
             if "<form" in src:
                 modulo = src[src.index("<form"):src.index("</form>")]
@@ -211,7 +236,7 @@ def controlla_sito(cartella, demo, problemi):
             if not risorsa or re.match(r"(https?:|//|/|data:)", risorsa):
                 continue
             percorso, _, versione = risorsa.partition("?v=")
-            file = cartella / percorso
+            file = cartella_pagina / percorso
             # script in fondo al body: la pagina può comparire prima e poi spostarsi quando lo script cambia testi e tendine
             if el[0] == "script" and not ("defer" in el[1] and "blocking" in el[1]):
                 avv(f"{percorso} senza defer e blocking=\"render\": usa comune.script(), nel <head>")
@@ -239,11 +264,13 @@ def controlla_sito(cartella, demo, problemi):
                 continue
             percorso, _, ancora = href.partition("#")
             percorso = percorso.split("?")[0]
-            destinazione = (cartella / percorso) if percorso else cartella / nome
+            destinazione = (cartella_pagina / percorso) if percorso else cartella / nome
+            if percorso.endswith("/") or (percorso and destinazione.is_dir()):
+                destinazione = destinazione / "index.html"
             if percorso and not destinazione.exists():
                 err(f"link rotto: {href}")
             elif ancora and destinazione.suffix == ".html":
-                testo_dest = lette.get(destinazione.name, (None, destinazione.read_text()))[1]
+                testo_dest = destinazione.read_text()
                 if f'id="{ancora}"' not in testo_dest:
                     err(f"ancora inesistente: {href}")
 
@@ -283,7 +310,9 @@ def main():
     for livello, dove, messaggio in problemi:
         print(f"{livello:7} {dove:28} {messaggio}")
     errori = sum(1 for l, *_ in problemi if l == "ERRORE")
-    pagine = sum(len(list(c.glob('*.html'))) for c in cartelle)
+    pagine = sum(len(list(c.glob('*.html'))) + (len([p for p in c.glob('*/*.html') if p.parent.name != "assets"])
+                 if c != radice and any('"WebApplication"' in p.read_text() for p in c.glob('*.html')) else 0)
+                 for c in cartelle)
     print(f"\n{pagine} pagine controllate: {errori} errori, {len(problemi) - errori} avvisi.")
     sys.exit(1 if errori else 0)
 

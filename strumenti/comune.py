@@ -2,6 +2,7 @@
 
 - icone: favicon SVG, icone PNG per iPhone/Android (anche quella adattiva) e manifest, da un solo SVG;
 - sitemap.xml del sito, con la data dell'ultima modifica vera di ogni pagina;
+- alternative(): i link hreflang di una pagina in più lingue (variante web app);
 - testa_icone(): i tag <link> da mettere nel <head> di ogni pagina;
 - con_versione(): link a CSS e JS che cambia quando cambia il file;
 - script(): il tag dello script del sito, nel <head>, applicato prima che la pagina compaia;
@@ -18,7 +19,7 @@ import subprocess
 import tempfile
 
 
-def scrivi_icone(assets, svg, nome, colore_tema, colore_fondo):
+def scrivi_icone(assets, svg, nome, colore_tema, colore_fondo, display="browser"):
     """Scrive in assets/: favicon.svg, icona-180.png, icona-192.png, icona-512.png, icona-adattiva-512.png,
     sito.webmanifest.
 
@@ -26,6 +27,7 @@ def scrivi_icone(assets, svg, nome, colore_tema, colore_fondo):
     L'icona adattiva ("maskable") è per Android, che ritaglia l'icona a cerchio, goccia o quadrato:
     l'SVG rimpicciolito al 70% su un fondo del suo stesso colore, così il ritaglio non tocca il disegno
     se questo sta dentro il cerchio inscritto nel quadrato.
+    display: "browser" per un sito, "standalone" per una web app che si installa e si apre come un'app.
     """
     from PIL import Image
 
@@ -44,7 +46,7 @@ def scrivi_icone(assets, svg, nome, colore_tema, colore_fondo):
     adattiva.paste(grande.resize((358, 358), Image.LANCZOS), (77, 77))
     adattiva.save(assets / "icona-adattiva-512.png", optimize=True)
     manifest = {
-        "name": nome, "short_name": nome, "start_url": "../", "display": "browser",
+        "name": nome, "short_name": nome, "start_url": "../", "display": display,
         "theme_color": colore_tema, "background_color": colore_fondo,
         "icons": [{"src": f"icona-{l}.png", "sizes": f"{l}x{l}", "type": "image/png"} for l in (192, 512)]
                  + [{"src": "icona-adattiva-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}],
@@ -66,7 +68,7 @@ def _da_git(cartella, file):
 
 
 def scrivi_sitemap(out, base, pagine):
-    """pagine: i nomi dei file HTML da indicizzare (la home come "index.html").
+    """pagine: i nomi dei file HTML da indicizzare (la home come "index.html", quella di una lingua come "en/index.html").
 
     lastmod è il giorno in cui il contenuto della pagina è cambiato davvero. Se la pagina è uguale a quella
     dell'ultimo commit (a parte le impronte ?v=), resta la data scritta nella sitemap di quel commit.
@@ -78,7 +80,7 @@ def scrivi_sitemap(out, base, pagine):
     date = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", _da_git(out, "sitemap.xml") or ""))
     righe = []
     for p in pagine:
-        loc = f"{base}{'' if p == 'index.html' else p}"
+        loc = base + re.sub(r"(^|/)index\.html$", r"\1", p)
         prima = _da_git(out, p)
         uguale = prima is not None and senza_impronte(prima) == senza_impronte((out / p).read_text())
         righe.append(f"  <url><loc>{loc}</loc><lastmod>{date[loc] if uguale and loc in date else oggi}</lastmod></url>")
@@ -87,6 +89,19 @@ def scrivi_sitemap(out, base, pagine):
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         f"{righe}\n</urlset>\n")
+
+
+def alternative(base, lingue, pagina):
+    """I <link rel="alternate" hreflang> di una pagina che esiste in più lingue (variante web app).
+
+    lingue: i codici, il primo è la lingua principale, servita alla radice ("it" → base, "en" → base + "en/").
+    pagina: il nome del file ("index.html" diventa la cartella). x-default punta alla lingua principale.
+    """
+    file = "" if pagina == "index.html" else pagina
+    url = lambda l: f"{base}{'' if l == lingue[0] else l + '/'}{file}"
+    righe = [f'<link rel="alternate" hreflang="{l}" href="{url(l)}">' for l in lingue]
+    righe.append(f'<link rel="alternate" hreflang="x-default" href="{url(lingue[0])}">')
+    return "\n".join(righe)
 
 
 def con_versione(sito, percorso):
